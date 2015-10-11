@@ -1,0 +1,22 @@
+{
+  "name": "MultiPerson-Blog",
+  "version": "1.0.0",
+  "description": "multi person blog.",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dnlyc/multiperson-blog.git"
+  },
+  "keywords": [
+    "Blog",
+    "MultiPerson"
+  ],
+  "author": "Xie Wei <xieweiprogrammer@163.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dnlyc/multiperson-blog/issues"
+  },
+  "homepage": "https://github.com/Dnlyc/multiperson-blog"
+}
