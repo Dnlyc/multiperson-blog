@@ -3,10 +3,6 @@ var express = require('express'),
 
 
 router.get('/', function (req, res) {
-  res.render('users', { title: '”√ªß' });
-});
-
-router.post('/', function (req, res) {
 });
 
 module.exports = router;

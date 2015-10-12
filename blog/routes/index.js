@@ -9,14 +9,10 @@ var router = express.Router();
  * 渲染views/index.ejs模版并显示到浏览器中。
  */
 router.get('/', function(req, res, next) {
-
   // 传入变量title，，模板引擎会将所有<% = title % >替换为变量值
   // 然后将渲染后生成的html显示到浏览器中
   res.render('index', { title: 'Express' });
 });
 
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-});
 
 module.exports = router;

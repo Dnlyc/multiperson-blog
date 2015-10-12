@@ -10,8 +10,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./routes/index'),
+    login = require('./routes/login'),
+    logout = require('./routes/logout'),
+    post = require('./routes/post'),
+    register = require('./routes/register'),
+    users = require('./routes/users');
 
 
 // 生成一个express实例app
@@ -33,7 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));      // 设置public文
 
 // 路由控制器。
 app.use('/', routes);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/post', post);
+app.use('/register', register);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 // 捕获404错误，并转发到错误处理器。
