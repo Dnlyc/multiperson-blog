@@ -10,6 +10,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
+// 路由配置文件
 var routes = require('./routes/index'),
     login = require('./routes/login'),
     logout = require('./routes/logout'),
@@ -17,6 +19,13 @@ var routes = require('./routes/index'),
     register = require('./routes/register'),
     users = require('./routes/users');
 
+// import settings module.
+var settings = require('./settings');
+
+// 将会话信息存储在数据库中，该两个模块实现了将会话信息存储到mongodb中。
+var session = require('express-session'),
+    MongoStore = require('connect-mongo')(session),
+    flash = require('connect-flash');
 
 // 生成一个express实例app
 var app = express();
@@ -34,6 +43,7 @@ app.use(bodyParser.json());                                     // 加载解析j
 app.use(bodyParser.urlencoded({ extended: false }));          // 加载解析urlencoded请求体的中间件。
 app.use(cookieParser());                                        // 加载解析cookie的中间件。
 app.use(express.static(path.join(__dirname, 'public')));      // 设置public文件夹为存放静态文件的目录。
+app.use(flash());                                                // 设置flash功能
 
 // 路由控制器。
 app.use('/', routes);
@@ -43,6 +53,19 @@ app.use('/post', post);
 app.use('/register', register);
 app.use('/users', users);
 
+app.use(session({
+    secret : settings.cookieSecret,
+    // cookie name
+    key : settings.db,
+    // 设定cookie的生存周期为30天
+    cookie : {maxAge : 1000 * 60 * 60 * 24 * 30},
+    // MongoStore 实例，把会话信息存储到数据库中
+    store : new MongoStore({
+        db : settings.db,
+        host : settings.host,
+        port : settings.port
+    })
+}));
 
 // catch 404 and forward to error handler
 // 捕获404错误，并转发到错误处理器。
@@ -52,7 +75,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
 
 // development error handler
 // will print stacktrace
