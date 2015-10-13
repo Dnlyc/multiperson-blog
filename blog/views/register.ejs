@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <!-- 我们通过 app.use(express.static(path.join(__dirname, 'public'))) 设置了静态文件目录为 public 文件夹 -->
-    <!--  所以代码中的 href='/stylesheets/style.css' 就相当于 href='public/stylesheets/style.css'-->
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include header %>
+<form method="post">
+    用户名：  <input type="text" name="name"/><br />
+    密码：    <input type="password" name="password"/><br />
+    确认密码：<input type="password" name="password-repeat"/><br />
+    邮箱：    <input type="email" name="email"/><br />
+    <input type="submit" value="注册"/>
+</form>
+<%- include footer %>

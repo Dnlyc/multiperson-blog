@@ -11,7 +11,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   // 传入变量title，，模板引擎会将所有<% = title % >替换为变量值
   // 然后将渲染后生成的html显示到浏览器中
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: '主页' });
 });
 
 

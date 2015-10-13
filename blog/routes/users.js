@@ -3,7 +3,7 @@ var express = require('express'),
 
 
 router.get('/', function (req, res) {
-  res.render('users', { title: '�û�' });
+  res.render('users', { title: '个人信息' });
 });
 
 router.post('/', function (req, res) {

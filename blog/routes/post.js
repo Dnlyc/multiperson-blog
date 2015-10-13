@@ -3,7 +3,7 @@ var express = require('express'),
 
 
 router.get('/', function (req, res) {
-    res.render('post', { title: '·¢±í' });
+    res.render('post', { title: 'å‘è¡¨åšæ–‡' });
 });
 
 router.post('/', function (req, res) {
