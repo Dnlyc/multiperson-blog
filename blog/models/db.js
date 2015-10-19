@@ -45,7 +45,7 @@ Mongodb = {
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+                return resolve(result);
             });
         });
     },
@@ -63,7 +63,7 @@ Mongodb = {
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+                return resolve(result);
             });
         });
     },
@@ -82,7 +82,7 @@ Mongodb = {
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+                return resolve(result);
             });
         });
     },
@@ -101,7 +101,7 @@ Mongodb = {
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+                return resolve(result);
             });
         });
     },

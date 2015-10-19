@@ -12,12 +12,12 @@ var bodyParser = require('body-parser');
 
 
 // 路由配置文件
-var routes = require('./routes/index'),
+var routes = require('./routes/index')/*,
     login = require('./routes/login'),
     logout = require('./routes/logout'),
     post = require('./routes/post'),
     register = require('./routes/register'),
-    users = require('./routes/users');
+    users = require('./routes/users')*/;
 
 // import settings module.
 var settings = require('./settings'),
@@ -31,12 +31,18 @@ var session = require('express-session'),
 // 生成一个express实例app
 var app = express();
 
+// step 1 : 初始化数据库
 mongodb.init().then(function () {
-
+    // step 2 : 找出下一个注册用户的id
+    return mongodb.find('user');
+}).then(function (res) {
+    // step 3 : 设定为全局变量
+    process.next_user_id = res.length;
+}).then(function () {
+    // step 4 : 设置网站信息
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));            // 设置 views 文件夹为存放视图文件的目录, 即存放模板文件的地方
     app.set('view engine', 'ejs');                              // 设置视图模板引擎为 ejs。
-    app.use(flash());                                              // 设置flash功能
 
     // uncomment after placing your favicon in /public
     // 设置/public/favicon.ico为favicon图标。
@@ -49,12 +55,12 @@ mongodb.init().then(function () {
     app.use(express.static(path.join(__dirname, 'public')));      // 设置public文件夹为存放静态文件的目录。
 
     // 路由控制器。
-    app.use('/', routes);
-    app.use('/login', login);
-    app.use('/logout', logout);
-    app.use('/post', post);
-    app.use('/register', register);
-    app.use('/users', users);
+    //app.use('/', routes);
+    //app.use('/login', login);
+    //app.use('/logout', logout);
+    //app.use('/post', post);
+    //app.use('/register', register);
+    //app.use('/users', users);
 
     app.use(session({
         secret : settings.cookieSecret,
@@ -69,6 +75,9 @@ mongodb.init().then(function () {
             port : settings.port
         })
     }));
+
+    app.use(flash());                                              // 设置flash功能
+    routes(app);
 
     // catch 404 and forward to error handler
     // 捕获404错误，并转发到错误处理器。
