@@ -4,7 +4,8 @@
 var mongodb = require('./db'),
     crypto = require('crypto'),
     Promise = require('bluebird'),
-    register;
+    getRegister,
+    postRegister;
 
 function User (user) {
     this.name = user.name;
@@ -15,7 +16,6 @@ function User (user) {
 
 /**
  * 存储用户信息
- * @param callback {Function} 回调函数
  */
 User.prototype.save = function () {
 
@@ -45,7 +45,26 @@ User.prototype.get = function (name) {
     });
 }
 
-register = function (req, res) {
+/**
+ * 请求注册页面
+ * @param req
+ * @param res
+ */
+getRegister = function (req, res) {
+    res.render('register', {
+        title: '注册',
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+    });
+}
+
+/**
+ * 提交注册
+ * @param req (Object)  请求对象
+ * @param res (Object)  响应对象
+ */
+postRegister = function (req, res) {
 
     // req.body： 就是 POST 请求信息解析过后的对象
     // res.redirect： 重定向功能，实现了页面的跳转
@@ -96,5 +115,6 @@ register = function (req, res) {
 
 module.exports = {
     User : User,
-    register : register
+    postRegister : postRegister,
+    getRegister : getRegister
 };

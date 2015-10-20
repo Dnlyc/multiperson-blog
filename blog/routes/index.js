@@ -17,15 +17,27 @@
 
 var user = require('../models/user');
 
-module.exports = function (app) {
-    app.get('/', function (req, res) {
-        res.render('index', { title: '主页' });
-    });
+/**
+ * 主页信息
+ * @param req
+ * @param res
+ */
+function getHomepage (req, res) {
+    res.render('index', {
+        title : '主页',
+        user : req.session.user,
+        success : req.flash('success').toString(),
+        err : req.flash('error').toString()
+    })
+}
 
-    app.get('/register', function (req, res) {
-        res.render('register', { title: '注册' });
-    });
-    app.post('/register', user.register);
+module.exports = function (app) {
+
+    // 首页信息
+    app.get('/', getHomepage);
+
+    app.get('/register', user.getRegister);
+    app.post('/register', user.postRegister);
 
     app.get('/login', function (req, res) {
         res.render('login', { title: '登录' });
