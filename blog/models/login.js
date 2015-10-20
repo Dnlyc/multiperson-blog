@@ -34,8 +34,8 @@ postLogin = function (req, res) {
 
     mongodb.find('user', {name : req.body.name}).then(function (result) {
         var user = result[0];
-
-        if (typeof user !== 'undefined')
+        console.log(user);
+        if (typeof user === 'undefined')
             return Promise.reject({message : '用户不存在!', direct : '/login'});
         else if (user.password !== password)
             return Promise.reject({message : '密码不正确!', direct : '/login'});

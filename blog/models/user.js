@@ -22,7 +22,9 @@ User.prototype.save = function () {
         id : process.next_user_id++,
         name : this.name,
         password : this.password,
-        email : this.email
+        email : this.email,
+        createDate : new Date(),
+        updateDate : new Date()
     }
 
     return mongodb.store('user', [data]).then(function (res) {

@@ -18,7 +18,8 @@
 var user = require('../models/user'),
     login = require('../models/login'),
     post = require('../models/post'),
-    logout = reuqire('../models/logout');
+    logout = require('../models/logout'),
+    mongodb = require('../models/db');
 
 /**
  * 主页信息
@@ -26,11 +27,23 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
-    res.render('index', {
-        title : '主页',
-        user : req.session.user,
-        success : req.flash('success').toString(),
-        error : req.flash('error').toString()
+
+    mongodb.find('posts', {name : req.session.name}, {time : -1}).then(function (reslut) {
+        res.render('index', {
+            title : '主页',
+            posts: reslut,
+            user : req.session.user,
+            success : req.flash('success').toString(),
+            error : req.flash('error').toString()
+        })
+    }).catch(function (err) {
+        res.render('index', {
+            title: '主页',
+            user: req.session.user,
+            posts: [],
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
     })
 }
 

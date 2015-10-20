@@ -4,6 +4,7 @@
 var mongodb = require('./db'),
     crypto = require('crypto'),
     Promise = require('bluebird'),
+    common = require('../lib/common'),
     getPost,
     postPost;
 
@@ -13,7 +14,7 @@ var mongodb = require('./db'),
  * @param res
  */
 getPost = function (req, res) {
-    req.render('post',{
+    res.render('post',{
         title: '发表',
         user : req.session.user,
         success : req.flash('success').toString(),
@@ -27,6 +28,24 @@ getPost = function (req, res) {
  * @param res
  */
 postPost = function (req, res) {
+
+    var now = common.getTime(),
+        user = req.session.user;
+
+    var post = {
+        name : user.name,
+        title : req.body.title,
+        post : req.body.post,
+        time : now
+    };
+
+    mongodb.store('posts', [post]).then(function (result) {
+        req.flash('success', '发布成功!');
+        res.redirect('/');//发表成功跳转到主页
+    }).catch(function (err) {
+        req.flash('error', err);
+        return res.redirect('/');
+    })
 
 }
 
