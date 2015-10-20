@@ -4,7 +4,7 @@
 var mongodb = require('./db'),
     crypto = require('crypto'),
     Promise = require('bluebird'),
-    getPost;
+    getLogout;
 
 /**
  * 登出请求
@@ -13,6 +13,7 @@ var mongodb = require('./db'),
  */
 getLogout = function (req, res) {
     req.session.user = null;
+    req.session.name = null;
     req.flash('success', '登出成功!');
     res.redirect('/');
 }

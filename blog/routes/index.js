@@ -19,7 +19,8 @@ var user = require('../models/user'),
     login = require('../models/login'),
     post = require('../models/post'),
     logout = require('../models/logout'),
-    mongodb = require('../models/db');
+    mongodb = require('../models/db'),
+    markdown = require('markdown').markdown;;
 
 /**
  * 主页信息
@@ -27,11 +28,14 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
-
-    mongodb.find('posts', {name : req.session.name}, {time : -1}).then(function (reslut) {
+    mongodb.find('posts', {name : req.session.user.name}, {time : -1}).then(function (docs) {
+        // 解析markdown格式
+        docs.forEach(function (doc) {
+            doc.post = markdown.toHTML(doc.post);
+        });
         res.render('index', {
             title : '主页',
-            posts: reslut,
+            posts: docs,
             user : req.session.user,
             success : req.flash('success').toString(),
             error : req.flash('error').toString()
