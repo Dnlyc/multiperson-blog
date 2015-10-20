@@ -16,7 +16,9 @@
 
 
 var user = require('../models/user'),
-    login = require('../models/login');
+    login = require('../models/login'),
+    post = require('../models/post'),
+    logout = reuqire('../models/logout');
 
 /**
  * 主页信息
@@ -28,26 +30,59 @@ function getHomepage (req, res) {
         title : '主页',
         user : req.session.user,
         success : req.flash('success').toString(),
-        err : req.flash('error').toString()
+        error : req.flash('error').toString()
     })
 }
+
+/**
+ * 校验是否登陆
+ * @param req
+ * @param res
+ * @param next
+ */
+function checkLogin (req, res, next) {
+    if (!req.session.user) {
+        req.flash('error', '未登录');
+        req.redirect('/login');
+    }
+    next();
+}
+
+/**
+ * 校验是否已登陆
+ * @param req
+ * @param res
+ * @param next
+ */
+function checkNotLogin (req, res, next) {
+    if (req.session.user) {
+        req.flash('error', '已登录!');
+        req.redirect('back');//返回之前的页面
+    }
+    next();
+}
+
 
 module.exports = function (app) {
 
     // 首页信息
     app.get('/', getHomepage);
 
+    app.get('/register', checkNotLogin);
     app.get('/register', user.getRegister);
+
+    app.post('/register', checkNotLogin);
     app.post('/register', user.postRegister);
 
+    app.get('/login', checkNotLogin);
     app.get('/login', login.getLogin);
+    app.post('/login', checkNotLogin);
     app.post('/login', login.postLogin);
 
-    app.get('/post', function (req, res) {
-        res.render('post', { title: '发表' });
-    });
-    app.post('/post', function (req, res) {
-    });
-    app.get('/logout', function (req, res) {
-    });
+    app.post('/post', checkLogin);
+    app.get('/post', post.getPost);
+    app.post('/post', checkLogin);
+    app.post('/post', post.postPost);
+
+    app.get('/logout', logout.getLogout);
 };

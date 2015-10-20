@@ -7,16 +7,16 @@ var mongodb = require('./db'),
     getPost;
 
 /**
- * 请求登出页面
+ * 鐧诲嚭璇锋眰
  * @param req
  * @param res
  */
-getPost = function (req, res) {
+getLogout = function (req, res) {
     req.session.user = null;
-    req.flash('success', '登出成功!');
-    res.redirect('/');//登出成功后跳转到主页
+    req.flash('success', '鐧诲嚭鎴愬姛!');
+    res.redirect('/');
 }
 
 module.exports = {
-    getPost : getPost
+    getLogout : getLogout
 };

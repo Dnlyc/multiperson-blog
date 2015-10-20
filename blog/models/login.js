@@ -8,26 +8,27 @@ var mongodb = require('./db'),
     postLogin;
 
 /**
- * ÇëÇó×¢²áÒ³Ãæ
+ * è¿”å›æ³¨å†Œé¡µé¢
  * @param req
  * @param res
  */
 getLogin = function (req, res) {
     res.render('login', {
-        title: 'µÇÂ¼',
+        title: 'ç™»é™†',
         user: req.session.user,
         success: req.flash('success').toString(),
-        error: req.flash('error').toString()});
+        error: req.flash('error').toString()
+    });
 };
 
 /**
- * Ìá½»×¢²áÇëÇó
+ * ç™»é™†è¯·æ±‚
  * @param req
  * @param res
  */
 postLogin = function (req, res) {
 
-    // Éú³ÉÃÜÂëµÄmd5Öµ
+    // ç”Ÿæˆå¯†ç çš„md5å€¼Öµ
     var md5 = crypto.createHash('md5'),
         password = md5.update(req.body.password).digest('hex');
 
@@ -35,13 +36,13 @@ postLogin = function (req, res) {
         var user = result[0];
 
         if (typeof user !== 'undefined')
-            return Promise.reject({message : 'ÓÃ»§²»´æÔÚ!', direct : '/login'});
+            return Promise.reject({message : 'ç”¨æˆ·ä¸å­˜åœ¨!', direct : '/login'});
         else if (user.password !== password)
-            return Promise.reject({message : 'ÃÜÂë´íÎó!', direct : '/login'});
+            return Promise.reject({message : 'å¯†ç ä¸æ­£ç¡®!', direct : '/login'});
         else {
             req.session.user = user;
-            req.flash('success', 'µÇÂ½³É¹¦!');
-            res.redirect('/');//µÇÂ½³É¹¦ºóÌø×ªµ½Ö÷Ò³
+            req.flash('success', 'ç™»é™†æˆåŠŸ!');
+            res.redirect('/');
         }
 
     }).catch(function (err) {
