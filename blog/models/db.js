@@ -33,8 +33,8 @@ Mongodb = {
     /**
      * * ### Store docs into database
      * store an array of documents into collection.
-     * @param cn (string) – the collection name we wish to into documents.
-     * @param docs (Array) – the content of documents
+     * @param cn (string) 鈥� the collection name we wish to into documents.
+     * @param docs (Array) 鈥� the content of documents
      * @returns {Promise}
      */
     store : function (cn, docs) {
@@ -51,8 +51,8 @@ Mongodb = {
     },
 
     /**
-     * ### Updates documents.
-     * @param cn (string) – the collection name we wish to update documents.
+     * ### remove documents.
+     * @param cn (string) 鈥� the collection name we wish to update documents.
      * @param selector (object) - the selector for the update operation.
      * @returns {Promise}
      */
@@ -70,7 +70,7 @@ Mongodb = {
 
     /**
      * ### Find documents.
-     * @param cn (string) – the collection name we wish to update documents.
+     * @param cn (string) 鈥� the collection name we wish to update documents.
      * @param selector (object) - the selector for the update operation.
      * @returns {Promise}
      */
@@ -89,7 +89,7 @@ Mongodb = {
 
     /**
      * ### Updates documents.
-     * @param cn (string) – the collection name we wish to update documents.
+     * @param cn (string) 鈥� the collection name we wish to update documents.
      * @param selector (object) - the selector for the update operation.
      * @param docs (object) - the update document.
      */

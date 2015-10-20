@@ -15,7 +15,8 @@
 //});
 
 
-var user = require('../models/user');
+var user = require('../models/user'),
+    login = require('../models/login');
 
 /**
  * 主页信息
@@ -39,11 +40,9 @@ module.exports = function (app) {
     app.get('/register', user.getRegister);
     app.post('/register', user.postRegister);
 
-    app.get('/login', function (req, res) {
-        res.render('login', { title: '登录' });
-    });
-    app.post('/login', function (req, res) {
-    });
+    app.get('/login', login.getLogin);
+    app.post('/login', login.postLogin);
+
     app.get('/post', function (req, res) {
         res.render('post', { title: '发表' });
     });

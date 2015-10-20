@@ -13,7 +13,6 @@ function User (user) {
     this.email = user.email;
 }
 
-
 /**
  * 存储用户信息
  */
@@ -105,7 +104,7 @@ postRegister = function (req, res) {
         res.redirect('/');
 
     }).catch(function (err) {
-        console.log(err);
+
         var direct = err.direct ? err.direct : '/';
         req.flash('error', err.message);
         return res.redirect(direct);
