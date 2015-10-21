@@ -73,15 +73,17 @@ Mongodb = {
      * @param cn (string) - the collection name we wish to update documents.
      * @param selector (object) - the selector for the find operation.
      * @param sort [object] - the sort for the find operation.
+     * @param limit [Number] - the limit for the find operation.
      * @returns {Promise}
      */
-    find : function (cn, selector, sort) {
+    find : function (cn, selector, sort, limit) {
         var collection = database.collection(cn),
             selector = selector || {},
-            sort = sort || {};
+            sort = sort || {},
+            limit = limit || NaN;
 
         return new Promise(function (resolve, reject) {
-            collection.find(selector).sort(sort).toArray(function(err, result) {
+            collection.find(selector).sort(sort).limit(limit).toArray(function(err, result) {
                 if (err) {
                     return reject(err);
                 }

@@ -21,7 +21,7 @@ var user = require('../models/user'),
     logout = require('../models/logout'),
     upload = require('../models/upload'),
     mongodb = require('../models/db'),
-    markdown = require('markdown').markdown;;
+    markdown = require('markdown').markdown;
 
 /**
  * 主页信息
@@ -29,8 +29,7 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
-    console.log(req.session.name);
-    mongodb.find('posts', {name : req.session.name}, {time : -1}).then(function (docs) {
+    mongodb.find('posts', {}, {time : -1}).then(function (docs) {
         // 解析markdown格式
         docs.forEach(function (doc) {
             doc.post = markdown.toHTML(doc.post);
@@ -110,6 +109,10 @@ module.exports = function (app) {
     app.get('/post', post.getPost);
     app.post('/post', checkLogin);
     app.post('/post', post.postPost);
+
+    // 文章
+    app.get('/u/:name', user.getArticle);
+    app.get('/u/:name/:day/:title', user.getArticle);
 
     // 登出页面
     app.get('/logout', checkLogin);
