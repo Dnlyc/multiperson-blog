@@ -11,13 +11,14 @@
 </header>
 
 <nav>
-    <span><a title="主页" herf="/">home</a></span>
+    <span><a title="主页" href="/">home</a></span>
 <% if (user) { %>
-    <span><a title="发表" herf="/post">post</a></span>
-    <span><a title="登出" herf="/logout">logout</a></span>
+    <span><a title="上传" href="/upload">upload</a></span>
+    <span><a title="发表" href="/post">post</a></span>
+    <span><a title="登出" href="/logout">logout</a></span>
 <% } else { %>
-    <span><a title="登录" herf="/login">login</a></span>
-    <span><a title="注册" herf="/register">register</a></span>
+    <span><a title="登录" href="/login">login</a></span>
+    <span><a title="注册" href="/register">register</a></span>
 <% } %>
 </nav>
 

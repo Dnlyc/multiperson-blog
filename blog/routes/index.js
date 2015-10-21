@@ -19,6 +19,7 @@ var user = require('../models/user'),
     login = require('../models/login'),
     post = require('../models/post'),
     logout = require('../models/logout'),
+    upload = require('../models/upload'),
     mongodb = require('../models/db'),
     markdown = require('markdown').markdown;;
 
@@ -28,7 +29,8 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
-    mongodb.find('posts', {name : req.session.user.name}, {time : -1}).then(function (docs) {
+    console.log(req.session.name);
+    mongodb.find('posts', {name : req.session.name}, {time : -1}).then(function (docs) {
         // 解析markdown格式
         docs.forEach(function (doc) {
             doc.post = markdown.toHTML(doc.post);
@@ -85,21 +87,31 @@ module.exports = function (app) {
     // 首页信息
     app.get('/', getHomepage);
 
+    // 注册页面
     app.get('/register', checkNotLogin);
     app.get('/register', user.getRegister);
-
     app.post('/register', checkNotLogin);
     app.post('/register', user.postRegister);
 
+    // 登陆页面
     app.get('/login', checkNotLogin);
     app.get('/login', login.getLogin);
     app.post('/login', checkNotLogin);
     app.post('/login', login.postLogin);
 
+    // 上传页面
+    app.get('/upload', checkLogin);
+    app.get('/upload', upload.getUpload);
+    app.post('/upload', checkLogin);
+    app.post('/upload', upload.postUpload);
+
+    // 发表页面
     app.post('/post', checkLogin);
     app.get('/post', post.getPost);
     app.post('/post', checkLogin);
     app.post('/post', post.postPost);
 
+    // 登出页面
+    app.get('/logout', checkLogin);
     app.get('/logout', logout.getLogout);
 };

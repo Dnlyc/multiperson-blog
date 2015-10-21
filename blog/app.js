@@ -9,15 +9,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer  = require('multer');
 
 
 // 路由配置文件
-var routes = require('./routes/index')/*,
-    login = require('./routes/login'),
-    logout = require('./routes/logout'),
-    post = require('./routes/post'),
-    register = require('./routes/register'),
-    users = require('./routes/users')*/;
+var routes = require('./routes/index');
 
 // import settings module.
 var settings = require('./settings'),
@@ -54,13 +50,13 @@ mongodb.init().then(function () {
     app.use(cookieParser());                                        // 加载解析cookie的中间件。
     app.use(express.static(path.join(__dirname, 'public')));      // 设置public文件夹为存放静态文件的目录。
 
-    // 路由控制器。
-    //app.use('/', routes);
-    //app.use('/login', login);
-    //app.use('/logout', logout);
-    //app.use('/post', post);
-    //app.use('/register', register);
-    //app.use('/users', users);
+    // 配置上传文件路径
+    app.use(multer({
+        dest: './public/images',
+        rename: function (fieldname, filename) {
+            return filename;
+        }
+    }));
 
     app.use(session({
         secret : settings.cookieSecret,
