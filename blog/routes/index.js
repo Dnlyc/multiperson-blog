@@ -20,6 +20,7 @@ var user = require('../models/user'),
     post = require('../models/post'),
     logout = require('../models/logout'),
     upload = require('../models/upload'),
+    comment = require('../models/comments'),
     mongodb = require('../models/db'),
     markdown = require('markdown').markdown;
 
@@ -125,6 +126,8 @@ module.exports = function (app) {
     // 文章
     app.get('/u/:name', user.getArticle);
     app.get('/u/:name/:day/:title', user.getArticle);
+    // 留言
+    app.post('/u/:name/:day/:title', comment.postComment);
 
     // 登出页面
     app.get('/logout', checkLogin);

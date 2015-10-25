@@ -152,6 +152,15 @@ getArticle = function (req, res) {
             result.post = markdown.toHTML(result.post);
         });
 
+        // 为文章页面添加留言，转化为markdown语法
+        if (limit === 1 && typeof results[0].comments !== 'undefined') {
+            results[0].comments.forEach(function (comment) {
+                comment.content = markdown.toHTML(comment.content);
+            });
+        }
+
+        console.log(results);
+
         return res.render(limit === 1 ? 'article' : 'user', {
             title: param.name,
             posts: results ,
