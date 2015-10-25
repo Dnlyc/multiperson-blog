@@ -135,8 +135,8 @@ getArticle = function (req, res) {
         var day = req.params.day,
             title = req.params.title;
 
-        if (typeof param.day !== 'undefined' && typeof param.title !== 'undefined') {
-            param.day = day;
+        if (typeof day !== 'undefined' && typeof title !== 'undefined') {
+            param['time.day'] = day;
             param.title = title;
             limit = 1;
         }

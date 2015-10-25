@@ -98,6 +98,18 @@ module.exports = function (app) {
     app.post('/login', checkNotLogin);
     app.post('/login', login.postLogin);
 
+    // 编辑页面
+    app.get('/edit/:name/:day/:title', checkLogin);
+    app.get('/edit/:name/:day/:title', post.getEditPost);
+
+    // 更新文章
+    app.post('/edit/:name/:day/:title', checkLogin);
+    app.post('/edit/:name/:day/:title', post.updatePost);
+
+    // 删除文章
+    app.get('/remove/:name/:day/:title', checkLogin);
+    app.get('/remove/:name/:day/:title', post.removePost);
+
     // 上传页面
     app.get('/upload', checkLogin);
     app.get('/upload', upload.getUpload);
