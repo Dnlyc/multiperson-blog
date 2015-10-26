@@ -37,6 +37,7 @@ function getHomepage (req, res) {
         });
         res.render('index', {
             title : '主页',
+            href : '',
             posts: docs,
             user : req.session.user,
             success : req.flash('success').toString(),
@@ -45,6 +46,7 @@ function getHomepage (req, res) {
     }).catch(function (err) {
         res.render('index', {
             title: '主页',
+            href : '',
             user: req.session.user,
             posts: [],
             success: req.flash('success').toString(),
@@ -62,7 +64,7 @@ function getHomepage (req, res) {
 function checkLogin (req, res, next) {
     if (!req.session.user) {
         req.flash('error', '未登录');
-        req.redirect('/login');
+        res.redirect('/login');
     }
     next();
 }
@@ -76,7 +78,7 @@ function checkLogin (req, res, next) {
 function checkNotLogin (req, res, next) {
     if (req.session.user) {
         req.flash('error', '已登录!');
-        req.redirect('back');//返回之前的页面
+        res.redirect('back');//返回之前的页面
     }
     next();
 }
