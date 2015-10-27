@@ -10,6 +10,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer  = require('multer');
+var ejs = require('ejs');
 
 
 // 路由配置文件
@@ -38,7 +39,9 @@ mongodb.init().then(function () {
     // step 4 : 设置网站信息
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));            // 设置 views 文件夹为存放视图文件的目录, 即存放模板文件的地方
-    app.set('view engine', 'ejs');                              // 设置视图模板引擎为 ejs。
+    app.engine('.html', ejs.__express);
+    app.set('view engine', 'html');
+    //app.set('view engine', 'ejs');                              // 设置视图模板引擎为 ejs。
 
     // uncomment after placing your favicon in /public
     // 设置/public/favicon.ico为favicon图标。

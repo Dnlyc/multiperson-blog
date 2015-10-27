@@ -1,19 +1,25 @@
-<%- include header %>
+<% include header.html %>
+
+<br />
 
 <form method="post" class="form-horizontal">
     <div class="form-group">
-        <label for="firstname" class="col-sm-2 control-label" for="inputSuccess"    >用户名：</label>
+        <label class="col-sm-2 control-label" >用户名：</label>
         <div class="col-xs-5">
             <input type="text" class="form-control" name="name" placeholder="请输入用户名">
         </div>
     </div>
 
+    <br />
+
     <div class="form-group">
-        <label for="password" class="col-sm-2 control-label">密码：</label>
+        <label class="col-sm-2 control-label">密码：</label>
         <div class="col-xs-5">
             <input type="password" class="form-control" name="password" placeholder="请输入密码">
         </div>
     </div>
+
+    <br />
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-xs-5">
@@ -21,6 +27,8 @@
         </div>
     </div>
 
+    <br />
+
 </form>
 
-<%- include footer %>
+<% include footer.html %>

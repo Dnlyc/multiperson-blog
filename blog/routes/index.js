@@ -30,29 +30,32 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
-    mongodb.find('posts', {}, {time : -1}).then(function (docs) {
-        // 解析markdown格式
-        docs.forEach(function (doc) {
-            doc.post = markdown.toHTML(doc.post);
-        });
-        res.render('index', {
-            title : '主页',
-            href : '',
-            posts: docs,
-            user : req.session.user,
-            success : req.flash('success').toString(),
-            error : req.flash('error').toString()
-        })
-    }).catch(function (err) {
-        res.render('index', {
-            title: '主页',
-            href : '',
-            user: req.session.user,
-            posts: [],
-            success: req.flash('success').toString(),
-            error: req.flash('error').toString()
-        });
-    })
+    res.render('index', {
+        title: '主页'
+    });
+    //mongodb.find('posts', {}, {time : -1}).then(function (docs) {
+    //    // 解析markdown格式
+    //    docs.forEach(function (doc) {
+    //        doc.post = markdown.toHTML(doc.post);
+    //    });
+    //    res.render('index', {
+    //        title : '主页',
+    //        href : '',
+    //        posts: docs,
+    //        user : req.session.user,
+    //        success : req.flash('success').toString(),
+    //        error : req.flash('error').toString()
+    //    })
+    //}).catch(function (err) {
+    //    res.render('index', {
+    //        title: '主页',
+    //        href : '',
+    //        user: req.session.user,
+    //        posts: [],
+    //        success: req.flash('success').toString(),
+    //        error: req.flash('error').toString()
+    //    });
+    //})
 }
 
 /**
@@ -89,49 +92,52 @@ module.exports = function (app) {
     // 首页信息
     app.get('/', getHomepage);
 
-    // 注册页面
-    app.get('/register', checkNotLogin);
-    app.get('/register', user.getRegister);
-    app.post('/register', checkNotLogin);
-    app.post('/register', user.postRegister);
-
-    // 登陆页面
-    app.get('/login', checkNotLogin);
     app.get('/login', login.getLogin);
-    app.post('/login', checkNotLogin);
     app.post('/login', login.postLogin);
 
-    // 编辑页面
-    app.get('/edit/:name/:day/:title', checkLogin);
-    app.get('/edit/:name/:day/:title', post.getEditPost);
-
-    // 更新文章
-    app.post('/edit/:name/:day/:title', checkLogin);
-    app.post('/edit/:name/:day/:title', post.updatePost);
-
-    // 删除文章
-    app.get('/remove/:name/:day/:title', checkLogin);
-    app.get('/remove/:name/:day/:title', post.removePost);
-
-    // 上传页面
-    app.get('/upload', checkLogin);
-    app.get('/upload', upload.getUpload);
-    app.post('/upload', checkLogin);
-    app.post('/upload', upload.postUpload);
-
-    // 发表页面
-    app.post('/post', checkLogin);
-    app.get('/post', post.getPost);
-    app.post('/post', checkLogin);
-    app.post('/post', post.postPost);
-
-    // 文章
-    app.get('/u/:name', user.getArticle);
-    app.get('/u/:name/:day/:title', user.getArticle);
-    // 留言
-    app.post('/u/:name/:day/:title', comment.postComment);
-
-    // 登出页面
-    app.get('/logout', checkLogin);
-    app.get('/logout', logout.getLogout);
+    // 注册页面
+    //app.get('/register', checkNotLogin);
+    //app.get('/register', user.getRegister);
+    //app.post('/register', checkNotLogin);
+    //app.post('/register', user.postRegister);
+    //
+    //// 登陆页面
+    //app.get('/login', checkNotLogin);
+    //app.get('/login', login.getLogin);
+    //app.post('/login', checkNotLogin);
+    //app.post('/login', login.postLogin);
+    //
+    //// 编辑页面
+    //app.get('/edit/:name/:day/:title', checkLogin);
+    //app.get('/edit/:name/:day/:title', post.getEditPost);
+    //
+    //// 更新文章
+    //app.post('/edit/:name/:day/:title', checkLogin);
+    //app.post('/edit/:name/:day/:title', post.updatePost);
+    //
+    //// 删除文章
+    //app.get('/remove/:name/:day/:title', checkLogin);
+    //app.get('/remove/:name/:day/:title', post.removePost);
+    //
+    //// 上传页面
+    //app.get('/upload', checkLogin);
+    //app.get('/upload', upload.getUpload);
+    //app.post('/upload', checkLogin);
+    //app.post('/upload', upload.postUpload);
+    //
+    //// 发表页面
+    //app.post('/post', checkLogin);
+    //app.get('/post', post.getPost);
+    //app.post('/post', checkLogin);
+    //app.post('/post', post.postPost);
+    //
+    //// 文章
+    //app.get('/u/:name', user.getArticle);
+    //app.get('/u/:name/:day/:title', user.getArticle);
+    //// 留言
+    //app.post('/u/:name/:day/:title', comment.postComment);
+    //
+    //// 登出页面
+    //app.get('/logout', checkLogin);
+    //app.get('/logout', logout.getLogout);
 };
