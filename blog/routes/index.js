@@ -17,11 +17,16 @@
 
 var user = require('../models/user'),
     login = require('../models/login'),
+    register = require('../models/register'),
     post = require('../models/post'),
     logout = require('../models/logout'),
     upload = require('../models/upload'),
     comment = require('../models/comments'),
+    space = require('../models/space'),
+    blogs = require('../models/blogs'),
     mongodb = require('../models/db'),
+    albums = require('../models/albums'),
+    settings = require('../models/settings'),
     markdown = require('markdown').markdown;
 
 /**
@@ -30,32 +35,31 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
-    res.render('index', {
-        title: '主页'
-    });
-    //mongodb.find('posts', {}, {time : -1}).then(function (docs) {
-    //    // 解析markdown格式
-    //    docs.forEach(function (doc) {
-    //        doc.post = markdown.toHTML(doc.post);
-    //    });
-    //    res.render('index', {
-    //        title : '主页',
-    //        href : '',
-    //        posts: docs,
-    //        user : req.session.user,
-    //        success : req.flash('success').toString(),
-    //        error : req.flash('error').toString()
-    //    })
-    //}).catch(function (err) {
-    //    res.render('index', {
-    //        title: '主页',
-    //        href : '',
-    //        user: req.session.user,
-    //        posts: [],
-    //        success: req.flash('success').toString(),
-    //        error: req.flash('error').toString()
-    //    });
-    //})
+    var error = {login : req.flash('error')[0]};
+    mongodb.find('posts', {}, {time : -1}).then(function (docs) {
+        // 解析markdown格式
+        docs.forEach(function (doc) {
+            doc.post = markdown.toHTML(doc.post);
+        });
+        res.render('proscenium/index', {
+            title : '主页',
+            href : '',
+            posts: docs,
+            user : req.session.user,
+            success : req.flash('success').toString(),
+            error : error
+        })
+    }).catch(function (err) {
+        error.post = req.flash('error').toString();
+        res.render('proscenium/index', {
+            title: '主页',
+            href : '',
+            user: req.session.user,
+            posts: [],
+            success: req.flash('success').toString(),
+            error : error
+        });
+    })
 }
 
 /**
@@ -67,7 +71,7 @@ function getHomepage (req, res) {
 function checkLogin (req, res, next) {
     if (!req.session.user) {
         req.flash('error', '未登录');
-        res.redirect('/login');
+        res.redirect('/');
     }
     next();
 }
@@ -91,21 +95,21 @@ module.exports = function (app) {
 
     // 首页信息
     app.get('/', getHomepage);
-
-    app.get('/login', login.getLogin);
-    app.post('/login', login.postLogin);
+    app.post('/', checkNotLogin);
+    app.post('/', login.postLogin);
 
     // 注册页面
-    //app.get('/register', checkNotLogin);
-    //app.get('/register', user.getRegister);
-    //app.post('/register', checkNotLogin);
-    //app.post('/register', user.postRegister);
-    //
-    //// 登陆页面
+    app.get('/register', register.getRegister);
+    app.post('/register', register.postRegister);
+
+    // 登出页面
+    app.get('/logout', checkLogin);
+    app.get('/logout', logout);
+
+    // 登陆页面
     //app.get('/login', checkNotLogin);
     //app.get('/login', login.getLogin);
-    //app.post('/login', checkNotLogin);
-    //app.post('/login', login.postLogin);
+
     //
     //// 编辑页面
     //app.get('/edit/:name/:day/:title', checkLogin);
@@ -124,20 +128,33 @@ module.exports = function (app) {
     //app.get('/upload', upload.getUpload);
     //app.post('/upload', checkLogin);
     //app.post('/upload', upload.postUpload);
-    //
-    //// 发表页面
-    //app.post('/post', checkLogin);
-    //app.get('/post', post.getPost);
-    //app.post('/post', checkLogin);
-    //app.post('/post', post.postPost);
-    //
-    //// 文章
+
+    // 博客文章页面
+    app.get('/space/:name/blogs', blogs.getArticles);
+    app.get('/space/:name/blogs/:page', blogs.getArticles);
+    app.get('/space/blog/:name/:day/:title', blogs.getArticle);
+    app.post('/space/blog/:name/:day/:title', blogs.postComment);
+    app.post('/space/reply', blogs.postReply);
+
+    // 相册页面
+    app.get('/space/:name/albums', albums.getAlbums);
+    app.post('/space/:name/albums', albums.createAlbum);
+    app.get('/space/:name/albums/:id', albums.getNewAlbums);
+    app.post('/space/:name/albums/:id', albums.changeAlbums);
+
+    // 全部博客文章页面
+    app.get('/space/:name/posts', post.getPost);
+    app.post('/space/:name/posts', post.postPost);
+
+    // 个人设置
+    app.get('/space/:name/settings', settings.getSettings);
+
+    // 文章
     //app.get('/u/:name', user.getArticle);
     //app.get('/u/:name/:day/:title', user.getArticle);
-    //// 留言
+    // 留言
     //app.post('/u/:name/:day/:title', comment.postComment);
-    //
-    //// 登出页面
-    //app.get('/logout', checkLogin);
-    //app.get('/logout', logout.getLogout);
+
+    // 个人博客首页
+    app.get('/space/:name', space.getSpace);
 };

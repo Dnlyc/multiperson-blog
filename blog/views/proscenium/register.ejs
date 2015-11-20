@@ -1,0 +1,45 @@
+<%- include header %>
+<section class="container">
+    <div class="login">
+        <h1>欢迎注册</h1>
+        <form method="post">
+            <% if(error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户名：</label>
+                <div class="col-xs-5">
+                    <input type="text" name="name" class="input-xlarge" placeholder="请输入用户名" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">密码：</label>
+                <div class="col-xs-5">
+                    <input type="password" name="password" class="form-control" placeholder="请输入密码" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password_repeat" class="col-sm-2 control-label">确认密码：</label>
+                <div class="col-xs-10">
+                    <input type="password" name="password_repeat" class="form-control" placeholder="请输入确认密码" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">邮箱：</label>
+                <div class="col-xs-5">
+                    <input type="email" name="email" class="form-control input-xlarge" placeholder="请输入邮箱" required>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-xs-5">
+                    <input type="submit" class="btn btn-info btn-block" value="注&nbsp;&nbsp;&nbsp;&nbsp;册"/>
+                </div>
+            </div>
+            <br />
+        </form>
+    </div>
+</section>
+<%- include footer %>

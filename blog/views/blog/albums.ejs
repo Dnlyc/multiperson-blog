@@ -1,0 +1,82 @@
+<%- include header %>
+<br/><br/><br/>
+<div class="gallery">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="space/<%= blogger %>">首页</a></li>
+            <li>个人相册</li>
+        </ol>
+        <br/><br/><br/>
+
+        <div class="gallry-info">
+            <% albums.forEach(function (album) { %>
+                <div class="col-md-3 gallery-grids">
+                    <a href="/space/<%= album.name %>/albums/<%= album.id %>" class="b-link-stripe b-animate-go  swipebox" title="">
+                        <img src="/images<% if (!!!album.photos || album.photos.length === 0) { %>/default_albums_bg.jpg<% } else { %><%= album.photos[0] %><% } %>" height="160px" width="260px" alt="">
+                        <div class="b-wrapper">
+                                <span class="b-animate b-from-left b-delay03 ">
+                                    <img class="img-responsive zoom-img img-circle" src="/images/e.png" alt=""/>
+                                </span>
+                        </div>
+
+                        <div align="center" style="padding-top:1em">
+                            <h4><%= album.title %></h4>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
+
+            <% if(blogger === user.name) { %>
+            <div class="col-md-3 gallery-grids" align="center">
+                <a href="#" class="b-link-stripe b-animate-go  swipebox" title="" onclick="createAlbums()">
+                    <img src="/images/albums_add.png" alt="">
+                    <div class="b-wrapper">
+                        <span class="b-animate b-from-left  b-delay03 "/>
+                    </div>
+                </a>
+            </div>
+            <% } %>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        创建相册
+                    </h4>
+                </div>
+
+                <form method="post">
+                    <div class="modal-body">
+                        <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="请输入回复内容..." required>-->
+                        <input type="text" name="title" class="form-control"  placeholder="相册标题..." required></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <input type="submit" class="btn btn-primary" value="创建"/>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<link rel="stylesheet" href="css/swipebox.css">
+<script src="js/jquery.swipebox.min.js"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $(".swipebox").swipebox();
+    });
+</script>
+<%- include footer %>

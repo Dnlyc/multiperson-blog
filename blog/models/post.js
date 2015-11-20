@@ -17,8 +17,10 @@ var mongodb = require('./db'),
  * @param res
  */
 getPost = function (req, res) {
-    res.render('post',{
+    res.render('blog/post',{
+        blogger: req.params.name,
         title: '发表',
+        href: 'posts',
         user : req.session.user,
         success : req.flash('success').toString(),
         error : req.flash('error').toString()
@@ -44,10 +46,10 @@ postPost = function (req, res) {
 
     mongodb.store('posts', [post]).then(function (result) {
         req.flash('success', '发布成功!');
-        res.redirect('/');//发表成功跳转到主页
+        res.redirect('/space/blog/' + user.name + '/' + post.day + '/' + now.title); //发表成功跳转到主页
     }).catch(function (err) {
         req.flash('error', err);
-        return res.redirect('/');
+        return res.redirect('back');
     })
 
 }

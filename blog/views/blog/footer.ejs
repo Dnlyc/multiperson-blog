@@ -1,0 +1,31 @@
+<!--smooth-scrolling-of-move-up-->
+<script type="text/javascript">
+    $(document).ready(function() {
+        /*
+         var defaults = {
+         containerID: 'toTop', // fading element id
+         containerHoverID: 'toTopHover', // fading element hover id
+         scrollSpeed: 1200,
+         easingType: 'linear'
+         };
+         */
+
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+<% if (href!='post') { %><a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a><% } %>
+<!--//smooth-scrolling-of-move-up-->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+<script src="/javascripts/blog.js"></script>
+<!-- //js -->
+<!-- start-smoth-scrolling-->
+<script type="text/javascript" src="/javascripts/move-top.js"></script>
+<script type="text/javascript" src="/javascripts/easing.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<%- include header %>
+<!--//header-->
+<!--blog-->
+<br /><br />
+<div class="blog">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="blog/<%=user.name%>">博主首页</a></li>
+            <li>博主博客</li>
+        </ol>
+        <div class="col-md-8 blog-left" >
+                <% posts.forEach(function (post, index) { %>
+                     <div class="blog-info">
+                        <h4><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
+                        <p>发布日期 &nbsp;&nbsp; <%= post.time.day %> &nbsp;&nbsp; Comments (10)</p>
+                        <div class="blog-info-text">
+                            <p class="snglp"><%= post.post.html %></p>
+                            <a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" class="btn btn-primary hvr-rectangle-in">阅读全文</a>
+                        </div>
+                     </div>
+                <% } ) %>
+        </div>
+        <br /><br /><br />
+        <%- include rightbart %>
+        <div class="clearfix"> </div>
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a href="/space/<%= blogger %>/blogs/1" aria-label="<<">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <% if (page != 1) { %>
+                <li>
+                    <a href="/space/<%= blogger %>/blogs/<%= (page - 1) %>" aria-label="<">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <% } %>
+
+                <% for(var i = 0; i < total; i++)  { %>
+                <li><a href="/space/<%= blogger %>/blogs/<%= i+1 %>" class="active"><%= i + 1 %></a></li>
+                <% } %>
+                <% if (page != total) { %>
+                <li>
+                    <a href="/space/<%= blogger %>/blogs/<%= (page + 1) %>" aria-label=">">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <% } %>
+                <li>
+                    <a href="/space/<%= blogger %>/blogs/<%= total %>" aria-label=">>">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!--//blog-->
+<%- include footer %>

@@ -39,7 +39,6 @@ Mongodb = {
      */
     store : function (cn, docs) {
         var collection = database.collection(cn);
-
         return new Promise(function (resolve, reject) {
             collection.insertMany(docs, function(err, result) {
                 if (err) {
@@ -76,14 +75,15 @@ Mongodb = {
      * @param limit [Number] - the limit for the find operation.
      * @returns {Promise}
      */
-    find : function (cn, selector, sort, limit) {
+    find : function (cn, selector, sort, limit, options) {
         var collection = database.collection(cn),
             selector = selector || {},
+            options = options || {},
             sort = sort || {},
             limit = limit || NaN;
 
         return new Promise(function (resolve, reject) {
-            collection.find(selector).sort(sort).limit(limit).toArray(function(err, result) {
+            collection.find(selector, options).sort(sort).limit(limit).toArray(function(err, result) {
                 if (err) {
                     return reject(err);
                 }
@@ -107,6 +107,24 @@ Mongodb = {
                     return reject(err);
                 }
                 return resolve(result);
+            });
+        });
+    },
+
+    /**
+     * count collections
+     * @param cn
+     * @param selector
+     * @returns {Promise}
+     */
+    count : function (cn, selector) {
+        var collection = database.collection(cn);
+        return new Promise(function (resolve, reject) {
+            collection.count(selector, function(err, total) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(total);
             });
         });
     },

@@ -1,6 +1,7 @@
 /**
  * common function
  */
+var mongodb = require('../models/db')
 
 function getTime () {
     var now = new Date(),
@@ -20,6 +21,35 @@ function getTime () {
     return time;
 }
 
+/**
+ * get recent comments
+ * @param name
+ */
+function getRecentComments(name) {
+    var res = [];
+    return new Promise(function (resolve, reject) {
+        mongodb.find('comments', {c_name : name}, {day : -1}, 5).then(function (comments) {
+            if (typeof comments !== 'undefined') {
+                res = res.concat(comments);
+            }
+            return mongodb.find('replys', {r_name : name}, {day : -1}, 5)
+        }).then(function (replys) {
+            if (typeof replys !== 'undefined') {
+                res = res.concat(replys);
+            }
+            var r = res.sort(function (lp, rp) {
+                return rp.time.data - lp.time.data;
+            })
+            r = r.slice(0, r.length > 5 ? 4 : r.length);
+            return resolve(r);
+        }).catch(function (err) {
+            console.log(err.message);
+            return reject(err);
+        })
+    })
+}
+
 module.exports = {
-    getTime : getTime
+    getTime : getTime,
+    getRecentComments : getRecentComments
 };

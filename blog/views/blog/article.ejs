@@ -1,0 +1,146 @@
+<%- include header %>
+<br/><br/>
+<!--single-page-->
+<div class="single-page">
+    <div class="container">
+        <div class="work-title sngl-title">
+            <ol class="breadcrumb">
+                <li><a href="/space/<%= post.name %>">首页</a></li>
+                <li class="active">文章</li>
+            </ol>
+        </div>
+        <div class="col-md-8 single-page-left">
+            <div class="single-page-info">
+                <h1><%= post.title %></h1>
+                <br/>
+                <%- post.post %>
+                <div class="comment-icons">
+                    <ul>
+                        <li><span></span><a href="#">Lorem ipsum dolor sit consectetur</a></li>
+                        <li><span class="clndr"></span><%= post.time.day %></li>
+                        <li><span class="admin"></span> <a href="#"><%= post.name %></a></li>
+                        <li><span class="cmnts"></span> <a href="#">
+                                <% if(comments) { %>
+                                <%= comments.length %>
+                                <% } else { %>
+                                0
+                                <% } %>
+                                comments</a></li>
+                        <li><a href="#" class="like">15</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="admin-text">
+                <h5>作者 <%= post.name %></h5>
+
+                <div class="admin-text-left">
+                    <a href="/space/<%= post.name %>"><img src="<%= post.avatar %>"/></a>
+                </div>
+                <div class="admin-text-right">
+                    <p><%= post.signature %></p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="response">
+                <h4>回复</h4>
+                <% if (comments) { %>
+                <% comments.forEach(function (comment) { %>
+                <div class="media response-info">
+                    <div class="media-left response-text-left">
+                        <a href="/space/<%= comment.c_name %>">
+                            <img class="media-object" src="<%= comment.c_avatar %>" alt=""/>
+                        </a>
+                        <h5><a href="/space/<%= comment.c_name %>"><%= comment.c_name %></a></h5>
+                    </div>
+                    <div class="media-body response-text-right">
+                        <p><%= comment.content %></p>
+                        <ul>
+                            <li><%= comment.time.day %></li>
+                            <% if(comment.replys == '' ) { %>
+                            <li><a onclick="submitReply(<%= comment.id %>)">Reply</a></li>
+                            <% } %>
+                            <!-- 模态框（Modal） -->
+                        </ul>
+                        <% if (comment.replys) { %>
+                        <% comment.replys.forEach(function (reply, index) { %>
+                        <div class="media response-info">
+                            <div class="media-left response-text-left">
+                                <a href="/space/<%= reply.r_name %>">
+                                    <img class="media-object" src="<%= reply.r_avatar %>" alt=""/>
+                                </a>
+                                <h5><a href="/space/<%= reply.r_name %>"><%= reply.r_name %></a></h5>
+                            </div>
+                            <div class="media-body response-text-right">
+                                <p><%= reply.content %></p>
+                                <ul>
+                                    <li><%= reply.time.day %></li>
+                                    <% if(index === comment.replys.length - 1) { %>
+                                    <li><a onclick="submitReply(<%= comment.id %>)">Reply</a></li>
+                                    <% } %>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
+
+            <div class="coment-form">
+                <h4>留言</h4>
+                <% if (user) { %>
+                <form method="post">
+                    <textarea type="text" name="content" onfocus="this.value = '';"
+                              onblur="if (this.value == '') {this.value = '输入留言.';}" required="">输入留言...</textarea>
+                    <input type="submit" value="提交">
+                </form>
+                <% } else { %>
+                <textarea type="text" readOnly=true>请先登录...</textarea>
+                <a href="/login"><input value="登陆"></a>
+                <% } %>
+            </div>
+        </div>
+
+        <%- include rightbart %>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    回复
+                </h4>
+            </div>
+
+            <form method="post" action="/space/reply">
+                <div class="modal-body">
+                    <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="请输入回复内容..." required>-->
+                    <textarea name="content" class="form-control" rows="5" placeholder="请输入回复内容..."></textarea>
+                </div>
+                <input style="display:none" id="comments_id" name="id" type="text" value="">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <input type="submit" class="btn btn-primary" value="回复"/>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<!--//single-page-->
+<%- include footer %>

@@ -1,0 +1,28 @@
+<div class="col-md-4 single-page-right">
+    <div class="category">
+        <h4>标签</h4>
+
+        <div class="list-group">
+            <a href="singlepage.html" class="list-group-item">动漫</a>
+            <a href="singlepage.html" class="list-group-item">漫画</a>
+            <a href="singlepage.html" class="list-group-item">海贼王</a>
+        </div>
+    </div>
+    <br />
+    <div class="comments">
+        <h4>最近回复</h4>
+        <% comments.forEach(function (comment) { %>
+            <div class="comments-info">
+                <div class="cmnt-icon-left">
+                    <img height="80" width="80" src="<% if(comment.c_avatar) { %><%= comment.c_avatar %><% } else { %><%= comment.r_avatar %><% } %>" alt=""/>
+                    <h5 style="text-align:center;padding-top:1em"><a  href="/space/<%= blogger %>"><%= blogger %></a></h5>
+                </div>
+                <div class="cmnt-icon-right">
+                    <p>日期 : <%= comment.time.day %> </p>
+                </div>
+                <p class="cmmnt">回复 : <%= comment.content %></p>
+            </div>
+        <div class="clearfix"></div>
+        <% }) %>
+    </div>
+</div>
