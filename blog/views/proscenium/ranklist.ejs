@@ -1,0 +1,142 @@
+<%- include header %>
+<div class="content">
+    <div class="content_resize">
+        <div class="container" align="center">
+            <h1>排行榜</h1>
+            <br />
+            <div class="row">
+                <div class="col-md-4" align="center">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="text-muted bootstrap-admin-box-title">博文排行</div>
+                        </div>
+                        <div class="bootstrap-admin-panel-content">
+                            <table class="table">
+                                <colgroup>
+                                    <col style="width:100px">
+                                    <col style="width:700px">
+                                    <col style="width:200px">
+                                </colgroup>
+                                <tr>
+                                    <th style="text-align: left">排名</th>
+                                    <th style="text-align: center">标题</th>
+                                    <th style="text-align: right">阅读数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% for(var i = 0; i < 10; i++) { %>
+                                <tr>
+                                    <td style="text-align: center"><%= i %></td>
+                                    <td style="text-align: center">那一年的春天</td>
+                                    <td style="text-align: right">13343333</td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" align="center">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="text-muted bootstrap-admin-box-title">博文排行</div>
+                        </div>
+                        <div class="bootstrap-admin-panel-content">
+                            <table class="table">
+                                <colgroup>
+                                    <col style="width:200px">
+                                    <col style="width:700px">
+                                    <col style="width:300px">
+                                    <col style="width:100px">
+                                </colgroup>
+                                <tr>
+                                    <th style="text-align: left">排名</th>
+                                    <th style="text-align: center">博主</th>
+                                    <th style="text-align: center">文章数量</th>
+                                    <th style="text-align: right">浏览量</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% for(var i = 0; i < 10; i++) { %>
+                                <tr>
+                                    <td style="text-align: center"><%= i %></td>
+                                    <td style="text-align: center">那一天未闻花名</td>
+                                    <td style="text-align: center">12</td>
+                                    <td style="text-align: right">13343333</td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" align="center">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="text-muted bootstrap-admin-box-title">评论排行</div>
+                        </div>
+                        <div class="bootstrap-admin-panel-content">
+                            <table class="table">
+                                <colgroup>
+                                    <col style="width:100px">
+                                    <col style="width:700px">
+                                    <col style="width:200px">
+                                </colgroup>
+                                <tr>
+                                    <th style="text-align: center">排名</th>
+                                    <th style="text-align: center">标题</th>
+                                    <th style="text-align: right">评论数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% for(var i = 0; i < 10; i++) { %>
+                                <tr>
+                                    <td style="text-align: center"><%= i %></td>
+                                    <td style="text-align: center">那一年的春天</td>
+                                    <td style="text-align: right">13343333</td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" align="center">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="text-muted bootstrap-admin-box-title">相册排行</div>
+                        </div>
+                        <div class="bootstrap-admin-panel-content">
+                            <table class="table">
+                                <colgroup>
+                                    <col style="width:100px">
+                                    <col style="width:700px">
+                                    <col style="width:200px">
+                                </colgroup>
+                                <tr>
+                                    <th style="text-align: left">排名</th>
+                                    <th style="text-align: center">标题</th>
+                                    <th style="text-align: right">浏览量</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% for(var i = 0; i < 10; i++) { %>
+                                <tr>
+                                    <td style="text-align: center"><%= i %></td>
+                                    <td style="text-align: center">那一年的春天</td>
+                                    <td style="text-align: right">13343333</td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include footer %>

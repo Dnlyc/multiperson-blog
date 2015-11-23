@@ -109,3 +109,7 @@ function closeModal() {
         document.getElementById('progress-text').innerText = '文件加载进度已完成0%';
     }, 500)
 }
+
+function preview() {
+    window.open("/");
+}
