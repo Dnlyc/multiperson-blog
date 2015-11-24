@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-xs-8 col-sm-offset-2 form-box">
 
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form role="form" action="" method="post" class="registration-form" enctype="multipart/form-data">
                             <div class="form-top">
                                 <div style="padding-top: 1em;" align="center">
                                     <img width="200px" height="200px" style="border-radius: 500px"  src="/images/2.jpg" class="img-thumbnail "/>
@@ -20,7 +20,7 @@
                                 <div class="form-group" align="center">
                                     <label class="col-sm-2 control-label">姓名：</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" class="form-control" readonly>
+                                        <input type="text" name="name" class="form-control" value="99" readonly>
                                     </div>
                                 </div>
                                 <br />
@@ -29,29 +29,21 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <select class="form-control" name="year">
-                                                <option>-----</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <% for (var i = year; i >= 1900; i--) { %>
+                                                    <option><%= i %></option>
+                                                <% } %>
                                             </select>
                                             <span class="input-group-addon">年</span>
                                             <select class="form-control" name="month">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option selected="selected">3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <% for (var i = 1; i <= 12; i++) { %>
+                                                    <option><%= i %></option>
+                                                <% } %>
                                             </select>
                                             <span class="input-group-addon">月</span>
                                             <select class="form-control" name="day">
-                                                <option>-----</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <% for (var i = 1; i <= 31; i++) { %>
+                                                    <option><%= i %></option>
+                                                <% } %>
                                             </select>
                                             <span class="input-group-addon">日</span>
                                         </div>
@@ -62,7 +54,7 @@
                                     <label class="col-sm-2 control-label">身高：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
-                                            <input type="text" class="form-control"  name="height">
+                                            <input type="text" class="form-control" name="height"  placeholder="保密">
                                             <span class="input-group-addon">cm</span>
                                         </div>
                                     </div>
@@ -72,7 +64,7 @@
                                     <label class="col-sm-2 control-label" name="weight">体重：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control"  placeholder="保密">
                                             <span class="input-group-addon">kg</span>
                                         </div>
                                     </div>

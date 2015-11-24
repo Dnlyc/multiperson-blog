@@ -113,10 +113,10 @@ function changeAlbums (req, res) {
 }
 
 function getPAlbums (req, res) {
+    console.log({name:'9'});
     res.render('proscenium/albums', {
         href : 'albums',
-        user : req.session.user,
-        success : req.flash('success').toString()
+        user : {name:'9'}
     })
 }
 
