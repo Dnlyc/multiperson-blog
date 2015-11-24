@@ -14,6 +14,12 @@ function getSettings (req, res) {
     })
 }
 
+function postSettings (req, res) {
+    console.log(req.body);
+    console.log(req.files);
+}
+
 module.exports = {
-    getSettings : getSettings
+    getSettings : getSettings,
+    postSettings : postSettings
 }

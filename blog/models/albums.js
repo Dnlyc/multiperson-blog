@@ -112,9 +112,18 @@ function changeAlbums (req, res) {
     }
 }
 
+function getPAlbums (req, res) {
+    res.render('proscenium/albums', {
+        href : 'albums',
+        user : req.session.user,
+        success : req.flash('success').toString()
+    })
+}
+
 module.exports = {
     getAlbums : getAlbums,
     getNewAlbums : getNewAlbums,
     createAlbum : createAlbum,
-    changeAlbums : changeAlbums
+    changeAlbums : changeAlbums,
+    getPAlbums : getPAlbums
 };

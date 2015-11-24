@@ -21,6 +21,7 @@ var user = require('../models/user'),
     post = require('../models/post'),
     logout = require('../models/logout'),
     upload = require('../models/upload'),
+    ranklist = require('../models/ranklist'),
     comment = require('../models/comments'),
     space = require('../models/space'),
     blogs = require('../models/blogs'),
@@ -106,6 +107,13 @@ module.exports = function (app) {
     app.get('/logout', checkLogin);
     app.get('/logout', logout);
 
+    // 排行榜页面
+    app.get('/ranklist', ranklist.getRankList)
+
+
+    // 精彩相册页面
+    app.get('/albums', albums.getPAlbums)
+
     // 登陆页面
     //app.get('/login', checkNotLogin);
     //app.get('/login', login.getLogin);
@@ -148,7 +156,7 @@ module.exports = function (app) {
 
     // 个人设置
     app.get('/space/:name/settings', settings.getSettings);
-
+    app.post('/space/:name/settings', settings.postSettings);
     // 文章
     //app.get('/u/:name', user.getArticle);
     //app.get('/u/:name/:day/:title', user.getArticle);

@@ -4,8 +4,10 @@ Design by http://www.templateaccess.com
 Released for free under a Creative Commons Attribution 3.0 License
 */
 
+/* e7e9eb */
+
 body { margin:0; padding:0; width:100%; color:#9a9a9a; font:normal 12px/1.8em Arial, Helvetica, sans-serif;}
-html, .main { padding:0; margin:0; background:#e7e9eb url(../images/main_bg.gif) top repeat-x;}
+html, .main { padding:0; margin:0; background:#fff url(../images/main_bg.gif) top repeat-x;}
 .clr { clear:both; padding:0; margin:0; width:100%; font-size:0px; line-height:0px;}
 .logo { padding:20px 0 20px 20px; margin:0 auto; width:950px;}
 .logo img { float:left; margin:0 10px 0 0; }
@@ -35,8 +37,8 @@ a.rm, a.com { margin-left:8px; padding:9px 12px; background:url(../images/a_bg.g
 /* search */
 .search { float:right; margin:0; padding:0; width:300px;}
 .search form { padding:0; margin:0; }
-.search span { display:block; float:left; background:#fff; border:1px solid #dcdcdd; width:200px; padding:0 10px; height:29px; margin:0;}
-.search form .keywords { width:250px; line-height:13px; height:13px; float:left; background:none; border:0; padding:8px 0px; margin:0; font:normal 11px Arial, Helvetica, sans-serif; color:#767676; }
+.search span { display:block; float:left; background:#fff; border:1px solid #fff; width:200px; padding:0 10px; height:29px; margin:0;}
+.search form .keywords { width:250px; line-height:13px; height:13px; float:left; background:none; border:0; padding:8px 0px; margin:0; font:normal 11px Arial, Helvetica, sans-serif; color:#fff }
 .search form .button { float:left; margin:0; padding:0; border:0; position:relative; }
 /* content */
 .content { padding:10px 0 0 0;}
