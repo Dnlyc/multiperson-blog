@@ -54,7 +54,15 @@ mongodb.init().then(function () {
     app.use(multer({
         dest: './public/images',
         rename: function (fieldname, filename) {
-            return '/' + process.name + '/' + process.albums + '/' + (new Date()).getTime();
+            var name = '/' + process.name + '/';
+            if (process.albums !== "") {
+                name += process.albums + '/' + (new Date()).getTime();
+            }
+            else {
+                name += (new Date()).getTime();
+            }
+            console.log(name);
+            return name;
         }
     }));
 

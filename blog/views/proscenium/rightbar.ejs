@@ -1,20 +1,27 @@
 <div class="sidebar">
-    <div class="gadget">
+    <div class="gadget" align="center">
         <h2><% if(!user) { %>欢迎登陆<% } else { %>欢迎来临幻想乡<% } %></h2>
         <div class="clr"></div>
         <br />
         <form method="post" class="form-horizontal">
+            <% if(user) { %>
             <div class="form-group">
-                <div class="col-xs-2">
-                    <% if(user) { %><p id="welcome" style="color:#808080;font-size:16px;">欢迎回来<a href="/space/<%= user.name %>"><%= user.name %></a></p>
-                    <% } else { %><input id="name" type="text" class="form-control" name="name" placeholder="请输入用户名" required><% } %>
+                <div class="col-xs-12">
+                    <a href="/space/<%= user.name %>"><img width="100px" height="100px" style="border-radius: 500px"  src="/images/2.jpg" class="img-thumbnail "/></a>
                 </div>
             </div>
-            <br />
+            <% } %>
+
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <% if(user) { %><p id="welcome" style="color:#808080;font-size:16px;">欢迎回来<a href="/space/<%= user.name %>"><%= user.name %></a></p>
+                    <% } else { %><input id="name" type="text" class="form-control" name="name" placeholder="请输入用户名" required> <% } %>
+                </div>
+            </div>
             <% if(error.login=='用户不存在!') { %><div class="alert alert-danger"><%= error.login %></div><% } %>
             <% if(!user) { %>
             <div class="form-group">
-                <div class="col-xs-2">
+                <div class="col-xs-12">
                     <input id="password" type="password" class="form-control" name="password" placeholder="请输入密码" required>
                 </div>
             </div>
@@ -22,27 +29,24 @@
             <% if(error.login=='密码不正确!') { %><div class="alert alert-danger"><%= error.login %></div><% } %>
 
             <div class="form-group">
-                <div class="col-sm-offset-2 col-xs-5">
+                <div class="col-xs-5">
                     <input type="submit" class="btn btn-info btn-block" value="登&nbsp;&nbsp;&nbsp;&nbsp;录"/>
                 </div>
+                <div class="col-xs-offset-1 col-xs-5">
+                    <a href="/register"><button class="btn btn-info btn-block">注&nbsp;&nbsp;&nbsp;&nbsp;册</button></a>
+                </div>
             </div>
-            <br />
-
             <% } %>
+
         </form>
         <% if (user) { %>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-xs-5">
+            <div class="col-xs-12">
                 <a href="/logout"><button class="btn btn-info btn-block">登&nbsp;&nbsp;&nbsp;&nbsp;出</button></a>
             </div>
         </div>
-        <% } else { %>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-xs-5">
-                <a href="/register"><button class="btn btn-info btn-block"/>注&nbsp;&nbsp;&nbsp;&nbsp;册</button></a>
-            </div>
-        </div>
-        <% } %>
+        <br />
+        <% }  %>
     </div>
     <div class="gadget">
         <h2><span>Sponsors</span></h2>

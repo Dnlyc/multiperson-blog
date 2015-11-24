@@ -113,3 +113,23 @@ function closeModal() {
 function preview() {
     window.open("/");
 }
+
+function chooseAvater() {
+    document.getElementById('avater').click();
+}
+
+function changAvater(files) {
+    if (files.files && files.files.length) {
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+            alert('finish');
+            document.getElementById('i-avater').src = evt.target.result;
+        }
+        reader.readAsDataURL(files.files[0]);
+    }
+}
+
+function changeValue(input) {
+    input.value = input.value;
+    alert(input.value);
+}

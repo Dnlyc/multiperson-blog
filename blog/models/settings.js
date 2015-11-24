@@ -6,36 +6,63 @@ var mongodb = require('./db'),
     common = require('../lib/common');
 
 function getSettings (req, res) {
+    process.name = req.params.name;
+    process.albums = "";
     var year = parseInt(common.getTime().year);
-    res.render('blog/settings', {
-        href : 'settings',
-        blogger : req.params.name,
-        year : year,
-        user : req.session.user,
-        success : req.flash('success').toString()
+
+    mongodb.find('user', {name : req.params.name}).then(function (results) {
+        var result = results[0];
+        if (typeof user === 'undefined')
+            return Promise.reject({message : '用户不存在!', direct : '/'});
+        var setting = {
+            name : result.name,
+            avater : result.avater,
+            year : parseInt(result.birthday.slice(0, result.birthday.indexOf('-'))),
+            month : parseInt(result.birthday.slice(result.birthday.indexOf('-') + 1, result.birthday.lastIndexOf('-'))),
+            day : parseInt(result.birthday.slice(result.birthday.lastIndexOf('-') + 1, result.birthday.length))
+        };
+        if (typeof result.hobby1 !== 'undefined') setting.hobby1 = result.hobby1;
+        if (typeof result.hobby2 !== 'undefined') setting.hobby2 = result.hobby2;
+        if (typeof result.hobby3 !== 'undefined') setting.hobby3 = result.hobby3;
+        if (typeof result.height !== 'undefined') setting.height = result.height;
+        if (typeof result.weight !== 'undefined') setting.weight = result.weight;
+        if (typeof result.email !== 'undefined') setting.email = result.email;
+        if (typeof result.signature !== 'undefined') setting.signature = result.signature;
+
+        console.log(setting);
+
+        res.render('blog/settings', {
+            href : 'settings',
+            blogger : req.params.name,
+            result: setting,
+            year : year,
+            user : req.session.user,
+            success : req.flash('success').toString()
+        })
     })
 }
 
 function postSettings (req, res) {
-
     if (req.files.avater || req.body.height || req.body.weight || req.body.hobby1 || req.body.hobby2 || req.body.hobby3 || req.body.email || req.body.signature) {
         var selector = {name : req.body.name};
         var doc = {birthday : req.body.year + '-' + req.body.month + '-' + req.body.day};
         if (req.files.avater) doc.avater = req.files.avater.name;
-        if (req.files.height) doc.height = req.body.height;
-        if (req.files.weight) doc.weight = req.body.weight;
-        if (req.files.hobby1) doc.hobby1 = req.body.hobby1;
-        if (req.files.hobby2) doc.hobby2 = req.body.hobby2;
-        if (req.files.hobby3) doc.hobby3 = req.body.hobby3;
-        if (req.files.email) doc.email = req.body.email;
-        if (req.files.signature) doc.signature = req.body.signature;
+        if (req.body.height) doc.height = req.body.height;
+        if (req.body.weight) doc.weight = req.body.weight;
+        if (req.body.hobby1) doc.hobby1 = req.body.hobby1;
+        if (req.body.hobby2) doc.hobby2 = req.body.hobby2;
+        if (req.body.hobby3) doc.hobby3 = req.body.hobby3;
+        if (req.body.email) doc.email = req.body.email;
+        if (req.body.signature) doc.signature = req.body.signature;
 
-        mongodb.update('users', selector).then(function () {
+        mongodb.update('user', selector, {$set : doc}).then(function (result) {
             res.redirect('/space/' + req.params.name + '/settings');
-        }).catch(function () {
+        }).catch(function (err) {
+            console.log(err.message)
             res.redirect('back');
         });
     } else {
+        console.log('no message');
         res.redirect('back');
     }
 }

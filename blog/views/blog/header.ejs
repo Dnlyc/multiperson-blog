@@ -3,7 +3,6 @@
 <head>
     <title><%=user.name%>博客</title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/stylesheets/form-elements.css" type="text/css" rel="stylesheet" media="all">
     <link href="/stylesheets/login-style.css" type="text/css" rel="stylesheet" media="all">
     <link href="/stylesheets/blog_style.css" type="text/css" rel="stylesheet" media="all">
     <!--web-font-->
@@ -48,6 +47,7 @@
                     <li><a href="/space/<%= blogger %>/albums" <% if(href=='albums') { %>class="active"<% } %>>个人相册</a></li>
                     <% if (blogger === user.name)  { %>
                         <li><a href="/space/<%= blogger %>/posts" <% if(href=='posts') { %>class="active"<% } %>>发表文章</a></li>
+                        <li><a href="/space/<%= blogger %>/tags" <% if(href=='tags') { %>class="active"<% } %>>标签管理</a></li>
                         <li><a href="/space/<%= blogger %>/settings" <% if(href=='settings') { %>class="active"<% } %>>个人信息</a></li>
                     <% } %>
                 </ul>
