@@ -155,3 +155,45 @@ function postPreview() {
         }
     });
 }
+
+function OnInput (button, content) {
+    document.getElementById(button).innerHTML = document.getElementById(content).value;
+}
+
+function changeText(button, content) {
+    if (document.getElementById(content).value === "") {
+        alert('标签内容不能为空！');
+        document.getElementById(content).value = "default";
+        document.getElementById(button).innerHTML = "default";
+    }
+}
+
+function selectStyle(button, style) {
+    document.getElementById(button).className = "btn " + document.getElementById(style).value;
+}
+
+function changeTag(id) {
+    var button = document.getElementById(id);
+    document.getElementById('module-content').value = button.innerHTML;
+    var options = document.getElementById('module-style').options;
+
+
+    document.getElementById('module-button').innerHTML = button.innerHTML;
+    document.getElementById('module-button').className = button.className;
+
+    for (var i = 0; i < options.length; i++) {
+        if ('btn ' + options[i].value === button.className) {
+            options[i].selected = true;
+            break;
+        }
+    }
+    //switch (button.className) {
+    //    case "btn btn-default" :  $("#module-style  option[value='btn btn-default'] ").attr("selected",true); break;
+    //    case "btn btn-primary" :  $("#module-style  option[value='btn btn-primary'] ").attr("selected",true); break;
+    //    case "btn btn-success" :  $("#module-style  option[value='btn btn-success'] ").attr("selected",true); break;
+    //    case "btn btn-info" :  $("#module-style  option[value='btn btn-info'] ").attr("selected",true); break;
+    //    case "btn btn-warning" :  $("#module-style  option[value='btn btn-warning'] ").attr("selected",true); break;
+    //    case "btn btn-danger" :  $("#module-style  option[value='btn btn-danger'] ").attr("selected",true); break;
+    //}
+    $("#myModal").modal();
+}

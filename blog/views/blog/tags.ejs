@@ -1,6 +1,112 @@
 <%- include header %>
 <div class="container">
+    <div class="container">
+        <br />
+        <form class="form-horizontal" role="form">
+            <div class="form-group" align="center">
+                <h3 for="name" class="col-sm-2  control-label">新增Tags</h3>
+            </div>
+            <div class="form-group">
+                <label for="firstname" class="col-sm-2 control-label">标签内容</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="tag-content" value="default" placeholder="请输入标签内容" oninput="OnInput('tag-button', 'tag-content')" onchange="changeText('tag-button', 'tag-content')" required>
+                </div>
 
+                <label for="firstname" class="col-sm-2 control-label">标签样式</label>
+                <div class="col-sm-3">
+                    <select id="tag-style" class="form-control" onchange="selectStyle('tag-button', 'tag-style')">
+                        <option value="btn-default">默认</option>
+                        <option value="btn-primary">原始</option>
+                        <option value="btn-success">成功</option>
+                        <option value="btn-info">信息</option>
+                        <option value="btn-warning">警告</option>
+                        <option value="btn-danger">危险</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">标签效果</label>
+                <div class="col-sm-2">
+                    <button id="tag-button" class="btn btn-default" disabled="disabled">default</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">已有标签</label>
+                <div class="col-sm-8">
+                    <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="2" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="3" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="4" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="5" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="6" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="7" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="8" class="btn btn-primary">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="9" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="10" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="11" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                    <a href="#" onclick="changeTag('1')"><button id="12" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-info">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" width="1000px" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        标签管理
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="请输入回复内容..." required>-->
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">标签内容</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="module-content" value="default" placeholder="请输入标签内容" oninput="OnInput('module-button', 'module-content')" onchange="changeText('module-button', 'module-content')" required>
+                        </div>
+
+                        <label for="firstname" class="col-sm-3 control-label">标签样式</label>
+                        <div class="col-sm-3">
+                            <select id="module-style" class="form-control" onchange="selectStyle('module-button', 'module-style')">
+                                <option value="btn-default">默认</option>
+                                <option value="btn-primary">原始</option>
+                                <option value="btn-success">成功</option>
+                                <option value="btn-info">信息</option>
+                                <option value="btn-warning">警告</option>
+                                <option value="btn-danger">危险</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">标签内容</label>
+                        <div class="col-sm-9">
+                            <button id="module-button" class="btn btn-default" disabled="disabled">default</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">修改</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">删除</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
 </div>
 <br /><br />
 <%- include footer %>

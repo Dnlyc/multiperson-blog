@@ -19,6 +19,6 @@ function postTags (req, res) {
 }
 
 module.exports = {
-    getSettings : getTags,
-    postSettings : postTags
+    getTags : getTags,
+    postTags : postTags
 }

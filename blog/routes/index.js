@@ -25,6 +25,7 @@ var user = require('../models/user'),
     comment = require('../models/comments'),
     space = require('../models/space'),
     blogs = require('../models/blogs'),
+    tags = require('../models/tags'),
     mongodb = require('../models/db'),
     albums = require('../models/albums'),
     settings = require('../models/settings'),
@@ -154,6 +155,10 @@ module.exports = function (app) {
     app.get('/space/:name/posts', post.getPost);
     app.post('/space/:name/posts', post.postPost);
     app.post('/preview', post.postPreview);
+
+    // 标签管理
+    app.get('/space/:name/tags', tags.getTags);
+    app.post('/space/:name/tags', tags.postTags);
 
     // 个人设置
     app.get('/space/:name/settings', settings.getSettings);
