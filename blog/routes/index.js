@@ -150,9 +150,10 @@ module.exports = function (app) {
     app.get('/space/:name/albums/:id', albums.getNewAlbums);
     app.post('/space/:name/albums/:id', albums.changeAlbums);
 
-    // 全部博客文章页面
+    // 发表文章
     app.get('/space/:name/posts', post.getPost);
     app.post('/space/:name/posts', post.postPost);
+    app.post('/preview', post.postPreview);
 
     // 个人设置
     app.get('/space/:name/settings', settings.getSettings);

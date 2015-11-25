@@ -130,6 +130,28 @@ function changAvater(files) {
 }
 
 function changeValue(input) {
-    input.value = input.value;
-    alert(input.value);
+}
+
+function postPreview() {
+    var params ={
+        content: $("#content").val()
+    };
+
+    $.ajax({
+        data: params,
+        url: '/preview',
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            alert(data.html);
+            console.log(data.html);
+            document.getElementById('m-content').innerHTML = data.html.html;
+            $("#myModal").modal();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('error ' + textStatus + " " + errorThrown);
+        }
+    });
 }

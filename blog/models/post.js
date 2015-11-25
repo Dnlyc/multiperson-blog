@@ -5,6 +5,7 @@ var mongodb = require('./db'),
     crypto = require('crypto'),
     Promise = require('bluebird'),
     common = require('../lib/common'),
+    trimHtml = require('trim-html'),
     getPost,
     postPost,
     getEditPost,
@@ -25,6 +26,13 @@ getPost = function (req, res) {
         success : req.flash('success').toString(),
         error : req.flash('error').toString()
     });
+}
+
+
+function postPreview(req, res) {
+    var html = trimHtml(markdown.toHTML(req.body.content));
+    console.log(html);
+    res.json({success : 1, html : html});
 }
 
 /**
@@ -135,5 +143,6 @@ module.exports = {
     postPost : postPost,
     getEditPost : getEditPost,
     updatePost : updatePost,
-    removePost : removePost
+    removePost : removePost,
+    postPreview : postPreview
 };

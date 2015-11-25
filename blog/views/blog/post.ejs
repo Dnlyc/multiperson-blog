@@ -12,17 +12,46 @@
         <div class="form-group">
             <label for="name">正文:</label>
             <div class="col-sm-20">
-                <br /><textarea class="form-control" rows="20" cols="100" name="post" required></textarea>
+                <br /><textarea class="form-control" rows="20" cols="100" name="post" id="content" required></textarea>
              </div>
         </div>
         <div class="form-group">
             <div class="col-xs-5">
                 <br /><button type="submit" class="btn btn-info col-sm-3">发表</button>
-                <button type="submit" class="btn btn-info col-sm-3" onclick="preview()">预览</button>
             </div>
             <div><br /></div>
         </div>
     </form>
+
+    <a href="#" onclick="postPreview()"><button class="btn btn-info col-sm-3">预览</button></a>
 </div>
 <br /><br />
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    文章预览
+                </h4>
+            </div>
+
+                <div class="modal-body">
+                    <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="请输入回复内容..." required>-->
+                    <p id="m-content">正文</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
 <%- include footer %>
