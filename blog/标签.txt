@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Test</title>
@@ -11,52 +11,52 @@
 <div class="container">
     <form class="form-horizontal" role="form">
         <div class="form-group" align="center">
-            <h3 for="name" class="col-sm-2  control-label">����Tags</h3>
+            <h3 for="name" class="col-sm-2  control-label">新增Tags</h3>
         </div>
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label">��ǩ����</label>
+            <label for="firstname" class="col-sm-2 control-label">标签内容</label>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="tag-content" value="default" placeholder="�������ǩ����" oninput="OnInput(event)" onchange="changeText()" required>
+                <input type="text" class="form-control" id="tag-content" value="default" placeholder="请输入标签内容" oninput="OnInput(event)" onchange="changeText()" required>
             </div>
 
-            <label for="firstname" class="col-sm-2 control-label">��ǩ��ʽ</label>
+            <label for="firstname" class="col-sm-2 control-label">标签样式</label>
             <div class="col-sm-3">
                 <select id="tag-style" class="form-control" onchange="selectStyle()">
-                    <option value="btn-default">Ĭ��</option>
-                    <option value="btn-primary">ԭʼ</option>
-                    <option value="btn-success">�ɹ�</option>
-                    <option value="btn-info">��Ϣ</option>
-                    <option value="btn-warning">����</option>
-                    <option value="btn-danger">Σ��</option>
+                    <option value="btn-default">默认</option>
+                    <option value="btn-primary">原始</option>
+                    <option value="btn-success">成功</option>
+                    <option value="btn-info">信息</option>
+                    <option value="btn-warning">警告</option>
+                    <option value="btn-danger">危险</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="lastname" class="col-sm-2 control-label">��ǩЧ��</label>
+            <label for="lastname" class="col-sm-2 control-label">标签效果</label>
             <div class="col-sm-2">
                 <button id="tag-button" class="btn btn-default" disabled="disabled">default</button>
             </div>
         </div>
         <div class="form-group">
-            <label for="lastname" class="col-sm-2 control-label">���б�ǩ</label>
+            <label for="lastname" class="col-sm-2 control-label">已有标签</label>
             <div class="col-sm-8">
-                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="2" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="3" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="4" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="5" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="6" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="7" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="8" class="btn btn-primary">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">���Ǻ�ѽ</button></a>
-                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">���Ǻ�ѽ</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="2" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="3" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="4" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="5" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="6" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="7" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="8" class="btn btn-primary">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
+                <a href="#" onclick="changeTag('1')"><button id="1" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-info">����</button>
+                <button type="submit" class="btn btn-info">保存</button>
             </div>
         </div>
     </form>
@@ -71,34 +71,34 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    ��ǩ����
+                    标签管理
                 </h4>
             </div>
 
             <div class="modal-body">
-                <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="������ظ�����..." required>-->
+                <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="请输入回复内容..." required>-->
                 <div class="form-group">
-                    <label for="firstname" class="col-sm-2 control-label">��ǩ����</label>
+                    <label for="firstname" class="col-sm-2 control-label">标签内容</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="module-content" value="default" placeholder="�������ǩ����" oninput="OnInput(event)" onchange="changeText()" required>
+                        <input type="text" class="form-control" id="module-content" value="default" placeholder="请输入标签内容" oninput="OnInput(event)" onchange="changeText()" required>
                     </div>
 
-                    <label for="firstname" class="col-sm-2 control-label">��ǩ��ʽ</label>
+                    <label for="firstname" class="col-sm-2 control-label">标签样式</label>
                     <div class="col-sm-3">
                         <select id="module-style" class="form-control" onchange="selectStyle()">
-                            <option value="btn-default">Ĭ��</option>
-                            <option value="btn-primary">ԭʼ</option>
-                            <option value="btn-success">�ɹ�</option>
-                            <option value="btn-info">��Ϣ</option>
-                            <option value="btn-warning">����</option>
-                            <option value="btn-danger">Σ��</option>
+                            <option value="btn-default">默认</option>
+                            <option value="btn-primary">原始</option>
+                            <option value="btn-success">成功</option>
+                            <option value="btn-info">信息</option>
+                            <option value="btn-warning">警告</option>
+                            <option value="btn-danger">危险</option>
                         </select>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">�ر�</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -114,7 +114,7 @@
 
     function changeText() {
         if (document.getElementById('tag-content').value === "") {
-            alert('��ǩ���ݲ���Ϊ�գ�');
+            alert('标签内容不能为空！');
             document.getElementById('tag-content').value = "default";
             document.getElementById('tag-button').innerHTML = "default";
         }
