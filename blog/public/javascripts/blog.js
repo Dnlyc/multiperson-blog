@@ -180,6 +180,7 @@ function changeTag(id) {
 
     document.getElementById('module-button').innerHTML = button.innerHTML;
     document.getElementById('module-button').className = button.className;
+    document.getElementById('id-module').value = id;
 
     for (var i = 0; i < options.length; i++) {
         if ('btn ' + options[i].value === button.className) {
@@ -187,13 +188,52 @@ function changeTag(id) {
             break;
         }
     }
-    //switch (button.className) {
-    //    case "btn btn-default" :  $("#module-style  option[value='btn btn-default'] ").attr("selected",true); break;
-    //    case "btn btn-primary" :  $("#module-style  option[value='btn btn-primary'] ").attr("selected",true); break;
-    //    case "btn btn-success" :  $("#module-style  option[value='btn btn-success'] ").attr("selected",true); break;
-    //    case "btn btn-info" :  $("#module-style  option[value='btn btn-info'] ").attr("selected",true); break;
-    //    case "btn btn-warning" :  $("#module-style  option[value='btn btn-warning'] ").attr("selected",true); break;
-    //    case "btn btn-danger" :  $("#module-style  option[value='btn btn-danger'] ").attr("selected",true); break;
-    //}
     $("#myModal").modal();
+}
+
+function updateTag(name) {
+    var params ={
+        id: document.getElementById('id-module').value,
+        content : document.getElementById('module-content').value,
+        style : document.getElementById('module-style').value
+    };
+    $.ajax({
+        data: params,
+        url: '/space/' + name + '/tags/update',
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            if (data.success) {
+                window.location.href = '/space/' + name + '/tags';
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('error ' + textStatus + " " + errorThrown);
+        }
+    });
+}
+
+function removeTag(name) {
+    var params ={
+        id: document.getElementById('id-module').value
+    };
+
+    $.ajax({
+        data: params,
+        url: '/space/' + name + '/tags/remove',
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            if (data.success) {
+                window.location.href = '/space/' + name + '/tags';
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('error ' + textStatus + " " + errorThrown);
+        }
+    });
 }

@@ -159,10 +159,13 @@ module.exports = function (app) {
     // 标签管理
     app.get('/space/:name/tags', tags.getTags);
     app.post('/space/:name/tags', tags.postTags);
+    app.post('/space/:name/tags/update', tags.updateTags);
+    app.post('/space/:name/tags/remove', tags.removeTags);
 
     // 个人设置
     app.get('/space/:name/settings', settings.getSettings);
     app.post('/space/:name/settings', settings.postSettings);
+
     // 文章
     //app.get('/u/:name', user.getArticle);
     //app.get('/u/:name/:day/:title', user.getArticle);
