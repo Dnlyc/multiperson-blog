@@ -197,3 +197,29 @@ function changeTag(id) {
     //}
     $("#myModal").modal();
 }
+
+function selectTag(id) {
+    var con = document.getElementById('tags'+id);
+    if (con === null) {
+        var select_button = document.getElementById(id);
+        var button = document.createElement("button");
+        button.className = select_button.className;
+        button.id = 'tags'+id;
+        button.innerHTML = select_button.innerHTML;
+        button.style.marginTop = '1em';
+        button.style.marginLeft = '1em';
+        button.disabled = "disabled";
+        document.getElementById('blog-tags').appendChild(button);
+
+        var input = document.createElement("input");
+        input.type = 'text';
+        input.value = id;
+        input.id = 'id' + id;
+        input.name = 'id[]';
+        input.style.display = 'none';
+        document.getElementById('submit-id').appendChild(input);
+    } else {
+        document.getElementById('blog-tags').removeChild(con);
+        document.getElementById('submit-id').removeChild(document.getElementById('id' + id));
+    }
+}
