@@ -3,15 +3,15 @@
         <h4>标签</h4>
 
         <div class="list-group">
-            <a href="singlepage.html" class="list-group-item">动漫</a>
-            <a href="singlepage.html" class="list-group-item">漫画</a>
-            <a href="singlepage.html" class="list-group-item">海贼王</a>
+            <% tags.forEach(function(tag) { %>
+                <a href="#" class="list-group-item"><%= tag.content %></a>
+            <% }) %>
         </div>
     </div>
     <br />
     <div class="comments">
         <h4>最近回复</h4>
-        <% comments.forEach(function (comment) { %>
+        <% recomments.forEach(function (comment) { %>
             <div class="comments-info">
                 <div class="cmnt-icon-left">
                     <img height="80" width="80" src="<% if(comment.c_avatar) { %><%= comment.c_avatar %><% } else { %><%= comment.r_avatar %><% } %>" alt=""/>

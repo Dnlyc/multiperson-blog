@@ -12,7 +12,7 @@ function getSettings (req, res) {
 
     mongodb.find('user', {name : req.params.name}).then(function (results) {
         var result = results[0];
-        if (typeof user === 'undefined')
+        if (typeof result === 'undefined')
             return Promise.reject({message : '用户不存在!', direct : '/'});
         var setting = {
             name : result.name,
@@ -39,6 +39,8 @@ function getSettings (req, res) {
             user : req.session.user,
             success : req.flash('success').toString()
         })
+    }).catch(function (err) {
+        console.log(err.message);
     })
 }
 

@@ -12,9 +12,13 @@ function getArticles (req, res) {
     var total;
     var page = req.params.page || 1;
     var comments;
+    var tags;
 
     common.getRecentComments(req.params.name).then(function (results) {
         comments = results;
+        return mongodb.find('tags', {name : req.params.name})
+    }).then(function (results) {
+        tags = results;
         return mongodb.count('posts', data);
     }).then(function (count) {
         total = count;
@@ -27,13 +31,14 @@ function getArticles (req, res) {
         docs.forEach(function (doc) {
             doc.post = trimHtml(markdown.toHTML(doc.post), { limit: 100 , preserveTags : false});
         });
-
+        console.log(comments);
         res.render('blog/blog', {
             blogger: blogger,
             href : 'blogs',
             posts: docs,
+            tags: tags,
             page: page,
-            comments: comments,
+            recomments: comments,
             total: parseInt(total / 10) + 1,
             user : req.session.user,
             success : req.flash('success').toString()
@@ -48,6 +53,8 @@ function getArticle (req, res) {
 
     var post,avatar,signature;
     var blogger = req.params.name;
+    var comments;
+    var recomments;
 
     // 先查找是否有该作者
     return mongodb.find('user', {name : req.params.name}).then(function (results) {
@@ -98,17 +105,23 @@ function getArticle (req, res) {
         } else {
             return Promise.resolve();
         }
-    }).then(function (comments) {
+    }).then(function (results) {
+        comments = results;
+        return common.getRecentComments(/*req.params.name*/'1233');
+    }).then(function (results) {
+        recomments = results;
+        return mongodb.find('tags', {name:req.params.name});
+    }).then(function (results) {
         return res.render('blog/article', {
             blogger: blogger,
             href : 'blogs',
             post: post ,
             comments: comments,
+            recomments: recomments,
+            tags : results,
             user : req.session.user,
             success : req.flash('success').toString()
         });
-
-
     }).catch(function (err) {
         console.log(err);
         req.flash('error', err.message);
