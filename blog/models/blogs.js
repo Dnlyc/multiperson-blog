@@ -103,11 +103,23 @@ function getArticle (req, res) {
             });
             return Promise.all(maps);
         } else {
-            return Promise.resolve();
+            return Promise.resolve([]);
         }
     }).then(function (results) {
         comments = results;
-        return common.getRecentComments(/*req.params.name*/'1233');
+        if (typeof post.tags !== 'undefined') {
+            var maps = post.tags.map(function (result) {
+                return mongodb.find('tags', {id : result}).then(function (tag) {
+                    return tag[0];
+                });
+            });
+            return Promise.all(maps);
+        } else {
+            return Promise.resolve([]);
+        }
+    }).then(function (results) {
+        post.tags = results;
+        return common.getRecentComments(req.params.name);
     }).then(function (results) {
         recomments = results;
         return mongodb.find('tags', {name:req.params.name});

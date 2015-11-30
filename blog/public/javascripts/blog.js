@@ -133,20 +133,20 @@ function changeValue(input) {
 }
 
 function postPreview() {
-    var params ={
-        content: $("#content").val()
-    };
+
+    if ($("#content").val() === '') {
+        alert('正文请输入内容！');
+        return ;
+    }
 
     $.ajax({
-        data: params,
+        data: {content: $("#content").val()},
         url: '/preview',
         dataType: 'json',
         type:'post',
         cache: false,
         timeout: 5000,
         success: function(data){
-            alert(data.html);
-            console.log(data.html);
             document.getElementById('m-content').innerHTML = data.html.html;
             $("#myModal").modal();
         },
@@ -216,12 +216,9 @@ function updateTag(name) {
 }
 
 function removeTag(name) {
-    var params ={
-        id: document.getElementById('id-module').value
-    };
 
     $.ajax({
-        data: params,
+        data: {id: document.getElementById('id-module').value},
         url: '/space/' + name + '/tags/remove',
         dataType: 'json',
         type:'post',
@@ -247,7 +244,7 @@ function selectTag(id) {
         button.id = 'tags'+id;
         button.innerHTML = select_button.innerHTML;
         button.style.marginTop = '1em';
-        button.style.marginLeft = '1em';
+        //button.style.marginLeft = '1em';
         button.disabled = "disabled";
         document.getElementById('blog-tags').appendChild(button);
 
@@ -255,7 +252,7 @@ function selectTag(id) {
         input.type = 'text';
         input.value = id;
         input.id = 'id' + id;
-        input.name = 'id[]';
+        input.name = 'tags';
         input.style.display = 'none';
         document.getElementById('submit-id').appendChild(input);
     } else {

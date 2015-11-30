@@ -1,6 +1,6 @@
 <%- include header %>
 <div class="container">
-    <form class="form-horizontal" role="form" >
+    <form class="form-horizontal" method="post" role="form" >
         <br /><br />
         <div class="form-group">
             <label for="firstname" class="col-sm-2 control-label">博文标题:</label>
@@ -18,18 +18,9 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">已有标签：</label>
             <div class="col-sm-10">
-                <a href="#" onclick="selectTag('1')"><button id="1" type="button" class="btn btn-primary"  style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('2')"><button id="2" type="button" class="btn btn-primary"  style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('3')"><button id="3" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('4')"><button id="4" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('5')"><button id="5" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
-                <a href="#" onclick="selectTag('6')"><button id="6" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀</button></a>
-                <a href="#" onclick="selectTag('7')"><button id="7" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('8')"><button id="8" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('9')"><button id="9" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('10')"><button id="10" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('11')"><button id="11" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
-                <a href="#" onclick="selectTag('12')"><button id="12" type="button" class="btn btn-primary" style="margin-top: 1em">你们好呀13123123123</button></a>
+                <% tags.forEach(function (tag) { %>
+                    <button id=<%= tag.id %> type="button" class="btn <%= tag.style %>"  style="margin-top: 1em" onclick="selectTag('<%= tag.id %>')"><%= tag.content %></button>
+                <% }) %>
             </div>
         </div>
 
@@ -82,31 +73,4 @@
     <!-- /.modal -->
 </div>
 
-<script>
-    function selectTag(id) {
-        var con = document.getElementById('tags'+id);
-        if (con === null) {
-            var select_button = document.getElementById(id);
-            var button = document.createElement("button");
-            button.className = select_button.className;
-            button.id = 'tags'+id;
-            button.innerHTML = select_button.innerHTML;
-            button.style.marginTop = '1em';
-            button.style.marginLeft = '1em';
-            button.disabled = "disabled";
-            document.getElementById('blog-tags').appendChild(button);
-
-            var input = document.createElement("input");
-            input.type = 'text';
-            input.value = id;
-            input.id = 'id' + id;
-            input.name = 'id[]';
-            input.style.display = 'none';
-            document.getElementById('submit-id').appendChild(input);
-        } else {
-            document.getElementById('blog-tags').removeChild(con);
-            document.getElementById('submit-id').removeChild(document.getElementById('id' + id));
-        }
-    }
-</script>
 <%- include footer %>

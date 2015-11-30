@@ -12,6 +12,14 @@
         <div class="col-md-8 single-page-left">
             <div class="single-page-info">
                 <h1><%= post.title %></h1>
+                <div>
+                    <% if (post.tags.length !== 0) { %>
+                        <label >标签：</label>
+                        <% post.tags.forEach(function (tag) { %>
+                            <button id=<%= tag.id %> type="button" class="btn <%= tag.style %>"  style="margin-top: 1em"><%= tag.content %></button>
+                        <% }) %>
+                    <% } %>
+                </div>
                 <br/>
                 <%- post.post %>
                 <div class="comment-icons">
@@ -44,51 +52,58 @@
 
             <div class="response">
                 <h4>回复</h4>
-                <% if (comments) { %>
-                <% comments.forEach(function (comment) { %>
-                <div class="media response-info">
-                    <div class="media-left response-text-left">
-                        <a href="/space/<%= comment.c_name %>">
-                            <img class="media-object" src="<%= comment.c_avatar %>" alt=""/>
-                        </a>
-                        <h5><a href="/space/<%= comment.c_name %>"><%= comment.c_name %></a></h5>
-                    </div>
-                    <div class="media-body response-text-right">
-                        <p><%= comment.content %></p>
-                        <ul>
-                            <li><%= comment.time.day %></li>
-                            <% if(comment.replys == '' ) { %>
-                            <li><a onclick="submitReply(<%= comment.id %>)">Reply</a></li>
-                            <% } %>
-                            <!-- 模态框（Modal） -->
-                        </ul>
-                        <% if (comment.replys) { %>
-                        <% comment.replys.forEach(function (reply, index) { %>
-                        <div class="media response-info">
-                            <div class="media-left response-text-left">
-                                <a href="/space/<%= reply.r_name %>">
-                                    <img class="media-object" src="<%= reply.r_avatar %>" alt=""/>
-                                </a>
-                                <h5><a href="/space/<%= reply.r_name %>"><%= reply.r_name %></a></h5>
-                            </div>
-                            <div class="media-body response-text-right">
-                                <p><%= reply.content %></p>
-                                <ul>
-                                    <li><%= reply.time.day %></li>
-                                    <% if(index === comment.replys.length - 1) { %>
-                                    <li><a onclick="submitReply(<%= comment.id %>)">Reply</a></li>
-                                    <% } %>
-                                </ul>
+
+                <div class="admin-text">
+                    <% if (comments.length !== 0) { %>
+                    <% comments.forEach(function (comment) { %>
+                    <div class="media response-info">
+                        <div class="media-left response-text-left">
+                            <a href="/space/<%= comment.c_name %>">
+                                <img class="media-object" src="<%= comment.c_avatar %>" alt=""/>
+                            </a>
+                            <h5><a href="/space/<%= comment.c_name %>"><%= comment.c_name %></a></h5>
+                        </div>
+                        <div class="media-body response-text-right">
+                            <p><%= comment.content %></p>
+                            <ul>
+                                <li><%= comment.time.day %></li>
+                                <% if(comment.replys == '' ) { %>
+                                <li><a onclick="submitReply(<%= comment.id %>)">Reply</a></li>
+                                <% } %>
+                                <!-- 模态框（Modal） -->
+                            </ul>
+                            <% if (comment.replys) { %>
+                            <% comment.replys.forEach(function (reply, index) { %>
+                            <div class="media response-info">
+                                <div class="media-left response-text-left">
+                                    <a href="/space/<%= reply.r_name %>">
+                                        <img class="media-object" src="<%= reply.r_avatar %>" alt=""/>
+                                    </a>
+                                    <h5><a href="/space/<%= reply.r_name %>"><%= reply.r_name %></a></h5>
+                                </div>
+                                <div class="media-body response-text-right">
+                                    <p><%= reply.content %></p>
+                                    <ul>
+                                        <li><%= reply.time.day %></li>
+                                        <% if(index === comment.replys.length - 1) { %>
+                                        <li><a onclick="submitReply(<%= comment.id %>)">Reply</a></li>
+                                        <% } %>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
+                            <% }) %>
+                            <% } %>
                         </div>
-                        <% }) %>
-                        <% } %>
                     </div>
+                    <% }) %>
+                    <% } else { %>
+                    <div align="center">
+                        <p>还没有人回复哟~</p>
+                    </div>
+                    <% } %>
                 </div>
-                <% }) %>
-                <% } %>
             </div>
 
             <div class="coment-form">

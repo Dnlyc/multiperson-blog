@@ -18,14 +18,17 @@ var mongodb = require('./db'),
  * @param res
  */
 getPost = function (req, res) {
-    res.render('blog/post',{
-        blogger: req.params.name,
-        title: '发表',
-        href: 'posts',
-        user : req.session.user,
-        success : req.flash('success').toString(),
-        error : req.flash('error').toString()
-    });
+    mongodb.find('tags', {name : req.params.name}).then(function (result) {
+        res.render('blog/post',{
+            blogger: req.params.name,
+            title: '发表',
+            href: 'posts',
+            user : req.session.user,
+            tags : result,
+            success : req.flash('success').toString(),
+            error : req.flash('error').toString()
+        });
+    })
 }
 
 
@@ -45,16 +48,20 @@ postPost = function (req, res) {
     var now = common.getTime(),
         user = req.session.user;
 
+    req.body.tags =  req.body.tags || [];
+    var tags = req.body.tags.map(function (tag) {return parseInt(tag)});
+
     var post = {
         name : user.name,
         title : req.body.title,
         post : req.body.post,
+        tags : tags,
         time : now
     };
 
     mongodb.store('posts', [post]).then(function (result) {
         req.flash('success', '发布成功!');
-        res.redirect('/space/blog/' + user.name + '/' + post.day + '/' + now.title); //发表成功跳转到主页
+        res.redirect('/space/' + user.name + '/blogs'); //发表成功跳转到主页
     }).catch(function (err) {
         req.flash('error', err);
         return res.redirect('back');
