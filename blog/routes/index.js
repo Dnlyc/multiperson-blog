@@ -154,6 +154,9 @@ module.exports = function (app) {
     // 发表文章
     app.get('/space/:name/posts', post.getPost);
     app.post('/space/:name/posts', post.postPost);
+    app.get('/space/posts/:name/:day/:title/edit', post.getEditArticle);
+    app.post('/space/posts/:name/:day/:title/edit', post.postEditArticle);
+    app.get('/space/posts/:name/:day/:title/remove', post.removePost);
     app.post('/preview', post.postPreview);
 
     // 标签管理

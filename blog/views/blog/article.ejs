@@ -12,9 +12,12 @@
         <div class="col-md-8 single-page-left">
             <div class="single-page-info">
                 <h1><%= post.title %></h1>
+                <% if (blogger === user.name) { %>
+                    <a href="/space/posts/<%= blogger %>/<%= post.time.day %>/<%= post.title %>/edit"/>编辑</a> |
+                    <a href="#" onclick="removePost('<%= blogger %>', '<%= post.time.day %>', '<%= post.title %>')"/>删除</a>
+                <% } %>
                 <div>
                     <% if (post.tags.length !== 0) { %>
-                        <label >标签：</label>
                         <% post.tags.forEach(function (tag) { %>
                             <button id=<%= tag.id %> type="button" class="btn <%= tag.style %>"  style="margin-top: 1em"><%= tag.content %></button>
                         <% }) %>

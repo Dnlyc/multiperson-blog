@@ -1,13 +1,13 @@
 var mongodb = require('../models/db'),
     data = require('../config/data');
-    common = require('../lib/common'),
+common = require('../lib/common'),
     markdown = require('markdown').markdown,
     trimHtml = require('trim-html'),
     Promise = require('bluebird');
 
 
-function getArticles (req, res) {
-    var data = {name : req.params.name};
+function getArticles(req, res) {
+    var data = {name: req.params.name};
     var blogger = req.params.name;
     var total;
     var page = req.params.page || 1;
@@ -16,32 +16,32 @@ function getArticles (req, res) {
 
     common.getRecentComments(req.params.name).then(function (results) {
         comments = results;
-        return mongodb.find('tags', {name : req.params.name})
+        return mongodb.find('tags', {name: req.params.name})
     }).then(function (results) {
         tags = results;
         return mongodb.count('posts', data);
     }).then(function (count) {
         total = count;
-        return mongodb.find('posts', data, {time : -1}, NaN, {
-            skip: (page - 1)*10,
+        return mongodb.find('posts', data, {time: -1}, NaN, {
+            skip: (page - 1) * 10,
             limit: 10
         });
     }).then(function (docs) {
         // 解析markdown格式
         docs.forEach(function (doc) {
-            doc.post = trimHtml(markdown.toHTML(doc.post), { limit: 100 , preserveTags : false});
+            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 100, preserveTags: false});
         });
         console.log(comments);
         res.render('blog/blog', {
             blogger: blogger,
-            href : 'blogs',
+            href: 'blogs',
             posts: docs,
             tags: tags,
             page: page,
             recomments: comments,
             total: parseInt(total / 10) + 1,
-            user : req.session.user,
-            success : req.flash('success').toString()
+            user: req.session.user,
+            success: req.flash('success').toString()
         })
     }).catch(function (err) {
         req.flash('error', err.message);
@@ -49,28 +49,28 @@ function getArticles (req, res) {
     })
 }
 
-function getArticle (req, res) {
+function getArticle(req, res) {
 
-    var post,avatar,signature;
+    var post, avatar, signature;
     var blogger = req.params.name;
     var comments;
     var recomments;
 
     // 先查找是否有该作者
-    return mongodb.find('user', {name : req.params.name}).then(function (results) {
+    return mongodb.find('user', {name: req.params.name}).then(function (results) {
         if (results.length <= 0)
-            return Promise.reject({message : '不存在该用户', direct : 'back'});
+            return Promise.reject({message: '不存在该用户', direct: 'back'});
 
         avatar = results[0].avatar;
         signature = results[0].signature;
 
         var param = {
-                name : req.params.name,
-                'time.day' : req.params.day,
-                title : req.params.title
+                name: req.params.name,
+                'time.day': req.params.day,
+                title: req.params.title
             },
             limit = 1,
-            sort = {time : -1};
+            sort = {time: -1};
 
         // 找该作者发表的文章
         return mongodb.find('posts', param, sort, limit);
@@ -93,7 +93,7 @@ function getArticle (req, res) {
     }).then(function (results) {
         if (typeof results !== 'undefined') {
             var maps = results.map(function (result) {
-                var sel = {c_id : result.id};
+                var sel = {c_id: result.id};
                 return mongodb.find('replys', sel).then(function (replys) {
                     if (typeof replys !== 'undefined') {
                         result.replys = replys;
@@ -109,7 +109,7 @@ function getArticle (req, res) {
         comments = results;
         if (typeof post.tags !== 'undefined') {
             var maps = post.tags.map(function (result) {
-                return mongodb.find('tags', {id : result}).then(function (tag) {
+                return mongodb.find('tags', {id: result}).then(function (tag) {
                     return tag[0];
                 });
             });
@@ -122,17 +122,17 @@ function getArticle (req, res) {
         return common.getRecentComments(req.params.name);
     }).then(function (results) {
         recomments = results;
-        return mongodb.find('tags', {name:req.params.name});
+        return mongodb.find('tags', {name: req.params.name});
     }).then(function (results) {
         return res.render('blog/article', {
             blogger: blogger,
-            href : 'blogs',
-            post: post ,
+            href: 'blogs',
+            post: post,
             comments: comments,
             recomments: recomments,
-            tags : results,
-            user : req.session.user,
-            success : req.flash('success').toString()
+            tags: results,
+            user: req.session.user,
+            success: req.flash('success').toString()
         });
     }).catch(function (err) {
         console.log(err);
@@ -146,20 +146,20 @@ function getArticle (req, res) {
  * @param req
  * @param res
  */
-function postComment (req, res) {
+function postComment(req, res) {
 
     var id = 0;
     var time = common.getTime();
     var selector = {
-        name : req.params.name,
-        'time.day' : req.params.day,
-        title : req.params.title
+        name: req.params.name,
+        'time.day': req.params.day,
+        title: req.params.title
     }
 
     var comment = {
-        name : req.params.name,
-        time : req.params.day,
-        title : req.params.title,
+        name: req.params.name,
+        time: req.params.day,
+        title: req.params.title,
         c_name: req.session.user.name,
         c_avatar: req.session.user.avatar,
         time: time,
@@ -181,29 +181,29 @@ function postComment (req, res) {
     });
 }
 
-function postReply (req, res) {
+function postReply(req, res) {
     var time = common.getTime();
     var reply = {
-        c_id : parseInt(req.body.id),
-        content : req.body.content,
-        r_name : req.session.user.name,
-        r_avatar : req.session.user.avatar,
-        time : time
+        c_id: parseInt(req.body.id),
+        content: req.body.content,
+        r_name: req.session.user.name,
+        r_avatar: req.session.user.avatar,
+        time: time
     }
     console.log(reply);
     return mongodb.store('replys', [reply]).then(function (result) {
-    req.flash('success', '留言成功!');
-    res.redirect('back');
-}).catch(function (err) {
-    console.log(err);
-    req.flash('error', err);
-    return res.redirect('back');
-});
+        req.flash('success', '留言成功!');
+        res.redirect('back');
+    }).catch(function (err) {
+        console.log(err);
+        req.flash('error', err);
+        return res.redirect('back');
+    });
 }
 
 module.exports = {
-    getArticles : getArticles,
-    getArticle : getArticle,
-    postComment : postComment,
-    postReply : postReply
+    getArticles: getArticles,
+    getArticle: getArticle,
+    postComment: postComment,
+    postReply: postReply
 };

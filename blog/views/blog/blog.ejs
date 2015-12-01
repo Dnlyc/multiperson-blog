@@ -5,10 +5,15 @@
 <div class="blog">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="blog/<%=user.name%>">博主首页</a></li>
+            <li><a href="/space/<%=user.name%>">博主首页</a></li>
             <li>博主博客</li>
         </ol>
         <div class="col-md-8 blog-left" >
+            <% if (posts.length === 0) { %>
+            <div class="blog-info">
+                <h3>还没有发表过博文哦~</h3>
+            </div>
+            <% } %>
                 <% posts.forEach(function (post, index) { %>
                      <div class="blog-info">
                         <h4><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
@@ -23,6 +28,8 @@
         <br /><br /><br />
         <%- include rightbart %>
         <div class="clearfix"> </div>
+
+        <% if (posts.length !== 0) { %>
         <nav>
             <ul class="pagination">
                 <li>
@@ -55,6 +62,7 @@
                 </li>
             </ul>
         </nav>
+        <% } %>
     </div>
 </div>
 <!--//blog-->

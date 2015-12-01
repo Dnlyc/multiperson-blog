@@ -35,10 +35,10 @@ a.rm, a.com { margin-left:8px; padding:9px 12px; background:url(../images/a_bg.g
 .menu_nav ul li.active a, .menu_nav ul li a:hover { color:#fdfdfd; text-decoration:underline;}
 .menu_nav ul li.last a { border:0;}
 /* search */
-.search { float:right; margin:0; padding:0; width:300px;}
+.search { float:right; margin:0; padding:0; width:250px;}
 .search form { padding:0; margin:0; }
 .search span { display:block; float:left; background:#fff; border:1px solid #fff; width:200px; padding:0 10px; height:29px; margin:0;}
-.search form .keywords { width:250px; line-height:13px; height:13px; float:left; background:none; border:0; padding:8px 0px; margin:0; font:normal 11px Arial, Helvetica, sans-serif; color:#fff }
+.search form .keywords { width:200px; line-height:20px; height:25px; float: inherit; background:none; border:0;  margin:0; font:normal 11px Arial, Helvetica, sans-serif; color:#000 }
 .search form .button { float:left; margin:0; padding:0; border:0; position:relative; }
 /* content */
 .content { padding:10px 0 0 0;}

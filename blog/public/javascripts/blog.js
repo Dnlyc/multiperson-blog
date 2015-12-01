@@ -265,3 +265,7 @@ function selectTag(id) {
         document.getElementById('submit-id').removeChild(document.getElementById('id' + id));
     }
 }
+
+function removePost (name, time, title) {
+    window.location.href="/space/posts/" + name + "/" + time + "/" + title + "/remove"
+}
