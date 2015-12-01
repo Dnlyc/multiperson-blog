@@ -11,8 +11,8 @@
                         <form role="form" action="" method="post" class="registration-form" enctype="multipart/form-data">
                             <div class="form-top">
                                 <div style="padding-top: 1em;" align="center">
-                                    <a href="#" onclick="chooseAvater()"><img width="200px" height="200px" id="i-avater" style="border-radius: 500px"  src="/images/<%= result.avater %>" class="img-thumbnail "/></a>
-                                    <input type="file" style="display: none" id="avater" name="avater" onchange="changAvater(this)"/>
+                                    <a href="#" onclick="chooseFile('avater')"><img width="200px" height="200px" id="i-avater" style="border-radius: 500px"  src="/images/<%= result.avater %>" class="img-thumbnail "/></a>
+                                    <input type="file" style="display: none" id="avater" name="avater" onchange="changBackground(this, 'i-avater', 0, 0)"/>
                                 </div>
                             </div>
                             <div class="form-bottom">

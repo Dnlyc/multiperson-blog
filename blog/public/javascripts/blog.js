@@ -114,16 +114,21 @@ function preview() {
     window.open("/");
 }
 
-function chooseAvater() {
-    document.getElementById('avater').click();
+function chooseFile(id) {
+    document.getElementById(id).click();
 }
 
-function changAvater(files) {
+function changBackground(files, id, width, height) {
     if (files.files && files.files.length) {
         var reader = new FileReader();
         reader.onload = function(evt) {
-            alert('finish');
-            document.getElementById('i-avater').src = evt.target.result;
+            if (width !== 0) {
+                document.getElementById(id).width = width;
+            }
+            if (height !== 0) {
+                document.getElementById(id).height = height;
+            }
+            document.getElementById(id).src = evt.target.result;
         }
         reader.readAsDataURL(files.files[0]);
     }

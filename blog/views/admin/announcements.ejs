@@ -1,67 +1,70 @@
 <%- include header %>
-        <!-- content -->
-        <div class="col-md-10">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="page-header bootstrap-admin-content-title">
-                        <h1>公告管理</h1>
-                    </div>
-                </div>
+<!-- content -->
+<div class="col-md-10">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header bootstrap-admin-content-title">
+                <h1>公告管理</h1>
+                <a href="/announcements/new" class="action btn">
+                    新增公告
+                </a>
             </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="text-muted bootstrap-admin-box-title">公告</div>
-                        </div>
-                        <div class="bootstrap-admin-panel-content">
-                            <table class="table bootstrap-admin-table-with-actions">
-                                <colgroup>
-                                    <col style="width:100px">
-                                    <col style="width:200px">
-                                    <col style="width:700px">
-                                    <col style="width:200px">
-                                    <col style="width:200px">
-                                    <col style="width:400px">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>标题</th>
-                                    <th>公告内容</th>
-                                    <th>发布者</th>
-                                    <th>发布日期</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>冬天在哪里</td>
-                                    <td>你们是是你们是是你们是是你们是是你们是是......</td>
-                                    <td>@mdo</td>
-                                    <td>2014-7-9</td>
-                                    <td>
-                                        <a href="#">
-                                            预览 |
-                                        </a>
-                                        <a href="#">
-                                           编辑 |
-                                        </a>
-                                        <a href="#">
-                                            删除
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="text-muted bootstrap-admin-box-title">公告</div>
+                </div>
+                <div class="bootstrap-admin-panel-content">
+                    <table class="table bootstrap-admin-table-with-actions">
+                        <colgroup>
+                            <col style="width:100px">
+                            <col style="width:200px">
+                            <col style="width:700px">
+                            <col style="width:200px">
+                            <col style="width:200px">
+                            <col style="width:400px">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>标题</th>
+                            <th>公告内容</th>
+                            <th>发布者</th>
+                            <th>发布日期</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>冬天在哪里</td>
+                            <td>你们是是你们是是你们是是你们是是你们是是......</td>
+                            <td>@mdo</td>
+                            <td>2014-7-9</td>
+                            <td>
+                                <a href="#">
+                                    预览 |
+                                </a>
+                                <a href="#">
+                                    编辑 |
+                                </a>
+                                <a href="#">
+                                    删除
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <%- include footer %>
