@@ -31,9 +31,9 @@ function postTags (req, res) {
     return mongodb.find('tags', selector).then(function (results) {
         if (results.length !== 0)
             return Promise.reject({message:'已存在该标签', redirect:'back'});
-        return mongodb.count('tags', {name : req.body.name})
-    }).then(function (num) {
-        selector.id = num;
+        return mongodb.find('tags', {name : req.body.name}, {"id" : -1}, 1)
+    }).then(function (results) {
+        selector.id = results.length === 0 ? 0 : results[0].id + 1;
         return mongodb.store('tags', [selector])
     }).then(function () {
         res.redirect('/space/' + req.params.name + '/tags');
@@ -70,7 +70,6 @@ function removeTags (req, res) {
         id : parseInt(req.body.id),
         name : req.params.name
     }
-    console.log(selector);
     return  mongodb.remove('tags', selector).then(function () {
         return mongodb.update('posts', {name : req.params.name}, {$pull : {tags : parseInt(req.body.id)}});
     }).then(function (results) {

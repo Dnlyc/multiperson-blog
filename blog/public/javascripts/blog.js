@@ -269,3 +269,7 @@ function selectTag(id) {
 function removePost (name, time, title) {
     window.location.href="/space/posts/" + name + "/" + time + "/" + title + "/remove"
 }
+
+function openImage (address) {
+    window.open(address);
+}

@@ -1,6 +1,6 @@
 var mongodb = require('../models/db'),
-    data = require('../config/data');
-common = require('../lib/common'),
+    data = require('../config/data'),
+    common = require('../lib/common'),
     markdown = require('markdown').markdown,
     trimHtml = require('trim-html'),
     Promise = require('bluebird');
@@ -39,7 +39,7 @@ function getArticles(req, res) {
             tags: tags,
             page: page,
             recomments: comments,
-            total: parseInt(total / 10) + 1,
+            total: parseInt(total % 10) === 0 ? parseInt(total / 10) : parseInt(total / 10) + 1,
             user: req.session.user,
             success: req.flash('success').toString()
         })
@@ -63,7 +63,7 @@ function getArticle(req, res) {
 
         avatar = results[0].avatar;
         signature = results[0].signature;
-
+        console.log(avatar);
         var param = {
                 name: req.params.name,
                 'time.day': req.params.day,
@@ -161,14 +161,14 @@ function postComment(req, res) {
         time: req.params.day,
         title: req.params.title,
         c_name: req.session.user.name,
-        c_avatar: req.session.user.avatar,
         time: time,
         content: req.body.content
     }
 
-    console.log(comment);
-
-    mongodb.find('comments', selector).then(function (result) {
+    mongodb.find('user', {name : req.session.user.name}).then(function (users) {
+        comment.c_avatar = users[0].avatar;
+        return mongodb.find('comments', selector);
+    }).then(function (result) {
         typeof result !== 'undefined' ? comment.id = result.length : comment.id = 0;
         return mongodb.store('comments', [comment]);
     }).then(function (result) {
@@ -187,11 +187,13 @@ function postReply(req, res) {
         c_id: parseInt(req.body.id),
         content: req.body.content,
         r_name: req.session.user.name,
-        r_avatar: req.session.user.avatar,
         time: time
     }
     console.log(reply);
-    return mongodb.store('replys', [reply]).then(function (result) {
+    mongodb.find('user', {name : req.session.user.name}).then(function (users) {
+        reply.r_avatar = users[0].avatar;
+        return mongodb.store('replys', [reply]);
+    }).then(function (result) {
         req.flash('success', '留言成功!');
         res.redirect('back');
     }).catch(function (err) {

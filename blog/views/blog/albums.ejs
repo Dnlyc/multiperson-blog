@@ -12,6 +12,7 @@
             <% albums.forEach(function (album) { %>
                 <div class="col-md-3 gallery-grids">
                     <a href="/space/<%= album.name %>/albums/<%= album.id %>" class="b-link-stripe b-animate-go  swipebox" title="">
+                        <!--<a href="#" onclick="openImage('/space/<%= album.name %>/albums/<%= album.id %>')" class="b-link-stripe b-animate-go  swipebox" title="">-->
                         <img src="/images<% if (!!!album.photos || album.photos.length === 0) { %>/default_albums_bg.jpg<% } else { %><%= album.photos[0] %><% } %>" height="160px" width="260px" alt="">
                         <div class="b-wrapper">
                                 <span class="b-animate b-from-left b-delay03 ">

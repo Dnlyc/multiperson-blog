@@ -20,7 +20,7 @@
         <div class="gallry-info" id="gallry-albums">
             <% for (var i = albums.photos.length - 1; i >= 0; i--) { %>
             <div class="col-md-3 gallery-grids" id="photo-0">
-                <a href="/images<%= albums.photos[i] %>" class="b-link-stripe b-animate-go  swipebox" title="">
+                <a href="#" onclick="openImage('/images<%= albums.photos[i] %>')" class="b-link-stripe b-animate-go  swipebox" title="">
                     <img id="photo0" src="/images<%= albums.photos[i] %>" height="160px" width="260px" alt="">
 
                     <div class="b-wrapper">

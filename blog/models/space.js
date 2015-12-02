@@ -1,11 +1,32 @@
+var mongodb = require('../models/db'),
+    trimHtml = require('trim-html'),
+    Promise = require('bluebird');
 
 function getSpace (req, res) {
     var blogger = req.params.name;
-    res.render('blog/index', {
-        blogger: blogger,
-        href : '',
-        user : req.session.user
-    });
+    var posts;
+
+    return mongodb.find('posts', {name : req.params.name}, {time: -1}, 9).then(function (docs) {
+        console.log(docs.length);
+        posts = docs.map(function (doc) {
+            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 30, preserveTags: false});
+            return doc;
+        });
+        return mongodb.find('albums', {name : req.params.name}, {}, 6);
+    }).then(function (albums) {
+        console.log('sucessful');
+        res.render('blog/index', {
+            blogger : blogger,
+            href : '',
+            albums : albums,
+            posts : posts,
+            user : req.session.user
+        });
+    }).catch(function (err) {
+        console.log(err.message);
+        req.flash('error', err.message);
+        return res.redirect('/');
+    })
 }
 
 module.exports = {

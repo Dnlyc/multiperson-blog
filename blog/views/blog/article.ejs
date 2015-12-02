@@ -45,7 +45,7 @@
                 <h5>作者 <%= post.name %></h5>
 
                 <div class="admin-text-left">
-                    <a href="/space/<%= post.name %>"><img src="<%= post.avatar %>"/></a>
+                    <a href="/space/<%= post.name %>"><img src="/images/<%= post.avatar %>"/></a>
                 </div>
                 <div class="admin-text-right">
                     <p><%= post.signature %></p>
@@ -62,7 +62,7 @@
                     <div class="media response-info">
                         <div class="media-left response-text-left">
                             <a href="/space/<%= comment.c_name %>">
-                                <img class="media-object" src="<%= comment.c_avatar %>" alt=""/>
+                                <img class="media-object" src="/images/<%= comment.c_avatar %>" alt=""/>
                             </a>
                             <h5><a href="/space/<%= comment.c_name %>"><%= comment.c_name %></a></h5>
                         </div>
@@ -80,7 +80,7 @@
                             <div class="media response-info">
                                 <div class="media-left response-text-left">
                                     <a href="/space/<%= reply.r_name %>">
-                                        <img class="media-object" src="<%= reply.r_avatar %>" alt=""/>
+                                        <img class="media-object" src="/images/<%= reply.r_avatar %>" alt=""/>
                                     </a>
                                     <h5><a href="/space/<%= reply.r_name %>"><%= reply.r_name %></a></h5>
                                 </div>

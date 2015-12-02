@@ -16,7 +16,7 @@ function getSettings (req, res) {
             return Promise.reject({message : '用户不存在!', direct : '/'});
         var setting = {
             name : result.name,
-            avater : result.avater,
+            avater : result.avatar,
             year : parseInt(result.birthday.slice(0, result.birthday.indexOf('-'))),
             month : parseInt(result.birthday.slice(result.birthday.indexOf('-') + 1, result.birthday.lastIndexOf('-'))),
             day : parseInt(result.birthday.slice(result.birthday.lastIndexOf('-') + 1, result.birthday.length))
@@ -48,7 +48,7 @@ function postSettings (req, res) {
     if (req.files.avater || req.body.height || req.body.weight || req.body.hobby1 || req.body.hobby2 || req.body.hobby3 || req.body.email || req.body.signature) {
         var selector = {name : req.body.name};
         var doc = {birthday : req.body.year + '-' + req.body.month + '-' + req.body.day};
-        if (req.files.avater) doc.avater = req.files.avater.name;
+        if (req.files.avater) doc.avatar = req.files.avater.name;
         if (req.body.height) doc.height = req.body.height;
         if (req.body.weight) doc.weight = req.body.weight;
         if (req.body.hobby1) doc.hobby1 = req.body.hobby1;
@@ -58,7 +58,16 @@ function postSettings (req, res) {
         if (req.body.signature) doc.signature = req.body.signature;
 
         mongodb.update('user', selector, {$set : doc}).then(function (result) {
-            res.redirect('/space/' + req.params.name + '/settings');
+
+            if (req.files.avater) {
+                mongodb.update('comments', {c_name : req.session.user.name}, {$set : {c_avatar : req.files.avater.name}}).then(function (result) {
+                    mongodb.update('replys', {r_name : req.session.user.name}, {$set : {r_avatar : req.files.avater.name}})
+                }).then(function () {
+                    res.redirect('/space/' + req.params.name + '/settings');
+                })
+            } else {
+                res.redirect('/space/' + req.params.name + '/settings');
+            }
         }).catch(function (err) {
             console.log(err.message)
             res.redirect('back');
