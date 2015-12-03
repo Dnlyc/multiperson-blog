@@ -29,6 +29,8 @@ var user = require('../models/user'),
     mongodb = require('../models/db'),
     albums = require('../models/albums'),
     settings = require('../models/settings'),
+    common = require('../lib/common'),
+    trimHtml = require('trim-html'),
     markdown = require('markdown').markdown;
 
 /**
@@ -37,17 +39,42 @@ var user = require('../models/user'),
  * @param res
  */
 function getHomepage (req, res) {
+    var count;
+    var page = req.params.page || 1;
     var error = {login : req.flash('error')[0]};
-    mongodb.find('posts', {}, {time : -1}).then(function (docs) {
+    var comments;
+    var bloggers;
+
+    mongodb.count('user', {}).then(function (num) {
+        var random = parseInt(Math.random() * num);
+        var begin = random < 6 ? 0 : random - 6;
+        return mongodb.find('user', {}, {}, 6, {skip : begin});
+    }).then(function (reults) {
+        bloggers = reults;
+        return common.getRecentComments();
+    }).then(function (results) {
+        comments = results;
+        return mongodb.count('posts', {});
+    }).then(function (num) {
+        count = num;
+        return mongodb.find('posts', {}, {time : -1}, 5, {
+            skip: (page - 1) * 5
+        })
+    }).then(function (docs) {
         // 解析markdown格式
         docs.forEach(function (doc) {
-            doc.post = markdown.toHTML(doc.post);
+            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 100, preserveTags: false});
         });
+        console.log(bloggers);
         res.render('proscenium/index', {
             title : '主页',
             href : '',
             posts: docs,
+            page : page,
+            total : parseInt(count % 5) === 0 ? parseInt(count / 5) : parseInt(count / 5) + 1,
             user : req.session.user,
+            comments : comments,
+            bloggers : bloggers,
             success : req.flash('success').toString(),
             error : error
         })
@@ -97,6 +124,7 @@ module.exports = function (app) {
 
     // 首页信息
     app.get('/', getHomepage);
+    app.get('/page/:page', getHomepage);
     app.post('/', checkNotLogin);
     app.post('/', login.postLogin);
 
@@ -113,7 +141,8 @@ module.exports = function (app) {
 
 
     // 精彩相册页面
-    app.get('/albums', albums.getPAlbums)
+    app.get('/albums', albums.getPAlbums);
+    app.get('/albums/:page', albums.getPAlbums);
 
     // 登陆页面
     //app.get('/login', checkNotLogin);
@@ -146,7 +175,7 @@ module.exports = function (app) {
     app.post('/space/reply', blogs.postReply);
 
     // 相册页面
-    app.get('/space/:name/albums', albums.getAlbums);
+    app.get('/space/:name/albums', albums.getAlbumsByName);
     app.post('/space/:name/albums', albums.createAlbum);
     app.get('/space/:name/albums/:id', albums.getNewAlbums);
     app.post('/space/:name/albums/:id', albums.changeAlbums);

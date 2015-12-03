@@ -7,7 +7,7 @@ var mongodb = require('../models/db'),
     Promise = require('bluebird');
 
 
-function getAlbums (req, res) {
+function getAlbumsByName (req, res) {
     var data = {name : req.params.name};
     var blogger = req.params.name;
 
@@ -113,15 +113,26 @@ function changeAlbums (req, res) {
 }
 
 function getPAlbums (req, res) {
-    console.log({name:'9'});
-    res.render('proscenium/albums', {
-        href : 'albums',
-        user : {name:'9'}
+    var page = req.params.page || 1;
+    var count;
+
+    mongodb.count('albums', {}).then(function (num) {
+        count = num;
+        return mongodb.find('albums', {}, {}, 9, {skip : (page - 1) * 9});
+    }).then(function (results) {
+        console.log(results);
+        res.render('proscenium/albums', {
+            href : 'albums',
+            albums : results,
+            user : req.session.user,
+            total : count % 9 == 0 ? count / 9 :parseInt(count / 9) + 1,
+            page : page
+        })
     })
 }
 
 module.exports = {
-    getAlbums : getAlbums,
+    getAlbumsByName : getAlbumsByName,
     getNewAlbums : getNewAlbums,
     createAlbum : createAlbum,
     changeAlbums : changeAlbums,

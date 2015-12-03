@@ -63,32 +63,47 @@
         <br />
 
         <div class="mainbar">
+            <% posts.forEach(function (post) { %>
             <div class="article">
-                <h2><span>Template License</span></h2>
+                <h2><span><%= post.title %></span></h2>
                 <div class="clr"></div>
-                <p>Posted on 18. Sep, 2015 by Sara in Filed under templates, internet,  with  Comments 18</p>
-                <img src="images/img_1.jpg" width="613" height="193" alt="image" />
+                <p>博主:<a href="/space/<%= post.name %>"><%= post.name %></a>,日期:<%= post.time.day %>,评论:18</p>
                 <div class="clr"></div>
-                <p>This is a free CSS website template by CoolWebTemplates. This
-                    work is distributed under the Creative Commons Attribution 3.0 License,
-                    which means that you are free to use it for any personal or commercial purpose provided you credit me in the form of a link back to <a href="http://www.cssmoban.com/" title="模板之家">模板之家</a>.</p>
-                <p>Maecenas dignissim mauris in arcu congue tincidunt. Vestibulum elit  nunc, accumsan vitae faucibus vel, scelerisque a quam. Aenean at metus id elit bibendum faucibus. Curabitur ultrices ante nec neque consectetur a aliquet libero lobortis. Ut nibh sem, pellentesque in dictum eu, convallis blandit erat. Cras vehicula tellus nec purus sagittis id scelerisque risus congue. Quisque sed semper massa. Donec id lacus mauris, vitae pretium risus. Fusce sed tempor erat. </p>
-                <p><a href="#">Read more </a></p>
+                <p><%= post.post.html %></p>
+               <p><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">阅读全文</a></p>
             </div>
-            <div class="article">
-                <h2><span>Aliquam Risus</span> Justo</h2>
-                <div class="clr"></div>
-                <p>Posted on 18. Sep, 2015 by Sara in Filed under templates, internet,  with  Comments 18</p>
-                <img src="images/img_1.jpg" width="613" height="193" alt="image" />
-                <div class="clr"></div>
-                <p>This is a free CSS website template by CoolWebTemplates. This
-                    work is distributed under the Creative Commons Attribution 3.0 License,
-                    which means that you are free to use it for any personal or commercial purpose provided you credit me in the form of a link back to <a href="http://www.cssmoban.com/" title="模板之家">模板之家</a>.</p>
-                <p>Maecenas dignissim mauris in arcu congue tincidunt. Vestibulum elit  nunc, accumsan vitae faucibus vel, scelerisque a quam. Aenean at metus id elit bibendum faucibus. Curabitur ultrices ante nec neque consectetur a aliquet libero lobortis. Ut nibh sem, pellentesque in dictum eu, convallis blandit erat. Cras vehicula tellus nec purus sagittis id scelerisque risus congue. Quisque sed semper massa. Donec id lacus mauris, vitae pretium risus. Fusce sed tempor erat. </p>
-                <p><a href="#">Read more </a></p>
-            </div>
-            <div class="article" style="padding:5px 20px 2px 20px; background:none; border:0;">
-                <p>Page 1 of 2 <span class="butons"><a href="#">3</a><a href="#">2</a> <a href="#" class="active">1</a></span></p>
+            <% }) %>
+            <div class="article" style="padding:5px 20px 2px 20px; background:none; border:0;" align="center">
+                <ul class="pagination">
+                    <li>
+                        <a href="/page/1" aria-label="<<">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <% if (page != 1) { %>
+                    <li>
+                        <a href="/page/<%= (page - 1) %>" aria-label="<">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% for(var i = 0; i < total; i++)  { %>
+                    <li <% if(i == page - 1) { %> class="active" <% } %>><a href="/page/<%= i+1 %>" ><%= i + 1 %></a></li>
+                    <% } %>
+                    <% if (page != total) { %>
+                    <li>
+                        <a href="/page/<%= (page + 1) %>" aria-label=">">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <li>
+                        <a href="/page/<%= total %>" aria-label=">>">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+                </p>
             </div>
         </div>
 <%- include rightbar %>

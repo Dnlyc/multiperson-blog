@@ -9,7 +9,8 @@ function getSpace (req, res) {
     return mongodb.find('posts', {name : req.params.name}, {time: -1}, 9).then(function (docs) {
         console.log(docs.length);
         posts = docs.map(function (doc) {
-            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 30, preserveTags: false});
+            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 200, preserveTags: false});
+            doc.post.html = doc.post.html.substr(0, 50);
             return doc;
         });
         return mongodb.find('albums', {name : req.params.name}, {}, 6);

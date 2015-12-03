@@ -3,6 +3,9 @@
         <h4>标签</h4>
 
         <div class="list-group">
+            <% if (tags.length === 0) { %>
+                <a class="list-group-item">博主还没有设置标签</a>
+            <% } %>
             <% tags.forEach(function(tag) { %>
                 <a href="#" class="list-group-item"><%= tag.content %></a>
             <% }) %>
@@ -14,7 +17,7 @@
         <% recomments.forEach(function (comment) { %>
             <div class="comments-info">
                 <div class="cmnt-icon-left">
-                    <img height="80" width="80" src="<% if(comment.c_avatar) { %><%= comment.c_avatar %><% } else { %><%= comment.r_avatar %><% } %>" alt=""/>
+                    <img height="80" width="80" src="/images/<% if(comment.c_avatar) { %><%= comment.c_avatar %><% } else { %><%= comment.r_avatar %><% } %>" alt=""/>
                     <h5 style="text-align:center;padding-top:1em"><a  href="/space/<%= blogger %>"><%= blogger %></a></h5>
                 </div>
                 <div class="cmnt-icon-right">

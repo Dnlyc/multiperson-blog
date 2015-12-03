@@ -23,16 +23,24 @@ function getTime () {
 
 /**
  * get recent comments
- * @param name
+ * @param [name]
  */
 function getRecentComments(name) {
     var res = [];
+    var c_name,r_name;
+    name = name || '';
+    if (name === '') {
+        c_name = r_name = {}
+    } else {
+        c_name = {c_name : name};
+        r_name = {r_name : name};
+    }
     return new Promise(function (resolve, reject) {
-        mongodb.find('comments', {c_name : name}, {day : -1}, 5).then(function (comments) {
+        mongodb.find('comments', c_name, {day : -1}, 5).then(function (comments) {
             if (typeof comments !== 'undefined') {
                 res = res.concat(comments);
             }
-            return mongodb.find('replys', {r_name : name}, {day : -1}, 5)
+            return mongodb.find('replys', r_name, {day : -1}, 5)
         }).then(function (replys) {
             if (typeof replys !== 'undefined') {
                 res = res.concat(replys);
@@ -47,6 +55,10 @@ function getRecentComments(name) {
             return reject(err);
         })
     })
+}
+
+function getBloggers () {
+    ;
 }
 
 module.exports = {

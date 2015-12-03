@@ -7,7 +7,7 @@
             <% if(user) { %>
             <div class="form-group">
                 <div class="col-xs-12">
-                    <a href="/space/<%= user.name %>"><img width="100px" height="100px" style="border-radius: 500px"  src="/images/2.jpg" class="img-thumbnail "/></a>
+                    <a href="/space/<%= user.name %>"><img width="100px" height="100px" style="border-radius: 500px"  src="/images/<%= user.avatar %>" class="img-thumbnail "/></a>
                 </div>
             </div>
             <% } %>
@@ -48,28 +48,38 @@
         <br />
         <% }  %>
     </div>
+
     <div class="gadget">
         <h2>推荐博主</h2>
         <div class="clr"></div>
-        <p>   <img src="images/test_1.gif" alt="image" width="18" height="17" /> <em>We can let circumstances rule us, or we can take charge and rule our lives from within </em>.<img src="images/test_2.gif" alt="image" width="18" height="17" /></p>
-        <p style="float:right;"><strong>Earl Nightingale</strong></p>
+        <p>
+            <% if (bloggers.length == 0) { %>
+                <p>还没有人参与进来哦~</p>
+            <% } else { %>
+                <% for(var i = 0; i < bloggers.length; i++) { %>
+                    <% if (i % 3 == 0) { %>
+                        <a href="/space/<%= bloggers[i].name %>" title="<%= bloggers[i].name %>"><img src="/images/<%= bloggers[i].avatar %>"  width="60" height="60" style="margin-left: 0em;margin-top: 1em"/></a>
+                    <% } else {%>
+                        <a href="/space/<%= bloggers[i].name %>" title="<%= bloggers[i].name %>"><img src="/images/<%= bloggers[i].avatar %>"  width="60" height="60" style="margin-left: 1em;margin-top: 1em"/></a>
+                    <% } %>
+                <% } %>
+            <% } %>
+        </p>
     </div>
+
     <div class="gadget">
         <h2><span>最新留言</span></h2>
         <div class="clr"></div>
         <ul class="ex_menu">
-            <li><a href="#" title="Website Templates">DreamTemplate</a><br />
-                Over 6,000+ Premium Web Templates</li>
-            <li><a href="#" title="WordPress Themes">TemplateSOLD</a><br />
-                Premium WordPress &amp; Joomla Themes</li>
-            <li><a href="#" title="Affordable Hosting">ImHosted.com</a><br />
-                Affordable Web Hosting Provider</li>
-            <li><a href="#" title="Stock Icons">MyVectorStore</a><br />
-                Royalty Free Stock Icons</li>
-            <li><a href="#" title="Website Builder">Evrsoft</a><br />
-                Website Builder Software &amp; Tools</li>
-            <li><a href="#" title="CSS Templates">CSS Hub</a><br />
-                Premium CSS Templates</li>
+            <% if(comments.length === 0) { %>
+                <li>还没有人留言~</li>
+            <% } else { %>
+            <% comments.forEach(function (comment) { %>
+            <li><a href="space/<% if(comment.c_name) { %> <%= comment.c_name %> <% } else { %> <%= comment.r_name %> <% }%>" title="Website Templates">
+                    <% if(comment.c_name) { %> <%= comment.c_name %> <% } else { %> <%= comment.r_name %> <% }%></a><br />
+                <%= comment.content %></li>
+            <% }) %>
+            <% }%>
         </ul>
     </div>
 </div>
