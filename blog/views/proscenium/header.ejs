@@ -18,10 +18,12 @@
             <div class="clr"></div>
             <div class="menu_nav">
                 <ul>
-                    <% if (href == 'index') { %> <li class="active"><% } else { %><li><% } %><a href="/">热门文章</a></li>
+                    <% if (href == '') { %> <li class="active"><% } else { %><li><% } %><a href="/">首页</a></li>
                     <% if (href == 'albums') { %> <li class="active"><% } else { %><li><% } %><a href="/albums">精彩相册</a></li>
                     <% if (href == 'ranklist') { %> <li class="active"><% } else { %><li><% } %><a href="/ranklist">排行榜</a></li>
-                    <% if (href == 'blog') { %> <li class="active"><% } else { %><li><% } %><a href="/blog">我的博客</a></li>
+                    <% if (user) { %>
+                        <% if (href == 'blog') { %> <li class="active"><% } else { %><li><% } %><a href="/space/<%= user.name %>">我的博客</a></li>
+                    <% } %>
                 </ul>
                 <div class="search">
                     <form id="form" name="form" method="post" action="">

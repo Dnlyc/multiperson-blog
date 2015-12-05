@@ -63,6 +63,7 @@ function postSettings (req, res) {
                 mongodb.update('comments', {c_name : req.session.user.name}, {$set : {c_avatar : req.files.avater.name}}).then(function (result) {
                     mongodb.update('replys', {r_name : req.session.user.name}, {$set : {r_avatar : req.files.avater.name}})
                 }).then(function () {
+                    req.session.user.avatar = req.files.avater.name;
                     res.redirect('/space/' + req.params.name + '/settings');
                 })
             } else {

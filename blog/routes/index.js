@@ -136,6 +136,10 @@ module.exports = function (app) {
     app.get('/logout', checkLogin);
     app.get('/logout', logout);
 
+    // 登陆页面
+    app.get('/login', login.getLogin);
+    app.post('/login', login.postLogin);
+
     // 排行榜页面
     app.get('/ranklist', ranklist.getRankList)
 
@@ -172,7 +176,7 @@ module.exports = function (app) {
     app.get('/space/:name/blogs/:page', blogs.getArticles);
     app.get('/space/blog/:name/:day/:title', blogs.getArticle);
     app.post('/space/blog/:name/:day/:title', blogs.postComment);
-    app.post('/space/reply', blogs.postReply);
+    app.post('/space/:name/:day/:title/reply', blogs.postReply);
 
     // 相册页面
     app.get('/space/:name/albums', albums.getAlbumsByName);

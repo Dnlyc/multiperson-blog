@@ -36,11 +36,11 @@ function getRecentComments(name) {
         r_name = {r_name : name};
     }
     return new Promise(function (resolve, reject) {
-        mongodb.find('comments', c_name, {day : -1}, 5).then(function (comments) {
+        mongodb.find('comments', c_name, {day : -1}, 10).then(function (comments) {
             if (typeof comments !== 'undefined') {
                 res = res.concat(comments);
             }
-            return mongodb.find('replys', r_name, {day : -1}, 5)
+            return mongodb.find('replys', r_name, {day : -1}, 10)
         }).then(function (replys) {
             if (typeof replys !== 'undefined') {
                 res = res.concat(replys);
@@ -48,7 +48,7 @@ function getRecentComments(name) {
             var r = res.sort(function (lp, rp) {
                 return rp.time.data - lp.time.data;
             })
-            r = r.slice(0, r.length > 5 ? 4 : r.length);
+            r = r.slice(0, r.length > 10 ? 10 : r.length);
             return resolve(r);
         }).catch(function (err) {
             console.log(err.message);

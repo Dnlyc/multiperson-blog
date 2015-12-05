@@ -65,6 +65,8 @@ postRegister = function (req, res) {
             email : email,
             avatar : datajson.default_avatar,
             signature : datajson.default_signature,
+            birthday: '1900-1-1',
+            pv: 0,
             createDate : new Date(),
             updateDate : new Date()
         }

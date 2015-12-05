@@ -38,6 +38,7 @@ function createAlbum (req, res) {
             id : total,
             title : req.body.title,
             name : req.params.name,
+            pv : 0,
             day : common.getTime()
         }
         return mongodb.store('albums', [doc]);
@@ -56,18 +57,26 @@ function getNewAlbums (req, res) {
         id : parseInt(req.params.id)
     };
     var blogger = req.params.name;
+    var album;
 
     mongodb.find('albums', selector).then(function (result) {
         if (result.length === 0) {
             return Promise.reject({message : '相册不存在！'});
         }
         result[0].photos = result[0].photos || [];
+        album = result[0];
         process.albums = result[0].title;
         process.name = req.params.name;
+        if (typeof req.session.user === 'undefined' && req.params.name == req.session.user.name) {
+            return Promise.resolve();
+        }
+        return mongodb.update('albums', selector, {$inc: {pv: 1}})
+    }).then(function () {
+        console.log(req.session.user);
         res.render('blog/albums_new', {
             blogger: blogger,
             href : 'albums',
-            albums : result[0],
+            albums : album,
             user : req.session.user,
             success : req.flash('success').toString()
         })

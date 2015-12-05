@@ -1,45 +1,47 @@
 <%- include header %>
-<section class="container">
-    <div class="login">
-        <h1>欢迎注册</h1>
-        <form method="post">
-            <% if(error) { %><div class="alert alert-danger"><%= error %></div><% } %>
-            <div class="form-group">
-                <label for="username" class="col-sm-2 control-label">用户名：</label>
-                <div class="col-xs-5">
-                    <input type="text" name="name" class="input-xlarge" placeholder="请输入用户名" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">密码：</label>
-                <div class="col-xs-5">
-                    <input type="password" name="password" class="form-control" placeholder="请输入密码" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="password_repeat" class="col-sm-2 control-label">确认密码：</label>
-                <div class="col-xs-10">
-                    <input type="password" name="password_repeat" class="form-control" placeholder="请输入确认密码" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">邮箱：</label>
-                <div class="col-xs-5">
-                    <input type="email" name="email" class="form-control input-xlarge" placeholder="请输入邮箱" required>
-                </div>
-            </div>
-
-            <br />
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-xs-5">
-                    <input type="submit" class="btn btn-info btn-block" value="注&nbsp;&nbsp;&nbsp;&nbsp;册"/>
-                </div>
-            </div>
-            <br />
-        </form>
+<div class="container" style="width: 600px;margin-top: 2em;margin-bottom: 2em">
+    <div class="panel panel-default bootstrap-admin-no-table-panel">
+        <div class="panel-heading">
+            <div class="text-muted bootstrap-admin-box-title">欢迎注册</div>
+        </div>
+        <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+            <form class="form-horizontal" method="post">
+                <fieldset>
+                    <% if(error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+                    <div class="form-group">
+                        <label class="col-lg-offset-1 col-lg-2 control-label" for="focusedInput">用户名</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" name="name" type="text"required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-offset-1 col-lg-2 control-label" for="focusedInput">密码</label>
+                        <div class="col-lg-7">
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-offset-1 col-lg-2 control-label" for="focusedInput">确认密码</label>
+                        <div class="col-lg-7">
+                            <input type="password" name="password_repeat" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-offset-1 col-lg-2 control-label" for="focusedInput">邮箱</label>
+                        <div class="col-lg-7">
+                            <input class="form-control"  type="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-5">
+                        <button type="submit" class="btn btn-primary">注册</button>
+                        <button type="reset" class="btn btn-default">取消</button>
+                    <div>
+                </fieldset>
+            </form>
+        </div>
     </div>
-</section>
+</div>
+
+
+
 <%- include footer %>

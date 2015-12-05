@@ -11,7 +11,7 @@
                         <form role="form" action="" method="post" class="registration-form" enctype="multipart/form-data">
                             <div class="form-top">
                                 <div style="padding-top: 1em;" align="center">
-                                    <a href="#" onclick="chooseFile('avater')"><img width="200px" height="200px" id="i-avater" style="border-radius: 500px"  src="/images/<%= result.avater %>" class="img-thumbnail "/></a>
+                                    <a href="#" <%if (user && user.name == blogger) { %>onclick="chooseFile('avater')"<% }%> ><img width="200px" height="200px" id="i-avater" style="border-radius: 500px"  src="/images/<%= result.avater %>" class="img-thumbnail "/></a>
                                     <input type="file" style="display: none" id="avater" name="avater" onchange="changBackground(this, 'i-avater', 0, 0)"/>
                                 </div>
                             </div>
@@ -27,19 +27,19 @@
                                     <label class="col-sm-2 control-label">出生日期：</label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
-                                            <select class="form-control" name="year">
+                                            <select class="form-control" name="year" <%if (!user || (user && user.name != blogger)) { %>disabled<% } %>>
                                                 <% for (var i = year; i >= 1900; i--) { %>
                                                     <option <% if (i === result.year) { %>selected="selected" <% } %>><%= i %></option>
                                                 <% } %>
                                             </select>
                                             <span class="input-group-addon">年</span>
-                                            <select class="form-control" name="month">
+                                            <select class="form-control" name="month" <%if (!user || (user && user.name != blogger)) { %>disabled<% } %>>
                                                 <% for (var i = 1; i <= 12; i++) { %>
                                                     <option <% if (i == parseInt(result.month)) { %>selected="selected" <% } %>><%= i %></option>
                                                 <% } %>
                                             </select>
                                             <span class="input-group-addon">月</span>
-                                            <select class="form-control" name="day">
+                                            <select class="form-control" name="day" <%if (!user || (user && user.name != blogger)) { %>disabled<% } %>>
                                                 <% for (var i = 1; i <= 31; i++) { %>
                                                     <option <% if (i == result.day) { %>selected="selected" <% } %>><%= i %></option>
                                                 <% } %>
@@ -53,7 +53,7 @@
                                     <label class="col-sm-2 control-label">身高：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="height"  placeholder="保密"<% if(result.height) { %>value="<%= result.height %>"<% } %>>
+                                            <input type="text" class="form-control" name="height"  placeholder="保密"<% if(result.height) { %>value="<%= result.height %>"<% } %>  <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
                                             <span class="input-group-addon">cm</span>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                     <label class="col-sm-2 control-label" name="weight">体重：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
-                                            <input type="text" class="form-control"  name="weight" placeholder="保密" <% if(result.weight) { %>value="<%= result.weight %>"<% } %>>
+                                            <input type="text" class="form-control"  name="weight" placeholder="保密" <% if(result.weight) { %>value="<%= result.weight %>"<% } %> <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
                                             <span class="input-group-addon">kg</span>
                                         </div>
                                     </div>
@@ -74,11 +74,11 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon">1.</span>
-                                            <input type="text" class="form-control" name="hobby1" <% if(result.hobby1) { %>value="<%= result.hobby1 %>"<% } %>>
+                                            <input type="text" class="form-control" name="hobby1" <% if(result.hobby1) { %>value="<%= result.hobby1 %>"<% } %> <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
                                             <span class="input-group-addon">2.</span>
-                                            <input type="text" class="form-control" name="hobby2" <% if(result.hobby2) { %>value="<%= result.hobby2 %>"<% } %>>
+                                            <input type="text" class="form-control" name="hobby2" <% if(result.hobby2) { %>value="<%= result.hobby2 %>"<% } %> <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
                                             <span class="input-group-addon" >3.</span>
-                                            <input type="text" class="form-control" name="hobby3" <% if(result.hobby3) { %>value="<%= result.hobby3 %>"<% } %>>
+                                            <input type="text" class="form-control" name="hobby3" <% if(result.hobby3) { %>value="<%= result.hobby3 %>"<% } %> <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                 <div class="form-group" align="center">
                                     <label class="col-sm-2 control-label">邮箱：</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="email" class="form-control" <% if(result.email) { %>value="<%= result.email %>"<% } %>>
+                                        <input type="text" name="email" class="form-control" <% if(result.email) { %>value="<%= result.email %>"<% } %> <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
                                     </div>
                                 </div>
                                 <br />
@@ -94,14 +94,16 @@
                                     <div class="form-group" align="center">
                                         <label class="col-sm-2 control-label">我的签名：</label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" rows="3" name="signature" ><% if(result.signature) { %><%= result.signature %><% } %></textarea>
+                                            <textarea class="form-control" rows="3" name="signature" <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>><% if(result.signature) { %><%= result.signature %><% } %></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <br /><br /><br />
-                                <div class="form-group" align="center">
-                                    <div><button type="submit" class="btn btn-info col-sm-offset-5 col-sm-2">保存</button></div>
-                                </div>
+                                <%if (user && user.name == blogger) { %>
+                                    <div class="form-group" align="center">
+                                        <div><button type="submit" class="btn btn-info col-sm-offset-5 col-sm-2">保存</button></div>
+                                    </div>
+                                <% } %>
                             </div>
 
                             <!-- Javascript -->

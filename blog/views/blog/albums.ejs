@@ -27,9 +27,9 @@
                 </div>
             <% }) %>
 
-            <% if(blogger === user.name) { %>
+            <% if(user && blogger === user.name) { %>
             <div class="col-md-3 gallery-grids" align="center">
-                <a href="#" class="b-link-stripe b-animate-go  swipebox" title="" onclick="createAlbums()">
+                <a href="#" class="b-link-stripe b-animate-go  swipebox" style="width:400px;text-align: center;line-height: 160px;vertical-align: middle;display: table-cell;cursor: pointer;" onclick="createAlbums()">
                     <img src="/images/albums_add.png" alt="">
                     <div class="b-wrapper">
                         <span class="b-animate b-from-left  b-delay03 "/>

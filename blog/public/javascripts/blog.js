@@ -270,6 +270,10 @@ function removePost (name, time, title) {
     window.location.href="/space/posts/" + name + "/" + time + "/" + title + "/remove"
 }
 
+function gotoRegister() {
+    window.location.href="/register"
+}
+
 function openImage (address) {
     window.open(address);
 }

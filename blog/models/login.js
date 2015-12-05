@@ -6,6 +6,7 @@ var mongodb = require('./db'),
     Promise = require('bluebird'),
     postLogin;
 
+
 /**
  * 登陆请求
  * @param req
@@ -37,6 +38,15 @@ postLogin = function (req, res) {
 
 }
 
+function getLogin (req, res) {
+    res.render('proscenium/login', {
+        href : 'login',
+        user : req.session.user,
+        error : req.flash('error').toString()
+    })
+}
+
 module.exports = {
-    postLogin : postLogin
+    postLogin : postLogin,
+    getLogin : getLogin
 };

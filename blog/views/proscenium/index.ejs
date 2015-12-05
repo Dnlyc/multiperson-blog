@@ -67,7 +67,7 @@
             <div class="article">
                 <h2><span><%= post.title %></span></h2>
                 <div class="clr"></div>
-                <p>博主:<a href="/space/<%= post.name %>"><%= post.name %></a>,日期:<%= post.time.day %>,评论:18</p>
+                <p>博主:<a href="/space/<%= post.name %>"><%= post.name %></a>,日期:<%= post.time.day %>,浏览次数:<%= post.pv %>;评论:<%= post.c_num %></p>
                 <div class="clr"></div>
                 <p><%= post.post.html %></p>
                <p><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">阅读全文</a></p>

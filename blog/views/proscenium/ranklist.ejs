@@ -1,10 +1,10 @@
 <%- include header %>
-<br /><br />
+<br />
 <div class="content">
     <div class="content_resize">
         <div class="container" style="width: auto" align="center">
             <h1>排行榜</h1>
-            <br /><br /><br />
+            <br /><br />
             <div class="row">
                 <div class="col-md-5" align="center">
                     <div class="panel panel-default">
@@ -21,15 +21,15 @@
                                 <tr>
                                     <th style="text-align: left">排名</th>
                                     <th style="text-align: center">标题</th>
-                                    <th style="text-align: right">阅读数</th>
+                                    <th style="text-align: right">阅读次数</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for(var i = 1; i < 11; i++) { %>
+                                <% for(var i = 0; i < posts.length; i++) { %>
                                 <tr>
-                                    <td style="text-align: center"><%= i %></td>
-                                    <td style="text-align: center">那一年的春天</td>
-                                    <td style="text-align: right">13343333</td>
+                                    <td style="text-align: center"><%= i + 1 %></td>
+                                    <td style="text-align: center"><%= posts[i].title %></td>
+                                    <td style="text-align: right"><%= posts[i].pv %></td>
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -43,30 +43,27 @@
                 <div class="col-md-5" align="center">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="text-muted bootstrap-admin-box-title">博文排行</div>
+                            <div class="text-muted bootstrap-admin-box-title">空间排行</div>
                         </div>
                         <div class="bootstrap-admin-panel-content">
                             <table class="table">
                                 <colgroup>
-                                    <col style="width:200px">
-                                    <col style="width:700px">
-                                    <col style="width:300px">
                                     <col style="width:100px">
+                                    <col style="width:700px">
+                                    <col style="width:200px">
                                 </colgroup>
                                 <tr>
                                     <th style="text-align: left">排名</th>
                                     <th style="text-align: center">博主</th>
-                                    <th style="text-align: center">文章数量</th>
-                                    <th style="text-align: right">浏览量</th>
+                                    <th style="text-align: right">访问次数</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for(var i = 1; i < 11; i++) { %>
+                                <% for(var i = 0; i < spaces.length; i++) { %>
                                 <tr>
-                                    <td style="text-align: center"><%= i %></td>
-                                    <td style="text-align: center">那一天未闻花名</td>
-                                    <td style="text-align: center">12</td>
-                                    <td style="text-align: right">13343333</td>
+                                    <td style="text-align: center"><%= i + 1 %></td>
+                                    <td style="text-align: center"><%= spaces[i].name %></td>
+                                    <td style="text-align: right"><%= spaces[i].pv %></td>
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -80,7 +77,6 @@
 
             <br /><br />
             <div class="row">
-
                 <div class="col-md-5" align="center">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -96,15 +92,15 @@
                                 <tr>
                                     <th style="text-align: center">排名</th>
                                     <th style="text-align: center">标题</th>
-                                    <th style="text-align: right">评论数</th>
+                                    <th style="text-align: right">评论次数</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for(var i = 1; i < 11; i++) { %>
+                                <% for(var i = 0; i < comments.length; i++) { %>
                                 <tr>
-                                    <td style="text-align: center"><%= i %></td>
-                                    <td style="text-align: center">那一年的春天</td>
-                                    <td style="text-align: right">13343333</td>
+                                    <td style="text-align: center"><%= i + 1 %></td>
+                                    <td style="text-align: center"><%= comments[i].title %></td>
+                                    <td style="text-align: right"><%= comments[i].c_num %></td>
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -130,15 +126,15 @@
                                 <tr>
                                     <th style="text-align: left">排名</th>
                                     <th style="text-align: center">标题</th>
-                                    <th style="text-align: right">浏览量</th>
+                                    <th style="text-align: right">浏览次数</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for(var i = 1; i < 11; i++) { %>
+                                <% for(var i = 0; i < albums.length; i++) { %>
                                 <tr>
-                                    <td style="text-align: center"><%= i %></td>
-                                    <td style="text-align: center">那一年的春天</td>
-                                    <td style="text-align: right">13343333</td>
+                                    <td style="text-align: center"><%= i + 1 %></td>
+                                    <td style="text-align: center"><%= albums[i].title %></td>
+                                    <td style="text-align: right"><%= albums[i].pv %></td>
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -149,4 +145,6 @@
             </div>
         </div>
         <br /><br />
+    </div>
+</div>
 <%- include footer %>

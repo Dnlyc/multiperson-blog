@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%=user.name%>博客</title>
+    <title><%=blogger%>博客</title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/login-style.css" type="text/css" rel="stylesheet" media="all">
     <link href="/stylesheets/blog_style.css" type="text/css" rel="stylesheet" media="all">
@@ -42,14 +42,15 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="/space/<%= blogger %>" <% if(href=='') { %>class="active"<% } %>>首页</a></li>
+                    <li><a href="/" >首页</a></li>
+                    <li><a href="/space/<%= blogger %>" <% if(href=='') { %>class="active"<% } %>>个人空间</a></li>
                     <li><a href="/space/<%= blogger %>/blogs" <% if(href == 'blogs') { %>class="active"<% } %>>个人博文</a></li>
                     <li><a href="/space/<%= blogger %>/albums" <% if(href=='albums') { %>class="active"<% } %>>个人相册</a></li>
-                    <% if (blogger === user.name)  { %>
+                    <% if (user && blogger === user.name)  { %>
                         <li><a href="/space/<%= blogger %>/posts" <% if(href=='posts') { %>class="active"<% } %>>发表文章</a></li>
                         <li><a href="/space/<%= blogger %>/tags" <% if(href=='tags') { %>class="active"<% } %>>标签管理</a></li>
-                        <li><a href="/space/<%= blogger %>/settings" <% if(href=='settings') { %>class="active"<% } %>>个人信息</a></li>
                     <% } %>
+                    <li><a href="/space/<%= blogger %>/settings" <% if(href=='settings') { %>class="active"<% } %>>个人信息</a></li>
                 </ul>
                 <div class="clearfix"> </div>
             </div>

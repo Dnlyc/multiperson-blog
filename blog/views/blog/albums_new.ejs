@@ -1,6 +1,6 @@
 <%- include header %>
 
-<br/><br/><br/>
+<br/><br/>
 <div class="gallery">
     <div class="container">
         <form id="albums-post" method="post" enctype='multipart/form-data'>
@@ -15,7 +15,7 @@
             <li><%= albums.title %></li>
             <li><%= albums.day.day %></li>
         </ol>
-        <br/><br/>
+        <br/>
 
         <div class="gallry-info" id="gallry-albums">
             <% for (var i = albums.photos.length - 1; i >= 0; i--) { %>
@@ -30,16 +30,18 @@
                     </div>
                 </a>
 
-                <div align="center" style="padding-top:1em">
-                    <button class="btn btn-danger" onclick="removePhoto('<%= albums.photos[i] %>')"
-                            style="display: <% if (user.name !== blogger) { %>none<% } %>">移除
-                    </button>
-                </div>
+                <% if (user) { %>
+                    <div align="center" style="padding-top:1em">
+                        <button class="btn btn-danger" onclick="removePhoto('<%= albums.photos[i] %>')"
+                                style="display:<% if (user.name !== blogger) { %>none<% } %>">移除
+                        </button>
+                    </div>
+                <% } %>
             </div>
             <% } %>
-            <% if (user.name === blogger) { %>
+            <% if (user && user.name === blogger) { %>
             <div class="col-md-3 gallery-grids" align="center" id="add">
-                <a href="#" onclick="addPhoto()" class="b-link-stripe b-animate-go  swipebox" title="">
+                <a href="#" onclick="addPhoto()" class="b-link-stripe b-animate-go  swipebox" style="width:400px;text-align: center;line-height: 160px;vertical-align: middle;display: table-cell;cursor: pointer;" >
                     <img src="/images/albums_add.png" alt="">
 
                     <div class="b-wrapper">

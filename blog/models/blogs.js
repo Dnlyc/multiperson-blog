@@ -63,7 +63,6 @@ function getArticle(req, res) {
 
         avatar = results[0].avatar;
         signature = results[0].signature;
-        console.log(avatar);
         var param = {
                 name: req.params.name,
                 'time.day': req.params.day,
@@ -82,15 +81,22 @@ function getArticle(req, res) {
         post.post = markdown.toHTML(post.post);
         post.avatar = avatar;
         post.signature = signature;
-
-        var selector = {
+        if (typeof req.session.user === 'undefined' && req.params.name == req.session.user.name) {
+            return Promise.resolve();
+        }
+        return mongodb.update('posts', {
             name: req.params.name,
             'time.day': req.params.day,
             title: req.params.title
+        }, {$inc: {pv: 1}})
+    }).then(function (results) {
+        var selector = {
+            name: req.params.name,
+            title: req.params.title
         }
-
         return mongodb.find('comments', selector);
     }).then(function (results) {
+        console.log(results);
         if (typeof results !== 'undefined') {
             var maps = results.map(function (result) {
                 var sel = {c_id: result.id};
@@ -150,11 +156,6 @@ function postComment(req, res) {
 
     var id = 0;
     var time = common.getTime();
-    var selector = {
-        name: req.params.name,
-        'time.day': req.params.day,
-        title: req.params.title
-    }
 
     var comment = {
         name: req.params.name,
@@ -167,10 +168,20 @@ function postComment(req, res) {
 
     mongodb.find('user', {name : req.session.user.name}).then(function (users) {
         comment.c_avatar = users[0].avatar;
-        return mongodb.find('comments', selector);
+        return mongodb.find('comments');
     }).then(function (result) {
-        typeof result !== 'undefined' ? comment.id = result.length : comment.id = 0;
+        console.log(result);
+        result.length != 0 ? comment.id = result[result.length - 1].id + 1 : comment.id = 0;
         return mongodb.store('comments', [comment]);
+    }).then(function () {
+        if (req.params.name == req.session.user.name) {
+            return Promise.resolve();
+        }
+        return mongodb.update('posts', {
+            name: req.params.name,
+            'time.day': req.params.day,
+            title: req.params.title
+        }, {$inc: {c_num: 1}})
     }).then(function (result) {
         req.flash('success', '留言成功!');
         res.redirect('back');
@@ -189,10 +200,18 @@ function postReply(req, res) {
         r_name: req.session.user.name,
         time: time
     }
-    console.log(reply);
     mongodb.find('user', {name : req.session.user.name}).then(function (users) {
         reply.r_avatar = users[0].avatar;
         return mongodb.store('replys', [reply]);
+    }).then(function () {
+        if (req.params.name == req.session.user.name) {
+            return Promise.resolve();
+        }
+        return mongodb.update('posts', {
+            name: req.params.name,
+            'time.day': req.params.day,
+            title: req.params.title
+        }, {$inc: {c_num: 1}})
     }).then(function (result) {
         req.flash('success', '留言成功!');
         res.redirect('back');

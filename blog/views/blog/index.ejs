@@ -6,10 +6,17 @@
             <h3>最新日志</h3>
         </div>
         <div class="navbar-right">
-            <a href="/space/<%= user.name %>/blogs">查看更多</a>
+            <a href="/space/<%= blogger %>/blogs">查看更多</a>
         </div>
     </div>
     <div class="container">
+        <% if (posts.length == 0) { %>
+            <div class="col-sm-12 col-md-12 featur-grids">
+                <div class="thumbnail feature-thmbnl" style="height:120px;vertical-align: middle;text-align: center;line-height: 60px;" >
+                    <p style="font-size:16px">博主还没有发表过任何文章哦...</p>
+                </div>
+            </div>
+        <% } %>
         <% posts.forEach(function (post) { %>
         <div class="col-sm-6 col-md-4 featur-grids" >
             <div class="thumbnail feature-thmbnl" style="height:180px" >
@@ -35,10 +42,17 @@
                 <h3>最新相册</h3>
             </div>
             <div class="navbar-right">
-                <a href="/space/<%= user.name %>/albums">查看更多</a>
+                <a href="/space/<%= blogger %>/albums">查看更多</a>
             </div>
         </div>
 		<div class="container">
+            <% if (albums.length == 0) { %>
+            <div class="col-sm-12 col-md-12 featur-grids">
+                <div class="thumbnail feature-thmbnl" style="height:120px;vertical-align: middle;text-align: center;line-height: 120px;" >
+                    <p style="font-size:16px">博主还没有发表过任何相册哦...</p>
+                </div>
+            </div>
+            <% } %>
             <% albums.forEach(function (album) { %>
             <div class="col-md-4 bb-grids">
                 <a href="/space/<%= album.name %>/albums/<%= album.id %>" class="thumbnail">

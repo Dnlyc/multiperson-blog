@@ -139,10 +139,18 @@ postPost = function (req, res) {
         title : req.body.title,
         post : req.body.post,
         tags : tags,
+        pv : 0,
+        c_num : 0,
+        praise : 0,
         time : now
     };
 
-    mongodb.store('posts', [post]).then(function (result) {
+    mongodb.find('posts', {name : user.name, title : req.body.title}).then(function (results) {
+        if (results.length != 0) {
+            return Promise.reject('该文章名字已存在.')
+        }
+        return mongodb.store('posts', [post]);
+    }).then(function (result) {
         req.flash('success', '发布成功!');
         res.redirect('/space/' + user.name + '/blogs'); //发表成功跳转到主页
     }).catch(function (err) {
