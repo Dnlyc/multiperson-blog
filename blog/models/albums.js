@@ -19,7 +19,7 @@ function getAlbumsByName (req, res) {
             user : req.session.user,
             success : req.flash('success').toString()
         })
-    }).catch(function () {
+    }).catch(function (err) {
         req.flash('error', err.message);
         res.redirect('back');
     })

@@ -153,6 +153,8 @@ module.exports = function (app) {
 
     // 博客文章页面
     app.get('/space/:name/blogs', blogs.getArticles);
+    app.get('/space/:name/blogs/:id/', blogs.getArticlesByTag);
+    app.get('/space/:name/blogs/:id/:page', blogs.getArticlesByTag);
     app.get('/space/:name/blogs/:page', blogs.getArticles);
     app.get('/space/blog/:name/:day/:title', blogs.getArticle);
     app.post('/space/blog/:name/:day/:title', blogs.postComment);
@@ -171,6 +173,7 @@ module.exports = function (app) {
     app.post('/space/posts/:name/:day/:title/edit', post.postEditArticle);
     app.get('/space/posts/:name/:day/:title/remove', post.removePost);
     app.post('/preview', post.postPreview);
+    app.post('/space/transfer/:name/:day/:title', post.postTransferPost);
 
     // 标签管理
     app.get('/space/:name/tags', tags.getTags);

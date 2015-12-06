@@ -139,6 +139,8 @@ postPost = function (req, res) {
         title : req.body.title,
         post : req.body.post,
         tags : tags,
+        transfer : 0,
+        transfer_num : 0,
         pv : 0,
         c_num : 0,
         praise : 0,
@@ -255,6 +257,46 @@ removePost = function (req, res) {
     })
 }
 
+function postTransferPost(req, res) {
+    var doc;
+    var selector = {
+        name : req.params.name,
+        'time.day': req.params.day,
+        title: req.params.title
+    }
+    var post;
+    mongodb.find('posts', selector).then(function (results) {
+        if (results.length === 0) {
+            return Promise.reject('没有转载的文章.');
+        }
+        doc = {
+            name : req.session.user.name,
+            title : results[0].title,
+            post : results[0].post,
+            transfer : 1,
+            transfer_num : 0,
+            pv : 0,
+            c_num : 0,
+            praise : 0,
+            time : common.getTime()
+        }
+        return mongodb.find('post', {name : req.session.user.name, title : results[0].title});
+    }).then(function (results) {
+        console.log(results[0]);
+        if (results.length !== 0) {
+            return Promise.reject('有相同题目的博文..');
+        }
+        return mongodb.store('posts', [doc]);
+    }).then(function () {
+        return mongodb.update('posts', selector, {$inc:{transfer_num: 1}})
+        res.json({successful : true, name : req.session.user.name});
+    }).catch(function (error) {
+        console.log(error.message);
+        req.flash('error', error.message);
+        res.json({successful : false});
+    })
+}
+
 module.exports = {
     getPost : getPost,
     postPost : postPost,
@@ -263,5 +305,6 @@ module.exports = {
     removePost : removePost,
     postPreview : postPreview,
     getEditArticle : getEditArticle,
-    postEditArticle : postEditArticle
+    postEditArticle : postEditArticle,
+    postTransferPost : postTransferPost
 };

@@ -7,7 +7,7 @@
                 <a class="list-group-item">博主还没有设置标签</a>
             <% } %>
             <% tags.forEach(function(tag) { %>
-                <a href="#" class="list-group-item"><%= tag.content %></a>
+                <a href="/space/<%= tag.name %>/blogs/<%= tag.id %>" class="list-group-item"><%= tag.content %></a>
             <% }) %>
         </div>
     </div>

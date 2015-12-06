@@ -222,9 +222,46 @@ function postReply(req, res) {
     });
 }
 
+function getArticlesByTag (req, res) {
+    var total,comments,tags;
+    var page = req.params.pages || 1;
+    var selector = {
+        name : req.params.name,
+        tags : {$all: [parseInt(req.params.id)] }
+    }
+    return common.getRecentComments(req.params.name).then(function (results) {
+        comments = results;
+        return mongodb.find('tags', {name: req.params.name})
+    }).then(function (results) {
+        tags = results;
+        return mongodb.count('posts', selector)
+    }).then(function (count) {
+        total = count;
+        return mongodb.find('posts', selector, {time:-1}, 10, {skip:(page - 1) * 10});
+    }).then(function (results) {
+        // 解析markdown格式
+        results.forEach(function (doc) {
+            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 100, preserveTags: false});
+        });
+        res.render('blog/blog_tag', {
+            blogger: req.params.name,
+            href: 'blogs',
+            posts: results,
+            tags: tags,
+            id : req.params.id,
+            page: page,
+            recomments: comments,
+            total: parseInt(total % 10) === 0 ? parseInt(total / 10) : parseInt(total / 10) + 1,
+            user: req.session.user,
+            success: req.flash('success').toString()
+        })
+    })
+}
+
 module.exports = {
     getArticles: getArticles,
     getArticle: getArticle,
     postComment: postComment,
-    postReply: postReply
+    postReply: postReply,
+    getArticlesByTag : getArticlesByTag
 };

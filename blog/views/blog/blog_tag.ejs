@@ -11,12 +11,12 @@
         <div class="col-md-8 blog-left" >
             <% if (posts.length === 0) { %>
             <div class="blog-info">
-                <h3>还没有发表过博文哦~</h3>
+                <h3>还没有有关该标签的博文哦~</h3>
             </div>
             <% } %>
                 <% posts.forEach(function (post, index) { %>
                      <div class="blog-info">
-                        <h4><% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a style="color: red">[原]</a> <% } %><a href="/space/blog/<%= post.name  %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
+                        <h4><a href="/space/blog/<%= post.name  %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
                         <p>发布日期 &nbsp;&nbsp; <%= post.time.day %> &nbsp;&nbsp; Comments (<%= post.c_num %>)</p>
                         <div class="blog-info-text">
                             <p class="snglp"><%= post.post.html %></p>
@@ -28,30 +28,30 @@
             <nav>
                 <ul class="pagination">
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/1" aria-label="<<">
+                        <a href="/space/<%= blogger %>/blogs/<%= id %>/1" aria-label="<<">
                             <span aria-hidden="true">&laquo;&laquo;</span>
                         </a>
                     </li>
                     <% if (page != 1) { %>
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= (page - 1) %>" aria-label="<">
+                        <a href="/space/<%= blogger %>/blogs/<%= id %>/<%= (page - 1) %>" aria-label="<">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <% } %>
 
                     <% for(var i = 0; i < total; i++)  { %>
-                    <li ><a href="/space/<%= blogger %>/blogs/<%= i+1 %>"><%= i + 1 %></a></li>
+                    <li ><a href="/space/<%= blogger %>/blogs/<%= id %>/<%= i+1 %>"><%= i + 1 %></a></li>
                     <% } %>
                     <% if (page != total) { %>
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= (page + 1) %>" aria-label=">">
+                        <a href="/space/<%= blogger %>/blogs/<%= id %>/<%= (page + 1) %>" aria-label=">">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                     <% } %>
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= total %>" aria-label=">>">
+                        <a href="/space/<%= blogger %>/blogs/<%= id %>/<%= total %>" aria-label=">>">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>
                     </li>
@@ -62,7 +62,6 @@
         <br /><br /><br />
         <%- include rightbart %>
         <div class="clearfix"> </div>
-
     </div>
 </div>
 <!--//blog-->

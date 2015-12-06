@@ -11,15 +11,17 @@
         </div>
         <div class="col-md-8 single-page-left">
             <div class="single-page-info">
-                <h1><%= post.title %></h1>
+                <h1><% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a>[原]</a> <% } %><%= post.title %></h1>
                 <% if (user && blogger === user.name) { %>
                     <a href="/space/posts/<%= blogger %>/<%= post.time.day %>/<%= post.title %>/edit"/>编辑</a> |
                     <a href="#" onclick="removePost('<%= blogger %>', '<%= post.time.day %>', '<%= post.title %>')"/>删除</a>
+                <% } else if (user && blogger !== user.name) { %>
+                    <a href="#" onclick="transferPost('<%= post.name %>', '<%= post.time.day %>', '<%= post.title %>')"/>转载</a>
                 <% } %>
                 <div>
                     <% if (post.tags.length !== 0) { %>
                         <% post.tags.forEach(function (tag) { %>
-                            <button id=<%= tag.id %> type="button" class="btn <%= tag.style %>"  style="margin-top: 1em"><%= tag.content %></button>
+                            <button id=<%= tag.id %> type="button" class="btn <%= tag.style %>"  style="margin-top: 1em" onclick="searchPostByTag('<%= tag.name %>', '<%= tag.id %>')"><%= tag.content %></button>
                         <% }) %>
                     <% } %>
                 </div>
@@ -32,12 +34,12 @@
                         <li><span class="admin"></span> <a href="#"><%= post.name %></a></li>
                         <li><span class="cmnts"></span> <a href="#">
                                 <% if(comments) { %>
-                                <%= comments.length %>
+                                <%= post.c_num %>
                                 <% } else { %>
                                 0
                                 <% } %>
                                 comments</a></li>
-                        <li><a href="#" class="like">15</a></li>
+                        <li><a href="#" onclick="" class="like">15</a></li>
                     </ul>
                 </div>
             </div>
