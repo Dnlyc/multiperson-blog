@@ -558,3 +558,19 @@ function transferPost(name, time, title) {
         }
     });
 }
+
+function praisePost (name, time, title) {
+    $.ajax({
+        url: '/space/' + name + '/' + time + '/' + title + '/praise',
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            window.location.href='/space/blog/' + name + '/' + time + '/' + title ;
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('error ' + textStatus + " " + errorThrown);
+        }
+    });
+}

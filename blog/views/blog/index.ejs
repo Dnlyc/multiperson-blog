@@ -20,7 +20,7 @@
         <% posts.forEach(function (post) { %>
         <div class="col-sm-6 col-md-4 featur-grids" >
             <div class="thumbnail feature-thmbnl" style="height:180px" >
-                <h4><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
+                <h4><% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a style="color: red">[原]</a><% } %><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
                 <!--<img src="/images/img7.jpg" alt="">-->
                 <div class="caption">
                     <p><%= post.post.html %>...</p>

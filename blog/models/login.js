@@ -42,7 +42,8 @@ function getLogin (req, res) {
     res.render('proscenium/login', {
         href : 'login',
         user : req.session.user,
-        error : req.flash('error').toString()
+        error : req.flash('error').toString(),
+        con : {}
     })
 }
 

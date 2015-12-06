@@ -21,7 +21,8 @@ getRegister = function (req, res) {
         href: '',
         user: req.session.user,
         success: req.flash('success').toString(),
-        error: req.flash('error').toString()
+        error: req.flash('error').toString(),
+        con : {}
     });
 }
 

@@ -159,6 +159,7 @@ module.exports = function (app) {
     app.get('/space/blog/:name/:day/:title', blogs.getArticle);
     app.post('/space/blog/:name/:day/:title', blogs.postComment);
     app.post('/space/:name/:day/:title/reply', blogs.postReply);
+    app.post('/space/:name/:day/:title/praise', blogs.postPraise);
 
     // 相册页面
     app.get('/space/:name/albums', albums.getAlbumsByName);

@@ -39,7 +39,7 @@
                                 0
                                 <% } %>
                                 comments</a></li>
-                        <li><a href="#" onclick="" class="like">15</a></li>
+                        <li><a href="#" <% if (user && user.name != blogger) { %>onclick="praisePost('<%= post.name%>', '<%= post.time.day %>', '<%= post.title %>')" <% } %>class="like"><%= post.praise %></a></li>
                     </ul>
                 </div>
             </div>

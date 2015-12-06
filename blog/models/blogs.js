@@ -258,10 +258,32 @@ function getArticlesByTag (req, res) {
     })
 }
 
+function postPraise (req, res) {
+    var selector = {
+        name: req.params.name,
+        'time.day': req.params.day,
+        title: req.params.title
+    }
+
+    return mongodb.count('posts', selector).then(function (count) {
+        if (count === 0) {
+            return Promise.reject('博文不存在');
+        }
+        return mongodb.update('posts', selector, {$inc:{praise : 1}});
+    }).then(function () {
+        res.json({successful : true});
+    }).catch(function (err) {
+        console.log(err.message);
+        req.flash('error', err.message);
+        res.json({successful : false});
+    })
+}
+
 module.exports = {
     getArticles: getArticles,
     getArticle: getArticle,
     postComment: postComment,
     postReply: postReply,
-    getArticlesByTag : getArticlesByTag
+    getArticlesByTag : getArticlesByTag,
+    postPraise : postPraise
 };

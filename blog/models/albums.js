@@ -11,7 +11,7 @@ function getAlbumsByName (req, res) {
     var data = {name : req.params.name};
     var blogger = req.params.name;
 
-    mongodb.find('albums', {name : req.params.name}).then(function (result) {
+    mongodb.find('albums', {name : req.params.name}, {day:-1}).then(function (result) {
         res.render('blog/albums', {
             blogger: blogger,
             href : 'albums',
@@ -67,7 +67,7 @@ function getNewAlbums (req, res) {
         album = result[0];
         process.albums = result[0].title;
         process.name = req.params.name;
-        if (typeof req.session.user === 'undefined' && req.params.name == req.session.user.name) {
+        if (typeof req.session.user === 'undefined' || req.params.name == req.session.user.name) {
             return Promise.resolve();
         }
         return mongodb.update('albums', selector, {$inc: {pv: 1}})
@@ -127,7 +127,7 @@ function getPAlbums (req, res) {
 
     mongodb.count('albums', {}).then(function (num) {
         count = num;
-        return mongodb.find('albums', {}, {time: -1}, 9, {skip : (page - 1) * 9});
+        return mongodb.find('albums', {}, {day: -1}, 9, {skip : (page - 1) * 9});
     }).then(function (results) {
         var total = count % 9 == 0 ? count / 9 :parseInt(count / 9) + 1;
         var t_res = [];

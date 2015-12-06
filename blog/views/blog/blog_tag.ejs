@@ -16,7 +16,7 @@
             <% } %>
                 <% posts.forEach(function (post, index) { %>
                      <div class="blog-info">
-                        <h4><a href="/space/blog/<%= post.name  %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
+                        <h4><% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a style="color: red">[原]</a> <% } %><a href="/space/blog/<%= post.name  %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
                         <p>发布日期 &nbsp;&nbsp; <%= post.time.day %> &nbsp;&nbsp; Comments (<%= post.c_num %>)</p>
                         <div class="blog-info-text">
                             <p class="snglp"><%= post.post.html %></p>
