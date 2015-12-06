@@ -1,0 +1,57 @@
+<%- include header %>
+<div class="content">
+    <div class="content_resize">
+
+        <div class="mainbar" id="mainbar">
+            <% if (posts.length == 0) { %>
+                <br />
+                <p style="padding-left:4em">没有类似相关的内容</p>
+            <% } else { %>
+                <% posts.forEach(function (post) { %>
+                <div class="article">
+                    <h2><span><%= post.title %></span></h2>
+                    <div class="clr"></div>
+                    <p>博主:<a href="/space/<%= post.name %>"><%= post.name %></a>,日期:<%= post.time.day %>,浏览次数:<%= post.pv %>;评论:<%= post.c_num %></p>
+                    <div class="clr"></div>
+                    <p><%= post.post.html %></p>
+                    <p><a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">阅读全文</a></p>
+                </div>
+                <% }) %>
+            <div class="article" style="padding:5px 20px 2px 20px; background:none; border:0;" align="center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(1)">
+                            <span>&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <% if (page != 1) { %>
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(<%= (page - 1) %>)" aria-label="<">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% for(var i = 0; i < total.length; i++)  { %>
+                    <li <% if(i == page - 1) { %> class="active" <% } %>><a href="#" onclick="searchPostsOrAlbums(<%= total[i] %>)" ><%= total[i] %></a></li>
+                    <% } %>
+                    <% if (page != total) { %>
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(<%= (page + 1) %>)" aria-label=">">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(<%= total[total.length - 1] %>)" aria-label=">>">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+                </p>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/javascripts/blog.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>

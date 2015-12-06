@@ -26,7 +26,8 @@ function getRankList(req, res) {
             posts : posts,
             spaces : spaces,
             comments : comments,
-            albums : results
+            albums : results,
+            con : req.body
         })
     })
 }

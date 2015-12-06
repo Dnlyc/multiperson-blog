@@ -1,7 +1,7 @@
 <%- include header %>
 <div class="content">
     <div class="content_resize">
-        <div class="container" style="width: auto" align="center">
+        <div class="container" style="width: auto" align="center" id="container">
             <h1>精彩相册</h1>
             <br />
 
@@ -18,9 +18,9 @@
                                 <% } %>
                                         <div class="col-md-4">
                                             <a href="/space/<%= albums[i].name %>/albums/<%= albums[i].id %>" class="thumbnail">
-                                                <img data-src="holder.js/260x180" alt="260x180" style="width: 260px; height: 180px;" src="/images<% if (!!!albums[i].photos || albums[i].photos.length === 0) { %>/default_albums_bg.jpg<% } else { %><%= albums[i].photos[0] %><% } %>">
+                                                <img title="<%= albums[i].title %>" data-src="holder.js/260x180" alt="260x180" style="width: 260px; height: 180px;" src="/images<% if (!!!albums[i].photos || albums[i].photos.length === 0) { %>/default_albums_bg.jpg<% } else { %><%= albums[i].photos[0] %><% } %>">
                                             </a>
-                                            <p>博主：<a href="#"> <%= albums[i].name %> </a></p>
+                                            <p>博主：<a href="/space/<%= albums[i].name %>"> <%= albums[i].name %> </a></p>
                                             <p>日期：<%= albums[i].day.day %></p>
                                         </div>
                                 <% if (i % 3 == 2 || i == albums.length) { %>
@@ -32,35 +32,38 @@
                 </div>
             </div>
 
-            <ul class="pagination">
-                <li>
-                    <a href="/albums/1" aria-label="<<">
-                        <span aria-hidden="true">&laquo;&laquo;</span>
-                    </a>
-                </li>
-                <% if (page != 1) { %>
-                <li>
-                    <a href="/albums/<%= (page - 1) %>" aria-label="<">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <% } %>
-                <% for(var i = 0; i < total; i++)  { %>
-                <li <% if(i == page - 1) { %> class="active" <% } %>><a href="/albums/<%= i+1 %>" ><%= i + 1 %></a></li>
-                <% } %>
-                <% if (page != total) { %>
-                <li>
-                    <a href="/albums/<%= (page + 1) %>" aria-label=">">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                <% } %>
-                <li>
-                    <a href="/albums/<%= total %>" aria-label=">>">
-                        <span aria-hidden="true">&raquo;&raquo;</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="article" style="padding:5px 20px 2px 20px; background:none; border:0;" align="center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(1)">
+                            <span>&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <% if (page != 1) { %>
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(<%= (page - 1) %>)" aria-label="<">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% for(var i = 0; i < total.length; i++)  { %>
+                    <li <% if(i == page - 1) { %> class="active" <% } %>><a href="#" onclick="searchPostsOrAlbums(<%= total[i] %>)" ><%= total[i] %></a></li>
+                    <% } %>
+                    <% if (page != total[total.length - 1]) { %>
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(<%= (page + 1) %>)" aria-label=">">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <li>
+                        <a href="#" onclick="searchPostsOrAlbums(<%= total[total.length - 1] %>)" aria-label=">>">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+                </p>
+            </div>
         </div>
     </div>
 </div>

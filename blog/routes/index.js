@@ -20,7 +20,7 @@ var user = require('../models/user'),
     register = require('../models/register'),
     post = require('../models/post'),
     logout = require('../models/logout'),
-    upload = require('../models/upload'),
+    search = require('../models/search'),
     ranklist = require('../models/ranklist'),
     comment = require('../models/comments'),
     space = require('../models/space'),
@@ -65,9 +65,7 @@ function getHomepage (req, res) {
         docs.forEach(function (doc) {
             doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 100, preserveTags: false});
         });
-        console.log(bloggers);
         res.render('proscenium/index', {
-            title : '主页',
             href : '',
             posts: docs,
             page : page,
@@ -75,6 +73,7 @@ function getHomepage (req, res) {
             user : req.session.user,
             comments : comments,
             bloggers : bloggers,
+            con : {},
             success : req.flash('success').toString(),
             error : error
         })
@@ -143,33 +142,14 @@ module.exports = function (app) {
     // 排行榜页面
     app.get('/ranklist', ranklist.getRankList)
 
+    // 搜索
+    app.get('/posts', search);
+    app.post('/search', search);
+    app.post('/search/:page', search);
 
     // 精彩相册页面
     app.get('/albums', albums.getPAlbums);
     app.get('/albums/:page', albums.getPAlbums);
-
-    // 登陆页面
-    //app.get('/login', checkNotLogin);
-    //app.get('/login', login.getLogin);
-
-    //
-    //// 编辑页面
-    //app.get('/edit/:name/:day/:title', checkLogin);
-    //app.get('/edit/:name/:day/:title', post.getEditPost);
-    //
-    //// 更新文章
-    //app.post('/edit/:name/:day/:title', checkLogin);
-    //app.post('/edit/:name/:day/:title', post.updatePost);
-    //
-    //// 删除文章
-    //app.get('/remove/:name/:day/:title', checkLogin);
-    //app.get('/remove/:name/:day/:title', post.removePost);
-    //
-    //// 上传页面
-    //app.get('/upload', checkLogin);
-    //app.get('/upload', upload.getUpload);
-    //app.post('/upload', checkLogin);
-    //app.post('/upload', upload.postUpload);
 
     // 博客文章页面
     app.get('/space/:name/blogs', blogs.getArticles);
@@ -201,12 +181,6 @@ module.exports = function (app) {
     // 个人设置
     app.get('/space/:name/settings', settings.getSettings);
     app.post('/space/:name/settings', settings.postSettings);
-
-    // 文章
-    //app.get('/u/:name', user.getArticle);
-    //app.get('/u/:name/:day/:title', user.getArticle);
-    // 留言
-    //app.post('/u/:name/:day/:title', comment.postComment);
 
     // 个人博客首页
     app.get('/space/:name', space.getSpace);

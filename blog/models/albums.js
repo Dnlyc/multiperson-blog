@@ -127,15 +127,20 @@ function getPAlbums (req, res) {
 
     mongodb.count('albums', {}).then(function (num) {
         count = num;
-        return mongodb.find('albums', {}, {}, 9, {skip : (page - 1) * 9});
+        return mongodb.find('albums', {}, {time: -1}, 9, {skip : (page - 1) * 9});
     }).then(function (results) {
-        console.log(results);
+        var total = count % 9 == 0 ? count / 9 :parseInt(count / 9) + 1;
+        var t_res = [];
+        for (var i = 0; i < total; i++) {
+            t_res.push(i + 1);
+        }
         res.render('proscenium/albums', {
             href : 'albums',
             albums : results,
             user : req.session.user,
-            total : count % 9 == 0 ? count / 9 :parseInt(count / 9) + 1,
-            page : page
+            total : t_res,
+            page : page,
+            con : {}
         })
     })
 }

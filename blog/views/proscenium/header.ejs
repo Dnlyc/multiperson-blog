@@ -19,6 +19,7 @@
             <div class="menu_nav">
                 <ul>
                     <% if (href == '') { %> <li class="active"><% } else { %><li><% } %><a href="/">首页</a></li>
+                    <% if (href == 'posts') { %> <li class="active"><% } else { %><li><% } %><a href="/posts">热门文章</a></li>
                     <% if (href == 'albums') { %> <li class="active"><% } else { %><li><% } %><a href="/albums">精彩相册</a></li>
                     <% if (href == 'ranklist') { %> <li class="active"><% } else { %><li><% } %><a href="/ranklist">排行榜</a></li>
                     <% if (user) { %>
@@ -26,9 +27,16 @@
                     <% } %>
                 </ul>
                 <div class="search">
-                    <form id="form" name="form" method="post" action="">
-                    <span><input type="text" class="keywords" name="height" maxlength="50" value="Search..." /></span>
-                        <input name="b" type="image" src="/images/search.gif" class="button" />
+                    <form id="form" name="form" method="post" action="/search">
+                        <div class="input-group">
+                            <input  id="content" name="content" type="text" maxlength="50" value="<% if(con && con.content !== false) {%><%= con.content %><%}%>"/>
+                            <select id="type" name="type" style="height: 26px">
+                                <option <% if(con && con.type == '0') {%>selected="selected"<%}%> value="0">标题</option>
+                                <option <% if(con && con.type == '1') {%>selected="selected"<%}%> value="1">标签</option>
+                                <option <% if(con && con.type == '2' || href == 'albums') {%>selected="selected"<%}%> value="2">相册</option>
+                            </select>
+                            <button type="submit" maxlength="50" value="Go" >Go</button>
+                        </div>
                     </form>
                 </div>
                 <!--/search -->

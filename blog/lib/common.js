@@ -57,11 +57,16 @@ function getRecentComments(name) {
     })
 }
 
-function getBloggers () {
-    ;
+function isEmptyObj(obj) {
+    var num = 0;
+    for (var key in obj) {
+        num++;
+    }
+    return num ? true : false;
 }
 
 module.exports = {
     getTime : getTime,
+    isEmptyObj : isEmptyObj,
     getRecentComments : getRecentComments
 };

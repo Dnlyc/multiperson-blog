@@ -31,7 +31,7 @@ function postTags (req, res) {
     return mongodb.find('tags', selector).then(function (results) {
         if (results.length !== 0)
             return Promise.reject({message:'已存在该标签', redirect:'back'});
-        return mongodb.find('tags', {name : req.body.name}, {"id" : -1}, 1)
+        return mongodb.find('tags', {}, {"id" : -1}, 1)
     }).then(function (results) {
         selector.id = results.length === 0 ? 0 : results[0].id + 1;
         return mongodb.store('tags', [selector])

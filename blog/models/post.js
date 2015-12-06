@@ -94,7 +94,7 @@ function postEditArticle (req, res) {
         'time.day' : req.params.day
     }
 
-    console.log(typeof req.body.tag);
+    console.log( req.body.tag);
 
     var tags;
     if (typeof req.body.tag === 'undefined') {

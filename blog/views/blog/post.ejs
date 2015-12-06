@@ -51,7 +51,7 @@
         <div id="submit-id">
             <% if (post.tags) { %>
             <% post.tags.forEach(function (tag) { %>
-            <input type="text" id="id<%= tag.id %>" name="tag" style="display: none" value="<%= tag.id %>"/>
+                <input type="text" id="id<%= tag.id %>" name="tag" style="display: none" value="<%= tag.id %>"/>
             <% }) %>
             <% } %>
         </div>
