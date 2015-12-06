@@ -1,4 +1,5 @@
 <%- include header %>
+<%- include leftbar %>
 <!-- content -->
 <div class="col-md-10">
     <div class="row">
@@ -6,17 +7,17 @@
             <div class="page-header bootstrap-admin-content-title">
                 <h1>新增公告</h1>
             </div>
-            <form class="form-horizontal" role="form" style="padding-top: 2em"  enctype='multipart/form-data'>
+            <form class="form-horizontal" method="post" role="form" id="myform" style="padding-top: 2em"  enctype='multipart/form-data' onsubmit="sumbitFrom()">
                 <div class="form-group">
                     <label for="firstname" class="col-sm-2 control-label">公告标题：</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="firstname" name="title">
+                        <input type="text" class="form-control" name="title" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lastname" class="col-sm-2 control-label">公告正文：</label>
                     <div class="col-sm-9" >
-                        <textarea class="form-control" rows="12" name="content"></textarea>
+                        <textarea class="form-control" rows="12" name="content" required></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -28,6 +29,7 @@
                     </div>
                 </div>
                 <input type="file" id="background-file" name="background" style="display: none" onchange="changBackground(this, 'background', 650, 400)">
+                <input type="text" id="flag" style="display: none" value="0">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-info">发表</button>
@@ -45,24 +47,6 @@
 </div>
 </div>
 </div>
-
-<script>
-    function chooseFile(id) {
-        document.getElementById(id).click();
-    }
-
-    function changBackground(files, id, width, height) {
-        if (files.files && files.files.length) {
-            var reader = new FileReader();
-            reader.onload = function(evt) {
-                document.getElementById(id).width = width;
-                document.getElementById(id).height = height;
-                document.getElementById(id).src = evt.target.result;
-            }
-            reader.readAsDataURL(files.files[0]);
-        }
-    }
-</script>
 
 <%- include footer %>
 

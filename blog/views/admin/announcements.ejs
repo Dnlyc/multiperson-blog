@@ -1,11 +1,12 @@
 <%- include header %>
+<%- include leftbar %>
 <!-- content -->
 <div class="col-md-10">
     <div class="row">
         <div class="col-lg-12">
             <div class="page-header bootstrap-admin-content-title">
                 <h1>公告管理</h1>
-                <a href="/announcements/new" class="action btn">
+                <a href="/main/announcements/new" class="action btn">
                     新增公告
                 </a>
             </div>
@@ -38,13 +39,13 @@
                             <th>操作</th>
                         </tr>
                         </thead>
+                        <% for (var i = 0; i < announcements.length; i++)  { %>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>冬天在哪里</td>
-                            <td>你们是是你们是是你们是是你们是是你们是是......</td>
-                            <td>@mdo</td>
-                            <td>2014-7-9</td>
+                            <td><%= i + 1 %></td>
+                            <td><%= announcements[i].title %></td>
+                            <td><%= announcements[i].content.html %></td>
+                            <td><%= announcements[i].name %></td>
+                            <td><%= announcements[i].time.day %></td>
                             <td>
                                 <a href="#">
                                     预览 |
@@ -52,15 +53,48 @@
                                 <a href="#">
                                     编辑 |
                                 </a>
-                                <a href="#">
+                                <a href="#" style="color: red">
                                     删除
                                 </a>
                             </td>
-                        </tr>
                         </tbody>
+                        <%  } %>
                     </table>
                 </div>
             </div>
+
+            <div class="col-lg-12" align="center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" onclick="searchAnnouncements(1)">
+                            <span>&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <% if (page != 1) { %>
+                    <li>
+                        <a href="#" onclick="searchAnnouncements(<%= (page - 1) %>)" aria-label="<">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% for(var i = 0; i < total.length; i++)  { %>
+                    <li <% if(i == page - 1) { %> class="active" <% } %>><a href="#" onclick="searchAnnouncements(<%= total[i] %>)" ><%= total[i] %></a></li>
+                    <% } %>
+                    <% if (page != total[total.length - 1]) { %>
+                    <li>
+                        <a href="#" onclick="searchAnnouncements(<%= (page + 1) %>)" aria-label=">">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    <li>
+                        <a href="#" onclick="searchAnnouncements(<%= total[total.length - 1] %>)" aria-label=">>">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>

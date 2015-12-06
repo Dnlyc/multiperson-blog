@@ -284,14 +284,13 @@ function postTransferPost(req, res) {
     }).then(function (results) {
         console.log(results[0]);
         if (results.length !== 0) {
-            return Promise.reject('有相同题目的博文..');
+            return Promise.reject({message : '有相同题目的博文..'});
         }
         return mongodb.store('posts', [doc]);
     }).then(function () {
-        return mongodb.update('posts', selector, {$inc:{transfer_num: 1}})
+        return mongodb.update('posts', selector, {$inc:{transfer: 1}})
         res.json({successful : true, name : req.session.user.name});
     }).catch(function (error) {
-        console.log(error.message);
         req.flash('error', error.message);
         res.json({successful : false});
     })

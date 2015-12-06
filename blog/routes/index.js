@@ -29,6 +29,7 @@ var user = require('../models/user'),
     mongodb = require('../models/db'),
     albums = require('../models/albums'),
     settings = require('../models/settings'),
+    announcement = require('../models/announcements'),
     common = require('../lib/common'),
     trimHtml = require('trim-html'),
     markdown = require('markdown').markdown;
@@ -188,4 +189,14 @@ module.exports = function (app) {
 
     // 个人博客首页
     app.get('/space/:name', space.getSpace);
+
+
+    // 后台管理
+    app.get('/main', login.getAdminLogin);
+    app.post('/main', login.postAdminLogin);
+
+    app.get('/main/announcements', announcement.getAnnouncements);
+    app.get('/main/announcements/:page', announcement.getAnnouncements);
+    app.get('/main/announcements/new', announcement.getNewAnnouncements);
+    app.post('/main/announcements/new', announcement.postNewAnnouncements);
 };

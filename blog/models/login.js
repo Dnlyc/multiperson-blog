@@ -47,7 +47,33 @@ function getLogin (req, res) {
     })
 }
 
+function getAdminLogin(req, res) {
+    res.render('admin/login', {
+        error : req.flash('error').toString()
+    })
+}
+
+function postAdminLogin(req, res) {
+    return mongodb.find('systemadmin', {name : req.body.name, password: req.body.password}).then(function (results) {
+        if (results.length == 0) {
+            console.log({name : req.body.name, password: req.body.password});
+            return Promise.reject({message : '用户名或密码错误.'});
+        }
+        req.session.admin = results[0];
+        res.render('admin/index', {
+            href : '',
+            name : results[0].alias,
+            error : req.flash('error').toString()
+        })
+    }).catch(function (error) {
+        req.flash('error', error.message);
+        res.redirect('back');
+    })
+}
+
 module.exports = {
     postLogin : postLogin,
-    getLogin : getLogin
+    getLogin : getLogin,
+    getAdminLogin : getAdminLogin,
+    postAdminLogin : postAdminLogin
 };
