@@ -574,3 +574,21 @@ function praisePost (name, time, title) {
         }
     });
 }
+
+function getAnnouncement (title) {
+    $.ajax({
+        url: '/announcement',
+        data: {title : title},
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            document.getElementById('m-content').innerHTML = data.html;
+            $("#myModal").modal();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('error ' + textStatus + " " + errorThrown);
+        }
+    });
+}

@@ -19,7 +19,6 @@ function searchPostsByTitle (req, res) {
             doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 300, preserveTags: false});
         });
         var total = parseInt(num % 10) === 0 ? parseInt(num / 10) : parseInt(num / 10) + 1;
-        var total = num % 9 == 0 ? num / 9 :parseInt(num / 9) + 1;
         var t_res = [];
         for (var i = 0; i < total; i++) {
             t_res.push(i + 1);

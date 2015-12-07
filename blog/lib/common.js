@@ -57,6 +57,33 @@ function getRecentComments(name) {
     })
 }
 
+function removePost (req) {
+    var comments;
+    return mongodb.find('comments', {title : req.params.title, name : req.params.name}).then(function (results) {
+        console.log('find comments : ', results);
+        if (results.length === 0) {
+            return Promise.resolve();
+        } else {
+            var r = results.map(function (result) {
+                return mongodb.remove('replys', {c_id : result.id});
+            })
+
+            return Promise.all(r);
+        }
+    }).then(function (result) {
+        console.log('remove replies : ', result);
+        return mongodb.remove('comments', {title : req.params.title});
+    }).then(function (result) {
+        console.log('remove comments : ', result.result);
+        var selector = {
+            name : req.params.name,
+            'time.day': req.params.day,
+            title: req.params.title
+        }
+        return mongodb.remove('posts', selector);
+    });
+}
+
 function isEmptyObj(obj) {
     var num = 0;
     for (var key in obj) {
@@ -68,5 +95,6 @@ function isEmptyObj(obj) {
 module.exports = {
     getTime : getTime,
     isEmptyObj : isEmptyObj,
-    getRecentComments : getRecentComments
+    getRecentComments : getRecentComments,
+    removePost : removePost
 };

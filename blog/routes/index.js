@@ -30,6 +30,7 @@ var user = require('../models/user'),
     albums = require('../models/albums'),
     settings = require('../models/settings'),
     announcement = require('../models/announcements'),
+    mian_index = require('../models/index'),
     common = require('../lib/common'),
     trimHtml = require('trim-html'),
     markdown = require('markdown').markdown;
@@ -45,8 +46,12 @@ function getHomepage (req, res) {
     var error = {login : req.flash('error')[0]};
     var comments;
     var bloggers;
+    var announcements;
 
-    mongodb.count('user', {}).then(function (num) {
+    mongodb.find('announcements', {}, {time : -1}, 5).then(function (results) {
+        announcements = results;
+        return mongodb.count('user', {});
+    }).then(function (num) {
         var random = parseInt(Math.random() * num);
         var begin = random < 6 ? 0 : random - 6;
         return mongodb.find('user', {}, {}, 6, {skip : begin});
@@ -69,6 +74,7 @@ function getHomepage (req, res) {
         res.render('proscenium/index', {
             href : '',
             posts: docs,
+            announcements : announcements,
             page : page,
             total : parseInt(count % 5) === 0 ? parseInt(count / 5) : parseInt(count / 5) + 1,
             user : req.session.user,
@@ -88,6 +94,15 @@ function getHomepage (req, res) {
             success: req.flash('success').toString(),
             error : error
         });
+    })
+}
+
+function getAnnouncement(req, res) {
+    mongodb.find('announcements', {title : req.body.title}).then(function (results) {
+        res.json({html : markdown.toHTML(results[0].content)})
+    }).catch(function (error) {
+        req.flash('error', error.message);
+        res.redirect('/');
     })
 }
 
@@ -125,6 +140,7 @@ module.exports = function (app) {
     // 首页信息
     app.get('/', getHomepage);
     app.get('/page/:page', getHomepage);
+    app.post('/announcement', getAnnouncement);
     app.post('/', checkNotLogin);
     app.post('/', login.postLogin);
 
@@ -134,7 +150,7 @@ module.exports = function (app) {
 
     // 登出页面
     app.get('/logout', checkLogin);
-    app.get('/logout', logout);
+    app.get('/logout', logout.getLogout);
 
     // 登陆页面
     app.get('/login', login.getLogin);
@@ -194,6 +210,7 @@ module.exports = function (app) {
     // 后台管理
     app.get('/main', login.getAdminLogin);
     app.post('/main', login.postAdminLogin);
+    app.get('/main/index', mian_index);
 
     app.get('/main/announcements', announcement.getAnnouncements);
     app.get('/main/announcements/:page', announcement.getAnnouncements);
@@ -204,4 +221,13 @@ module.exports = function (app) {
     app.post('/main/preview-announcements/', announcement.postPreviewAnnouncements);
     app.post('/main/preview-announcements/:title', announcement.postPreviewAnnouncements);
     app.get('/main/announcements/remove/:title', announcement.removeAnnouncements);
+
+    app.get('/main/posts', post.getAdminPosts);
+    app.get('/main/posts/:page', post.getAdminPosts);
+    app.get('/main/posts/remove/:title/:day/:name', post.removeAdminPost);
+
+    app.get('/main/bloggers', user.getUsers);
+    app.get('/main/bloggers/:page', user.getUsers);
+
+    app.get('/main/logout', logout.getMainLogout);
 };

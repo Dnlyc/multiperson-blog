@@ -223,33 +223,8 @@ updatePost = function (req, res) {
  * @param res
  */
 removePost = function (req, res) {
-    var comments;
-    mongodb.find('comments', {title : req.params.title}).then(function (results) {
-        console.log('find comments : ', results);
-        if (results.length === 0) {
-            return Promise.resolve();
-        } else {
-            var r = results.map(function (result) {
-                return mongodb.remove('replys', {c_id : result.id});
-            })
-
-            return Promise.all(r);
-        }
-    }).then(function (result) {
-        console.log('remove replies : ', result);
-        return mongodb.remove('comments', {title : req.params.title});
-    }).then(function (result) {
-        console.log('remove comments : ', result.result);
-        var selector = {
-            name : req.session.user.name,
-            'time.day': req.params.day,
-            title: req.params.title
-        }
-        return mongodb.remove('posts', selector);
-    }).then(function (result) {
-        console.log('remove posts : ', result.result);
+    common.removePost(req).then(function (result) {
         req.flash('success', '删除成功!');
-        console.log('/space/'+ req.session.user.name +'/blogs');
         res.redirect('/space/'+ req.session.user.name +'/blogs');
     }).catch(function (err) {
             req.flash('error', err);
@@ -282,7 +257,6 @@ function postTransferPost(req, res) {
         }
         return mongodb.find('post', {name : req.session.user.name, title : results[0].title});
     }).then(function (results) {
-        console.log(results[0]);
         if (results.length !== 0) {
             return Promise.reject({message : '有相同题目的博文..'});
         }
@@ -296,6 +270,47 @@ function postTransferPost(req, res) {
     })
 }
 
+function getAdminPosts(req, res) {
+    var page = req.params.page || 1;
+    var num;
+    mongodb.count('posts', {}).then(function (count) {
+        num = count;
+        return mongodb.find('posts', {}, {time : -1}, 10, {skip : (page - 1) * 10});
+    }).then(function (results) {
+        results.forEach(function (doc) {
+            doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 10, preserveTags: false});
+        })
+        var total = parseInt(num % 10) === 0 ? parseInt(num / 10) : parseInt(num / 10) + 1;
+        var t_res = [];
+        for (var i = 0; i < total; i++) {
+            t_res.push(i + 1);
+        }
+        res.render('admin/posts', {
+            href : 'posts',
+            posts: results,
+            page : page,
+            total : t_res,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        }).catch(function (error) {
+            req.flash('error', error.message);
+            res.redirect('back');
+        })
+    })
+}
+
+function removeAdminPost(req, res) {
+    console.log('\n\n\n\n\n\n');
+    common.removePost(req).then(function (result) {
+        req.flash('success', '删除成功!');
+        res.redirect('/main/posts');
+    }).catch(function (err) {
+        console.log(err.message);
+        req.flash('error', err);
+        return res.redirect('back');
+    })
+}
+
 module.exports = {
     getPost : getPost,
     postPost : postPost,
@@ -305,5 +320,7 @@ module.exports = {
     postPreview : postPreview,
     getEditArticle : getEditArticle,
     postEditArticle : postEditArticle,
-    postTransferPost : postTransferPost
+    postTransferPost : postTransferPost,
+    getAdminPosts : getAdminPosts,
+    removeAdminPost : removeAdminPost
 };

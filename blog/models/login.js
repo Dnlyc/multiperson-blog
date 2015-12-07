@@ -60,11 +60,7 @@ function postAdminLogin(req, res) {
             return Promise.reject({message : '用户名或密码错误.'});
         }
         req.session.admin = results[0];
-        res.render('admin/index', {
-            href : '',
-            name : results[0].alias,
-            error : req.flash('error').toString()
-        })
+        res.redirect('/main/index');
     }).catch(function (error) {
         req.flash('error', error.message);
         res.redirect('back');

@@ -88,7 +88,6 @@ function getEditAnnouncements(req, res) {
 }
 
 function postEditAnnouncements(req, res) {
-    console.log(123123123);
     var doc = {
         content : req.body.content
     }

@@ -5,10 +5,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="page-header bootstrap-admin-content-title">
-                <h1>公告管理</h1>
-                <a href="/main/new-announcements" class="action btn">
-                    新增公告
-                </a>
+                <h1>博文管理</h1>
             </div>
         </div>
     </div>
@@ -17,7 +14,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="text-muted bootstrap-admin-box-title">公告</div>
+                    <div class="text-muted bootstrap-admin-box-title">博文</div>
                 </div>
                 <div class="bootstrap-admin-panel-content">
                     <table class="table bootstrap-admin-table-with-actions">
@@ -27,33 +24,39 @@
                             <col style="width:700px">
                             <col style="width:200px">
                             <col style="width:200px">
+                            <col style="width:200px">
+                            <col style="width:200px">
+                            <col style="width:200px">
                             <col style="width:400px">
                         </colgroup>
                         <thead>
                         <tr>
                             <th>id</th>
-                            <th>标题</th>
-                            <th>公告内容</th>
-                            <th>发布者</th>
+                            <th>博文标题</th>
+                            <th>博文正文</th>
+                            <th>博主</th>
+                            <th>原|转</th>
+                            <th>阅读</th>
+                            <th>评论</th>
                             <th>发布日期</th>
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <% for (var i = 0; i < announcements.length; i++)  { %>
+                        <% for (var i = 0; i < posts.length; i++)  { %>
                         <tbody>
                             <td><%= (page - 1) * 10 + (i + 1) %></td>
-                            <td><%= announcements[i].title %></td>
-                            <td><%= announcements[i].content.html %></td>
-                            <td><%= announcements[i].name %></td>
-                            <td><%= announcements[i].time.day %></td>
+                            <td><%= posts[i].title %></td>
+                            <td><%= posts[i].post.html %></td>
+                            <td><%= posts[i].name %></td>
+                            <td><% if (posts[i].transfer) { %> 转载 <% } else { %> 原创 <% } %></td>
+                            <td><%= posts[i].pv %></td>
+                            <td><%= posts[i].c_num %></td>
+                            <td><%= posts[i].time.day %></td>
                             <td>
-                                <a href="#" onclick="previewModel('<%= announcements[i].title %>')">
-                                    预览 |
+                                <a href="#" onclick="previewModel('<%= posts[i].title %>')">
+                                    查看 |
                                 </a>
-                                <a href="/main/announcements/edit/<%= announcements[i].title %>">
-                                    编辑 |
-                                </a>
-                                <a href="/main/announcements/remove/<%= announcements[i].title %>" style="color: red">
+                                <a href="/main/posts/remove/<%= posts[i].title %>/<%= posts[i].time.day %>/<%= posts[i].name %>" style="color: red">
                                     删除
                                 </a>
                             </td>
