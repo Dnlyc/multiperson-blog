@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="page-header bootstrap-admin-content-title">
                 <h1>公告管理</h1>
-                <a href="/main/announcements/new" class="action btn">
+                <a href="/main/new-announcements" class="action btn">
                     新增公告
                 </a>
             </div>
@@ -47,13 +47,13 @@
                             <td><%= announcements[i].name %></td>
                             <td><%= announcements[i].time.day %></td>
                             <td>
-                                <a href="#">
+                                <a href="#" onclick="previewModel('<%= announcements[i].title %>')">
                                     预览 |
                                 </a>
-                                <a href="#">
+                                <a href="/main/announcements/edit/<%= announcements[i].title %>">
                                     编辑 |
                                 </a>
-                                <a href="#" style="color: red">
+                                <a href="/main/announcements/remove/<%= announcements[i].title %>" style="color: red">
                                     删除
                                 </a>
                             </td>
@@ -101,4 +101,5 @@
 </div>
 </div>
 
+<%- include announcements_model %>
 <%- include footer %>

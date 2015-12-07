@@ -34,7 +34,7 @@ getPost = function (req, res) {
 
 
 function postPreview(req, res) {
-    var html = trimHtml(markdown.toHTML(req.body.content));
+    var html = markdown.toHTML(req.body.content);
     console.log(html);
     res.json({success : 1, html : html});
 }

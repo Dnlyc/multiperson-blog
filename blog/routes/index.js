@@ -197,6 +197,11 @@ module.exports = function (app) {
 
     app.get('/main/announcements', announcement.getAnnouncements);
     app.get('/main/announcements/:page', announcement.getAnnouncements);
-    app.get('/main/announcements/new', announcement.getNewAnnouncements);
-    app.post('/main/announcements/new', announcement.postNewAnnouncements);
+    app.get('/main/new-announcements', announcement.getNewAnnouncements);
+    app.post('/main/new-announcements', announcement.postNewAnnouncements);
+    app.get('/main/announcements/edit/:title', announcement.getEditAnnouncements);
+    app.post('/main/announcements/edit/:title', announcement.postEditAnnouncements);
+    app.post('/main/preview-announcements/', announcement.postPreviewAnnouncements);
+    app.post('/main/preview-announcements/:title', announcement.postPreviewAnnouncements);
+    app.get('/main/announcements/remove/:title', announcement.removeAnnouncements);
 };

@@ -152,7 +152,7 @@ function postPreview() {
         cache: false,
         timeout: 5000,
         success: function(data){
-            document.getElementById('m-content').innerHTML = data.html.html;
+            document.getElementById('m-content').innerHTML = data.html;
             $("#myModal").modal();
         },
         error: function(jqXHR, textStatus, errorThrown){
