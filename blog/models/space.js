@@ -6,7 +6,14 @@ function getSpace (req, res) {
     var blogger = req.params.name;
     var posts;
 
-    return mongodb.find('posts', {name : req.params.name}, {time: -1}, 9).then(function (docs) {
+    return Promise.resolve().then(function () {
+        if (typeof req.session.user === 'undefined' || req.params.name !== req.session.user.name) {
+            return mongodb.update('user', {name : req.params.name}, {$inc:{pv:1}})
+        }
+        return null;
+    }).then(function () {
+        return mongodb.find('posts', {name : req.params.name}, {time: -1}, 9)
+    }).then(function (docs) {
         console.log(docs.length);
         posts = docs.map(function (doc) {
             doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 200, preserveTags: false});
@@ -15,7 +22,7 @@ function getSpace (req, res) {
         });
         return mongodb.find('albums', {name : req.params.name}, {}, 6);
     }).then(function (albums) {
-        console.log('sucessful');
+
         res.render('blog/index', {
             blogger : blogger,
             href : '',

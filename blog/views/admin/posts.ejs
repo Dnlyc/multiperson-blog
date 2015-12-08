@@ -10,6 +10,39 @@
         </div>
     </div>
 
+    <form id="form" class="form-inline" role="form" method="post" style="margin-top: 1em;margin-bottom: 1em">
+        <div class="form-group">
+            <label for="name">标题:</label>
+            <input type="text" class="form-control" name="title" value="<% if (search.title) { %><%= search.title %><% } %>">
+        </div>
+        <div class="form-group" style="margin-left: 1em;">
+            <label for="name">博主:</label>
+            <select class="form-control" name="name" >
+                <option value="">全部</option>
+                <% users.forEach(function (user) { %>
+                    <option <% if (search.name && search.name === user.name) { %>selected="selected" <% } %> value="<%= user.name %>"><%= user.name %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="form-group" style="margin-left: 1em;">
+            <label for="name">原创|转载:</label>
+            <select class="form-control" name="type" >
+                <option <% if (search.type && search.type === '2') { %>selected="selected" <% } %> value="2">全部</option>
+                <option <% if (search.type && search.type === '0') { %>selected="selected" <% } %> value="0">原创</option>
+                <option <% if (search.type && search.type === '1') { %>selected="selected" <% } %> value="1">转载</option>
+            </select>
+        </div>
+        <div class="form-group" style="margin-left: 1em;">
+            <label for="name">排序:</label>
+            <select class="form-control" name="sort" >
+                <option <% if (search.sort && search.sort === '0') { %>selected="selected" <% } %> value="0">发布时间</option>
+                <option <% if (search.sort && search.sort === '1') { %>selected="selected" <% } %> value="1">阅读次数</option>
+                <option <% if (search.sort && search.sort === '2') { %>selected="selected" <% } %> value="2">评论次数</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-info" style="margin-left: 1em;">查找</button>
+    </form>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -42,6 +75,11 @@
                             <th>操作</th>
                         </tr>
                         </thead>
+                        <% if (posts.length === 0) { %>
+                        <tbody>
+                            <td /><td /><td>没有相关结果....</td>
+                        </tbody>
+                        <% } %>
                         <% for (var i = 0; i < posts.length; i++)  { %>
                         <tbody>
                             <td><%= (page - 1) * 10 + (i + 1) %></td>
@@ -53,7 +91,7 @@
                             <td><%= posts[i].c_num %></td>
                             <td><%= posts[i].time.day %></td>
                             <td>
-                                <a href="#" onclick="previewModel('<%= posts[i].title %>')">
+                                <a href="#" onclick="previewPostModel('<%= posts[i].title %>', '<%= posts[i].name %>')">
                                     查看 |
                                 </a>
                                 <a href="/main/posts/remove/<%= posts[i].title %>/<%= posts[i].time.day %>/<%= posts[i].name %>" style="color: red">
@@ -69,29 +107,29 @@
             <div class="col-lg-12" align="center">
                 <ul class="pagination">
                     <li>
-                        <a href="#" onclick="searchAnnouncements(1)">
+                        <a href="#" onclick="sumbitPage('posts', 1)">
                             <span>&laquo;&laquo;</span>
                         </a>
                     </li>
                     <% if (page != 1) { %>
                     <li>
-                        <a href="#" onclick="searchAnnouncements(<%= (page - 1) %>)" aria-label="<">
+                        <a href="#" onclick="sumbitPage('posts', <%= (page - 1) %>)" aria-label="<">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <% } %>
-                    <% for(var i = 0; i < total.length; i++)  { %>
-                    <li <% if(i == page - 1) { %> class="active" <% } %>><a href="#" onclick="searchAnnouncements(<%= total[i] %>)" ><%= total[i] %></a></li>
+                    <% for(var i = 0; i < total; i++)  { %>
+                    <li <% if(i == page - 1) { %> class="active" <% } %>><a href="#" onclick="sumbitPage('posts', <%= i + 1 %>)" ><%= i + 1 %></a></li>
                     <% } %>
-                    <% if (page != total[total.length - 1]) { %>
+                    <% if (page != total) { %>
                     <li>
-                        <a href="#" onclick="searchAnnouncements(<%= (page + 1) %>)" aria-label=">">
+                        <a href="#" onclick="sumbitPage('posts', <%= (page + 1) %>)" aria-label=">">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                     <% } %>
                     <li>
-                        <a href="#" onclick="searchAnnouncements(<%= total[total.length - 1] %>)" aria-label=">>">
+                        <a href="#" onclick="sumbitPage('posts', <%= total %>)" aria-label=">>">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>
                     </li>
@@ -104,5 +142,34 @@
 </div>
 </div>
 
-<%- include announcements_model %>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    博文查看
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <!--<input id="name" type="text" rows="3" class="form-control" name="content" placeholder="请输入回复内容..." required>-->
+                <div data-spy="scroll" data-target="#navbar-example" data-offset="0"
+                     style="height:350px;weight:500px;overflow:auto; position: relative;">
+                    <p id="m-content">正文</p>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
 <%- include footer %>

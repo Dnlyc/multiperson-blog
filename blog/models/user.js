@@ -8,24 +8,25 @@ var mongodb = require('./db'),
 
 function getUsers (req, res) {
     var page = req.params.page || 1;
-    var num;
-    mongodb.count('user', {}).then(function (count) {
-        num = count;
-        return mongodb.find('user', {}, {time : -1}, 10, {skip : (page - 1) * 10})
+    var total, selector = {};
+    if (typeof req.body.name !== 'undefined' && req.body.name !== '') selector.name = new RegExp(req.body.name);
+
+    mongodb.count('user', selector).then(function (count) {
+        total = count;
+        return mongodb.find('user', selector, {pv : -1}, 10, {skip : (page - 1) * 10})
     }).then(function (results) {
         results.forEach(function (doc) {
-            doc.signature = doc.signature.slice(0, 20) + '.....';
+            if (doc.signature.length > 20) {
+                doc.signature = doc.signature.slice(0, 20) + '.....';
+            }
         })
-        var total = parseInt(num % 10) === 0 ? parseInt(num / 10) : parseInt(num / 10) + 1;
-        var t_res = [];
-        for (var i = 0; i < total; i++) {
-            t_res.push(i + 1);
-        }
+        console.log(results);
         res.render('admin/bloggers', {
             href: 'bloggers',
             users: results,
             page: page,
-            total: t_res,
+            total: parseInt(total % 10) === 0 ? parseInt(total / 10) : parseInt(total / 10) + 1,
+            search : req.body,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         }).catch(function (error) {

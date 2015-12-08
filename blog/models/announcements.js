@@ -8,41 +8,10 @@ var mongodb = require('./db'),
     markdown = require('markdown').markdown,
     trimHtml = require('trim-html');
 
-/**
- * 登陆发表页面
- * @param req
- * @param res
- */
-function getAnnouncements (req, res) {
-    var page = req.params.page || 1;
-    var num;
-    mongodb.count('announcements', {}).then(function (count) {
-        num = count;
-        return mongodb.find('announcements', {}, {time : -1}, 10, {skip:(page - 1) * 10});
-    }).then(function (results) {
-        results.forEach(function (doc) {
-            doc.content = trimHtml(markdown.toHTML(doc.content), {limit: 20, preserveTags: false});
-        })
-        var t_res = [];
-        var total = parseInt(num % 10) === 0 ? parseInt(num / 10) : parseInt(num / 10) + 1;
-        for (var i = 0; i < total; i++) {
-            t_res.push(i + 1);
-        }
-        res.render('admin/announcements',{
-            announcements : results,
-            page : page,
-            total : t_res,
-            href : 'announcements',
-            success : req.flash('success').toString(),
-            error : req.flash('error').toString()
-        });
-    })
-}
-
 function getNewAnnouncements (req, res) {
     process.name = '';
     res.render('admin/announcements_new',{
-        tag : 'announcements',
+        href : 'announcements',
         success : req.flash('success').toString(),
         error : req.flash('error').toString()
     });
@@ -118,6 +87,38 @@ function postPreviewAnnouncements(req, res) {
 function removeAnnouncements(req, res) {
     mongodb.remove('announcements', {title : req.params.title}).then(function (results) {
         res.redirect('back')
+    })
+}
+
+function getAnnouncements(req, res) {
+    var selector = {};
+    var page = req.params.page || 1;
+    var total, admin;
+    if (typeof req.body.name !== 'undefined' && req.body.name !== '') selector.name = req.body.name;
+    if (typeof req.body.title !== 'undefined' && req.body.title !== '') selector.title = new RegExp(req.body.title);
+
+    console.log(selector);
+
+    mongodb.find('systemadmin', {}).then(function (results) {
+        admin = results;
+        return mongodb.count('announcements', selector)
+    }).then(function (count) {
+        total = count;
+        return mongodb.find('announcements', selector, {time : -1}, 10, {skip:(page - 1) * 10});
+    }).then(function (results) {
+        results.forEach(function (doc) {
+            doc.content = trimHtml(markdown.toHTML(doc.content), {limit: 20, preserveTags: false});
+        });
+        res.render('admin/announcements',{
+            announcements : results,
+            page : page,
+            total : parseInt(total % 10) === 0 ? parseInt(total / 10) : parseInt(total / 10) + 1,
+            href : 'announcements',
+            search : req.body,
+            admins : admin,
+            success : req.flash('success').toString(),
+            error : req.flash('error').toString()
+        });
     })
 }
 

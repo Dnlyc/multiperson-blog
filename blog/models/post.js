@@ -272,24 +272,37 @@ function postTransferPost(req, res) {
 
 function getAdminPosts(req, res) {
     var page = req.params.page || 1;
-    var num;
-    mongodb.count('posts', {}).then(function (count) {
-        num = count;
-        return mongodb.find('posts', {}, {time : -1}, 10, {skip : (page - 1) * 10});
+    var total, users;
+    var selector = {};
+    var sort = {};
+    if (typeof req.body.title !== 'undefined' && req.body.title !== '') selector.title = new RegExp(req.body.title);
+    if (typeof req.body.name !== 'undefined' && req.body.name !== '') selector.name = req.body.name;
+    if (typeof req.body.type !== 'undefined' && req.body.type !== '2') selector.transfer = parseInt(req.body.type);
+    if (typeof req.body.sort === 'undefined' || req.body.sort === '0') {
+        sort.time = -1;
+    } else if (req.body.sort === '1') {
+        sort.pv = -1;
+    } else {
+        sort.c_num = -1;
+    }
+    console.log(selector, sort);
+    mongodb.find('user', {}).then(function (results) {
+        users = results;
+        return mongodb.count('posts', selector);
+    }).then(function (count) {
+        total = count;
+        return mongodb.find('posts', selector, sort, 10, {skip : (page - 1) * 10});
     }).then(function (results) {
         results.forEach(function (doc) {
             doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 10, preserveTags: false});
         })
-        var total = parseInt(num % 10) === 0 ? parseInt(num / 10) : parseInt(num / 10) + 1;
-        var t_res = [];
-        for (var i = 0; i < total; i++) {
-            t_res.push(i + 1);
-        }
         res.render('admin/posts', {
             href : 'posts',
             posts: results,
             page : page,
-            total : t_res,
+            users : users,
+            search : req.body,
+            total : parseInt(total % 10) === 0 ? parseInt(total / 10) : parseInt(total / 10) + 1,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         }).catch(function (error) {
@@ -300,7 +313,6 @@ function getAdminPosts(req, res) {
 }
 
 function removeAdminPost(req, res) {
-    console.log('\n\n\n\n\n\n');
     common.removePost(req).then(function (result) {
         req.flash('success', '删除成功!');
         res.redirect('/main/posts');
@@ -308,6 +320,15 @@ function removeAdminPost(req, res) {
         console.log(err.message);
         req.flash('error', err);
         return res.redirect('back');
+    })
+}
+
+function getPreviewPost(req, res) {
+    mongodb.find('posts', {
+        name : req.body.name,
+        title : req.body.title
+    }).then(function (results) {
+        res.json({html : markdown.toHTML(results[0].post)})
     })
 }
 
@@ -322,5 +343,6 @@ module.exports = {
     postEditArticle : postEditArticle,
     postTransferPost : postTransferPost,
     getAdminPosts : getAdminPosts,
-    removeAdminPost : removeAdminPost
+    removeAdminPost : removeAdminPost,
+    getPreviewPost : getPreviewPost
 };

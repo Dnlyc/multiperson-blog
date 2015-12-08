@@ -213,7 +213,9 @@ module.exports = function (app) {
     app.get('/main/index', mian_index);
 
     app.get('/main/announcements', announcement.getAnnouncements);
+    app.post('/main/announcements', announcement.getAnnouncements);
     app.get('/main/announcements/:page', announcement.getAnnouncements);
+    app.post('/main/announcements/:page', announcement.getAnnouncements);
     app.get('/main/new-announcements', announcement.getNewAnnouncements);
     app.post('/main/new-announcements', announcement.postNewAnnouncements);
     app.get('/main/announcements/edit/:title', announcement.getEditAnnouncements);
@@ -223,11 +225,16 @@ module.exports = function (app) {
     app.get('/main/announcements/remove/:title', announcement.removeAnnouncements);
 
     app.get('/main/posts', post.getAdminPosts);
+    app.post('/main/preview-posts/', post.getPreviewPost);
     app.get('/main/posts/:page', post.getAdminPosts);
+    app.post('/main/posts', post.getAdminPosts);
+    app.post('/main/posts/:page', post.getAdminPosts);
     app.get('/main/posts/remove/:title/:day/:name', post.removeAdminPost);
 
     app.get('/main/bloggers', user.getUsers);
     app.get('/main/bloggers/:page', user.getUsers);
+    app.post('/main/bloggers', user.getUsers);
+    app.post('/main/bloggers/:page', user.getUsers);
 
     app.get('/main/logout', logout.getMainLogout);
 };

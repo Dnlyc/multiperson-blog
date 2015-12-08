@@ -24,8 +24,8 @@ function changBackground(files, id, width, height) {
     }
 }
 
-function searchAnnouncements(page) {
-    alert(page);
+function sumbitPage(des, page) {
+    $("#form").attr('action', '/main/' + des + '/' + page).submit();
 }
 
 function previewModel(id) {
@@ -50,4 +50,22 @@ function previewModel(id) {
     }
 
     $.ajax(form);
+}
+
+function previewPostModel(title, name) {
+    $.ajax({
+        url : '/main/preview-posts/',
+        data : {title : title, name : name},
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            document.getElementById('m-content').innerHTML = data.html;
+            $("#myModal").modal();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('error ' + textStatus + " " + errorThrown);
+        }
+    });
 }
