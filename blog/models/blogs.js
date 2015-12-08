@@ -174,9 +174,6 @@ function postComment(req, res) {
         result.length != 0 ? comment.id = result[result.length - 1].id + 1 : comment.id = 0;
         return mongodb.store('comments', [comment]);
     }).then(function () {
-        if (req.params.name == req.session.user.name) {
-            return Promise.resolve();
-        }
         return mongodb.update('posts', {
             name: req.params.name,
             'time.day': req.params.day,
@@ -204,9 +201,6 @@ function postReply(req, res) {
         reply.r_avatar = users[0].avatar;
         return mongodb.store('replys', [reply]);
     }).then(function () {
-        if (req.params.name == req.session.user.name) {
-            return Promise.resolve();
-        }
         return mongodb.update('posts', {
             name: req.params.name,
             'time.day': req.params.day,

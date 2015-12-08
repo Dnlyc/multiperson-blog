@@ -237,4 +237,10 @@ module.exports = function (app) {
     app.post('/main/bloggers/:page', user.getUsers);
 
     app.get('/main/logout', logout.getMainLogout);
+
+    // 其他 router ...
+    // 404
+    app.get('*', function(req, res){
+        res.render('404')
+    });
 };

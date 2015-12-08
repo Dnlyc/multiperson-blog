@@ -7,7 +7,8 @@ function getSpace (req, res) {
     var posts;
 
     return Promise.resolve().then(function () {
-        if (typeof req.session.user === 'undefined' || req.params.name !== req.session.user.name) {
+        console.log(req.session.user);
+        if (typeof req.session.user === 'undefined' || !req.session.user || req.params.name !== req.session.user.name) {
             return mongodb.update('user', {name : req.params.name}, {$inc:{pv:1}})
         }
         return null;

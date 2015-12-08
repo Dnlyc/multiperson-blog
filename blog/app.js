@@ -25,6 +25,9 @@ var session = require('express-session'),
     flash = require('connect-flash');
 
 // 生成一个express实例app
+var fs = require('fs');
+var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
+var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
 var app = express();
 
 // step 1 : 初始化数据库
@@ -45,10 +48,16 @@ mongodb.init().then(function () {
     //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
     app.use(logger('dev'));                                         // 加载日志中间件。
+    app.use(logger({stream: accessLog}));
     app.use(bodyParser.json());                                     // 加载解析json的中间件。
     app.use(bodyParser.urlencoded({ extended: false }));          // 加载解析urlencoded请求体的中间件。
     app.use(cookieParser());                                        // 加载解析cookie的中间件。
     app.use(express.static(path.join(__dirname, 'public')));      // 设置public文件夹为存放静态文件的目录。
+    app.use(function (err, req, res, next) {
+        var meta = '[' + new Date() + '] ' + req.url + '\n';
+        errorLog.write(meta + err.stack + '\n');
+        next();
+    });
 
     // 配置上传文件路径
     app.use(multer({
@@ -102,7 +111,7 @@ mongodb.init().then(function () {
     if (app.get('env') === 'development') {
         app.use(function(err, req, res, next) {
             res.status(err.status || 500);
-            res.render('error', {
+            res.render('500', {
                 message: err.message,
                 error: err
             });
@@ -114,7 +123,7 @@ mongodb.init().then(function () {
     // 生产环境下的错误处理器，将错误信息渲染error模版并显示到浏览器中。
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.render('error', {
+        res.render('500', {
             message: err.message,
             error: {}
         });
