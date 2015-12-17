@@ -28,9 +28,9 @@ function addPhoto () {
     document.getElementById('multiple-file').click();
 }
 
-function onChangeFile (files) {
+function onChangeFile (files, id) {
     if (files.files && files.files.length) {
-        document.getElementById("albums-post").submit();
+        document.getElementById(id).submit();
     }
 }
 
@@ -319,7 +319,19 @@ function resetPosts(data) {
 
             var h2 = document.createElement("h2");
             var h2_span = document.createElement("span");
-            h2_span.innerHTML = post.title;
+            var h2_a = document.createElement("a");
+            if (post.transfer) {
+                h2_a.style.color = "#39b3d7";
+                h2_a.innerHTML = "[转]";
+            } else {
+                h2_a.style.color = "red";
+                h2_a.innerHTML = "[原]";
+            }
+            var h2_text = document.createElement("a");
+            h2_text.innerHTML = post.title;
+            h2_text.href = "/space/blog/" + post.name + '/' + post.time.day + '/' + post.title;
+            h2_span.appendChild(h2_a);
+            h2_span.appendChild(h2_text);
             h2.appendChild(h2_span);
 
             var clr = document.createElement("div");

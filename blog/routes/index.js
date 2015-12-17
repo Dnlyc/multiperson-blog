@@ -171,8 +171,9 @@ module.exports = function (app) {
 
     // 博客文章页面
     app.get('/space/:name/blogs', blogs.getArticles);
-    app.get('/space/:name/blogs/:id/', blogs.getArticlesByTag);
-    app.get('/space/:name/blogs/:id/:page', blogs.getArticlesByTag);
+    app.get('/space/:name/blogs/:page', blogs.getArticles);
+    app.get('/space/:name/blogs/tag/:id/', blogs.getArticlesByTag);
+    app.get('/space/:name/blogs/tag/:id/:page', blogs.getArticlesByTag);
     app.get('/space/:name/blogs/:page', blogs.getArticles);
     app.get('/space/blog/:name/:day/:title', blogs.getArticle);
     app.post('/space/blog/:name/:day/:title', blogs.postComment);
@@ -203,6 +204,7 @@ module.exports = function (app) {
     // 个人设置
     app.get('/space/:name/settings', settings.getSettings);
     app.post('/space/:name/settings', settings.postSettings);
+    app.post('/space/:name/avater', settings.postAvater);
 
     // 个人博客首页
     app.get('/space/:name', space.getSpace);

@@ -28,30 +28,30 @@
             <nav>
                 <ul class="pagination">
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= id %>/1" aria-label="<<">
+                        <a href="/space/<%= blogger %>/blogs/tag/<%= id %>/1" aria-label="<<">
                             <span aria-hidden="true">&laquo;&laquo;</span>
                         </a>
                     </li>
                     <% if (page != 1) { %>
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= id %>/<%= (page - 1) %>" aria-label="<">
+                        <a href="/space/<%= blogger %>/blogs/tag/<%= id %>/<%= (page - 1) %>" aria-label="<">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <% } %>
 
                     <% for(var i = 0; i < total; i++)  { %>
-                    <li ><a href="/space/<%= blogger %>/blogs/<%= id %>/<%= i+1 %>"><%= i + 1 %></a></li>
+                    <li ><a href="/space/<%= blogger %>/blogs/tag/<%= id %>/<%= i+1 %>"><%= i + 1 %></a></li>
                     <% } %>
                     <% if (page != total) { %>
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= id %>/<%= (page + 1) %>" aria-label=">">
+                        <a href="/space/<%= blogger %>/blogs/tag/<%= id %>/<%= (page + 1) %>" aria-label=">">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                     <% } %>
                     <li>
-                        <a href="/space/<%= blogger %>/blogs/<%= id %>/<%= total %>" aria-label=">>">
+                        <a href="/space/<%= blogger %>/blogs/tag/<%= id %>/<%= total %>" aria-label=">>">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>
                     </li>

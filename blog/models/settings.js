@@ -3,6 +3,7 @@
  */
 var mongodb = require('./db'),
     Promise = require('bluebird'),
+    data = require('../config/data'),
     common = require('../lib/common');
 
 function getSettings (req, res) {
@@ -45,30 +46,24 @@ function getSettings (req, res) {
 }
 
 function postSettings (req, res) {
-    if (req.files.avater || req.body.height || req.body.weight || req.body.hobby1 || req.body.hobby2 || req.body.hobby3 || req.body.email || req.body.signature) {
+    if (req.body.height || req.body.weight || req.body.hobby1 || req.body.hobby2 || req.body.hobby3 || req.body.email || req.body.signature) {
         var selector = {name : req.body.name};
-        var doc = {birthday : req.body.year + '-' + req.body.month + '-' + req.body.day};
-        if (req.files.avater) doc.avatar = req.files.avater.name;
-        if (req.body.height) doc.height = req.body.height;
-        if (req.body.weight) doc.weight = req.body.weight;
-        if (req.body.hobby1) doc.hobby1 = req.body.hobby1;
-        if (req.body.hobby2) doc.hobby2 = req.body.hobby2;
-        if (req.body.hobby3) doc.hobby3 = req.body.hobby3;
-        if (req.body.email) doc.email = req.body.email;
-        if (req.body.signature) doc.signature = req.body.signature;
+        var doc = {
+            birthday : req.body.year + '-' + req.body.month + '-' + req.body.day,
+            height : req.body.height,
+            weight : req.body.weight,
+            hobby1 : req.body.hobby1,
+            hobby2 : req.body.hobby2,
+            hobby3 : req.body.hobby3,
+            email : req.body.email,
+            signature : req.body.signature === '' ? data.default_signature : req.body.signature
+        };
 
-        mongodb.update('user', selector, {$set : doc}).then(function (result) {
+        console.log(req.body);
+        console.log(doc);
 
-            if (req.files.avater) {
-                mongodb.update('comments', {c_name : req.session.user.name}, {$set : {c_avatar : req.files.avater.name}}).then(function (result) {
-                    mongodb.update('replys', {r_name : req.session.user.name}, {$set : {r_avatar : req.files.avater.name}})
-                }).then(function () {
-                    req.session.user.avatar = req.files.avater.name;
-                    res.redirect('/space/' + req.params.name + '/settings');
-                })
-            } else {
-                res.redirect('/space/' + req.params.name + '/settings');
-            }
+        mongodb.update('user', selector, {$set : doc}).then(function () {
+            res.redirect('/space/' + req.params.name + '/settings');
         }).catch(function (err) {
             console.log(err.message)
             res.redirect('back');
@@ -79,7 +74,21 @@ function postSettings (req, res) {
     }
 }
 
+function postAvater(req, res) {
+    var doc = {avatar : req.files.avater.name};
+    var selector = {name : req.session.user.name};
+    mongodb.update('user', selector, {$set : doc}).then(function () {
+        return mongodb.update('comments', {c_name : req.session.user.name}, {$set : {c_avatar : req.files.avater.name}})
+    }).then(function () {
+        return mongodb.update('replys', {r_name : req.session.user.name}, {$set : {r_avatar : req.files.avater.name}})
+    }).then(function () {
+        req.session.user.avatar = req.files.avater.name;
+        res.redirect('/space/' + req.params.name + '/settings');
+    });
+}
+
 module.exports = {
     getSettings : getSettings,
-    postSettings : postSettings
+    postSettings : postSettings,
+    postAvater : postAvater
 }

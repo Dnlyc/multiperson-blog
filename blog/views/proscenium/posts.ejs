@@ -9,7 +9,10 @@
             <% } else { %>
                 <% posts.forEach(function (post) { %>
                 <div class="article">
-                    <h2><span><% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a style="color: red">[原]</a><% } %><%= post.title %></span></h2>
+                    <h2><span>
+                            <% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a style="color: red">[原]</a><% } %>
+                            <a href="/space/blog/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
+                        </span></h2>
                     <div class="clr"></div>
                     <p>博主:<a href="/space/<%= post.name %>"><%= post.name %></a>,日期:<%= post.time.day %>,浏览次数:<%= post.pv %>;评论:<%= post.c_num %></p>
                     <div class="clr"></div>

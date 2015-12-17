@@ -6,7 +6,7 @@
         <form id="albums-post" method="post" enctype='multipart/form-data'>
             <div class="col-lg-12" id="form">
                 <input type="file" style="display:none" id="multiple-file" multiple="multiple" name="img"
-                       onchange="onChangeFile(this)"/>
+                       onchange="onChangeFile(this, 'albums-post')"/>
                 <input type="text" style="display:none" id="path" name="path" value="" readonly/>
             </div>
         </form>

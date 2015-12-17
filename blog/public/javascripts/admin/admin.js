@@ -8,6 +8,7 @@ function sumbitFromNew() {
 }
 
 function chooseFile(id) {
+    alert(123123);
     document.getElementById(id).click();
 }
 

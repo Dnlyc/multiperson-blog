@@ -219,6 +219,7 @@ function postReply(req, res) {
 function getArticlesByTag (req, res) {
     var total,comments,tags;
     var page = req.params.pages || 1;
+    console.log(req.params.id);
     var selector = {
         name : req.params.name,
         tags : {$all: [parseInt(req.params.id)] }

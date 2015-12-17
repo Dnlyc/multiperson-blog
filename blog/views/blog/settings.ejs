@@ -8,13 +8,16 @@
                 <div class="row">
                     <div class="col-xs-8 col-sm-offset-2 form-box">
 
-                        <form role="form" action="" method="post" class="registration-form" enctype="multipart/form-data">
+                        <form role="form" action="<%if (user && user.name == blogger) { %>/space/<%= user.name %>/avater<% }%>" id="avater" method="post" class="registration-form" enctype="multipart/form-data">
                             <div class="form-top">
                                 <div style="padding-top: 1em;" align="center">
-                                    <a href="#" <%if (user && user.name == blogger) { %>onclick="chooseFile('avater')"<% }%> ><img width="200px" height="200px" id="i-avater" style="border-radius: 500px"  src="/images/<%= result.avater %>" class="img-thumbnail "/></a>
-                                    <input type="file" style="display: none" id="avater" name="avater" onchange="changBackground(this, 'i-avater', 0, 0)"/>
+                                    <a href="#" <%if (user && user.name == blogger) { %>onclick="chooseFile('f-avater')"<% }%> ><img width="200px" height="200px" id="i-avater" style="border-radius: 500px"  src="/images/<%= result.avater %>" class="img-thumbnail "/></a>
+                                    <input type="file" id="f-avater" style="display: none" name="avater" onchange="onChangeFile(this, 'avater')"/>
                                 </div>
                             </div>
+                        </form>
+
+                        <form role="form" action="" method="post" class="registration-form">
                             <div class="form-bottom">
                                 <div class="form-group" align="center">
                                     <label class="col-sm-2 control-label">姓名：</label>
@@ -53,7 +56,10 @@
                                     <label class="col-sm-2 control-label">身高：</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="height"  placeholder="保密"<% if(result.height) { %>value="<%= result.height %>"<% } %>  <%if (!user || (user && user.name != blogger)) { %>readonly<% } %>>
+                                            <input type="text" class="form-control" name="height"  placeholder="保密"
+                                                   <% if(result.height) { %>value="<%= result.height %>"<% } %>
+                                                   <% if (!user || (user && user.name != blogger)) { %>readonly<% } %>
+                                                    onkeyup="value=''">
                                             <span class="input-group-addon">cm</span>
                                         </div>
                                     </div>
