@@ -78,7 +78,7 @@ postRegister = function (req, res) {
         req.session.user = user;
         req.flash('success', '注册成功!');
         fs.mkdirSync('./public/images/' + name);
-        res.redirect('/space/' + user.name);
+        res.redirect('/space/' + name);
     }).catch(function (err) {
         console.log(err);
         var direct = err.direct ? err.direct : '/';

@@ -592,3 +592,7 @@ function getAnnouncement (title) {
         }
     });
 }
+
+function comeback() {
+    location.href=document.referrer;
+}

@@ -69,3 +69,7 @@ function previewPostModel(title, name) {
         }
     });
 }
+
+function comeback() {
+    location.href=document.referrer;
+}

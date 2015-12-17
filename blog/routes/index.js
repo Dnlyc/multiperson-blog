@@ -53,6 +53,7 @@ function getHomepage (req, res) {
         return mongodb.count('user', {});
     }).then(function (num) {
         var random = parseInt(Math.random() * num);
+        console.log(num, random);
         var begin = random < 6 ? 0 : random - 6;
         return mongodb.find('user', {}, {}, 6, {skip : begin});
     }).then(function (reults) {
