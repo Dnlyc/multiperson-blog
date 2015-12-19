@@ -52,6 +52,7 @@ function createAlbum (req, res) {
 }
 
 function getNewAlbums (req, res) {
+    console.log(req.params);
     var selector = {
         name : req.params.name,
         id : parseInt(req.params.id)
@@ -67,7 +68,8 @@ function getNewAlbums (req, res) {
         album = result[0];
         process.albums = result[0].title;
         process.name = req.params.name;
-        if (typeof req.session.user === 'undefined' || req.params.name == req.session.user.name) {
+        console.log(req.session.user);
+        if (typeof req.session.user !== 'undefined' && req.session.user &&  req.params.name === req.session.user.name) {
             return Promise.resolve();
         }
         return mongodb.update('albums', selector, {$inc: {pv: 1}})
@@ -82,7 +84,7 @@ function getNewAlbums (req, res) {
         })
     }).catch(function (err) {
         console.log(err.message);
-        res.flash('err', err.message);
+        req.flash('err', err.message);
         res.redirect('back');
     })
 }
@@ -104,7 +106,7 @@ function changeAlbums (req, res) {
             res.redirect('/space/' + req.params.name + '/albums/' + req.params.id);
         }).catch(function (err) {
             console.log(err.message);
-            res.flash('err', err.message);
+            req.flash('err', err.message);
             res.redirect('back');
         })
     } else {
@@ -115,7 +117,7 @@ function changeAlbums (req, res) {
             res.redirect('/space/' + req.params.name + '/albums/' + req.params.id);
         }).catch(function (err) {
             console.log(err.message);
-            res.flash('err', err.message);
+            req.flash('err', err.message);
             res.redirect('back');
         })
     }

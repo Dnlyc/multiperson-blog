@@ -43,6 +43,7 @@ function getEditAnnouncements(req, res) {
         if (results.length === 0) {
             return Promise.reject({message : '不存在该公告'});
         }
+        process.name = '';
         res.render('admin/announcements_edit',{
             announcement : results[0],
             href : 'announcements',
@@ -62,7 +63,6 @@ function postEditAnnouncements(req, res) {
     }
     if (typeof req.files.background !== 'undefined')
         doc.background = req.files.background.name;
-    console.log(doc);
     return mongodb.update('announcements', {title : req.params.title}, {$set:doc}).then(function () {
         res.redirect('/main/announcements');
     }).catch(function (error) {

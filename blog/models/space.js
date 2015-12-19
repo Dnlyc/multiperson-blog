@@ -15,13 +15,12 @@ function getSpace (req, res) {
     }).then(function () {
         return mongodb.find('posts', {name : req.params.name}, {time: -1}, 9)
     }).then(function (docs) {
-        console.log(docs.length);
         posts = docs.map(function (doc) {
             doc.post = trimHtml(markdown.toHTML(doc.post), {limit: 200, preserveTags: false});
             doc.post.html = doc.post.html.substr(0, 50);
             return doc;
         });
-        return mongodb.find('albums', {name : req.params.name}, {}, 6);
+        return mongodb.find('albums', {name : req.params.name}, {day : -1}, 6);
     }).then(function (albums) {
 
         res.render('blog/index', {

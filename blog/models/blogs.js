@@ -81,15 +81,15 @@ function getArticle(req, res) {
         post.post = markdown.toHTML(post.post);
         post.avatar = avatar;
         post.signature = signature;
-        if (typeof req.session.user === 'undefined' && req.params.name == req.session.user.name) {
-            return Promise.resolve();
+        if (typeof req.session.user === 'undefined' || !req.session.user || req.params.name !== req.session.user.name) {
+            return mongodb.update('posts', {
+                name: req.params.name,
+                'time.day': req.params.day,
+                title: req.params.title
+            }, {$inc: {pv: 1}})
         }
-        return mongodb.update('posts', {
-            name: req.params.name,
-            'time.day': req.params.day,
-            title: req.params.title
-        }, {$inc: {pv: 1}})
-    }).then(function (results) {
+        return null;
+    }).then(function () {
         var selector = {
             name: req.params.name,
             title: req.params.title

@@ -233,6 +233,7 @@ removePost = function (req, res) {
 }
 
 function postTransferPost(req, res) {
+    console.log(req.params);
     var doc;
     var selector = {
         name : req.params.name,
@@ -262,9 +263,12 @@ function postTransferPost(req, res) {
         }
         return mongodb.store('posts', [doc]);
     }).then(function () {
-        return mongodb.update('posts', selector, {$inc:{transfer: 1}})
-        res.json({successful : true, name : req.session.user.name});
+        return mongodb.update('posts', selector, {$inc:{transfer_num: 1}});
+        //res.json({successful : true, name : req.session.user.name});
+    }).then(function () {
+        res.redirect('/space/' + req.session.user.name + '/blogs');
     }).catch(function (error) {
+        console.log(error.message);
         req.flash('error', error.message);
         res.json({successful : false});
     })

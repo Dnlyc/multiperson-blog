@@ -551,24 +551,8 @@ function searchPostByTag (name, id) {
     window.location.href="/space/" + name + "/blogs/" + id;
 }
 
-function transferPost(name, time, title) {
-    $.ajax({
-        url: '/space/transfer/' + name + '/' + time + '/' + title,
-        dataType: 'json',
-        type:'post',
-        cache: false,
-        timeout: 5000,
-        success: function(data){
-            if (data.successful) {
-                window.location.href="/space/" + data.name + "/blogs";
-            } else {
-                window.location.href="/space/blog/" + name + '/' + time + '/' + title;
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log('error ' + textStatus + " " + errorThrown);
-        }
-    });
+function transferPost() {
+    $('#transfer').submit();
 }
 
 function praisePost (name, time, title) {

@@ -9,6 +9,9 @@
                 <li class="active">文章</li>
             </ol>
         </div>
+
+        <form id='transfer' method="post" action="/space/transfer/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" />
+
         <div class="col-md-8 single-page-left">
             <div class="single-page-info">
                 <h1><% if (post.transfer) { %> <a style="color: #39b3d7">[转]</a> <% } else { %> <a>[原]</a> <% } %><%= post.title %></h1>
@@ -16,7 +19,7 @@
                     <a href="/space/posts/<%= blogger %>/<%= post.time.day %>/<%= post.title %>/edit"/>编辑</a> |
                     <a href="#" onclick="removePost('<%= blogger %>', '<%= post.time.day %>', '<%= post.title %>')"/>删除</a>
                 <% } else if (user && blogger !== user.name) { %>
-                    <a href="#" onclick="transferPost('<%= post.name %>', '<%= post.time.day %>', '<%= post.title %>')"/>转载</a>
+                    <a href="#" onclick="transferPost()"/>转载</a>
                 <% } %>
                 <div>
                     <% if (post.tags.length !== 0) { %>
